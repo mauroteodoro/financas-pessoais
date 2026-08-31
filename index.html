@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -647,8 +647,9 @@
             </div>
         </div>
 
-           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+           <div id="cardsDeSaldoGlobais" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 <!-- CARD 1 -->
+
                 <div class="card-tilt bg-white p-5 xl:p-6 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center gap-4 relative group">
                     <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-500 shadow-[0_0_15px_rgba(239,68,68,0.1)] dark:shadow-[0_0_15px_rgba(239,68,68,0.4)] flex-shrink-0">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/></svg>
@@ -1587,11 +1588,12 @@
         const btnTabCaixa = document.getElementById('btnTabCaixa'); const btnTabProjecao = document.getElementById('btnTabProjecao');
         const abaCaixa = document.getElementById('abaCaixa'); const abaProjecao = document.getElementById('abaProjecao');
 
-        window.mudarParaAbaCaixa = function() {
+                window.mudarParaAbaCaixa = function() {
             btnTabCaixa.className = "px-5 py-2 text-sm font-bold tab-transition bg-white text-[#0f172a] rounded-lg shadow-sm border border-white/20";
             btnTabProjecao.className = "px-5 py-2 text-sm font-bold tab-transition bg-transparent text-slate-300 hover:text-white hover:bg-white/10 rounded-lg border border-transparent";
             abaCaixa.classList.remove('hidden'); abaCaixa.classList.add('block');
             abaProjecao.classList.add('hidden'); abaProjecao.classList.remove('block');
+            abaCaixa.insertBefore(document.getElementById('cardsDeSaldoGlobais'), document.getElementById('formArea'));
             atualizarTabela();
         }
 
@@ -1600,8 +1602,10 @@
             btnTabCaixa.className = "px-5 py-2 text-sm font-bold tab-transition bg-transparent text-slate-300 hover:text-white hover:bg-white/10 rounded-lg border border-transparent";
             abaProjecao.classList.remove('hidden'); abaProjecao.classList.add('block');
             abaCaixa.classList.add('hidden'); abaCaixa.classList.remove('block');
+            abaProjecao.insertBefore(document.getElementById('cardsDeSaldoGlobais'), abaProjecao.firstElementChild);
             carregarOuCalcularFolha();
         }
+
         btnTabCaixa.addEventListener('click', window.mudarParaAbaCaixa); btnTabProjecao.addEventListener('click', window.mudarParaAbaProjecao);
         // ===================== EXPORTAR E IMPORTAR =====================
         window.exportarBackup = function() {

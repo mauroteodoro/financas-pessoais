@@ -267,10 +267,10 @@ select:focus, select:focus-visible {
         </div>
 <!-- MODAL DE GERENCIAMENTO DE CONTAS -->
         <div id="modalContas" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[1000] backdrop-blur-sm transition-opacity px-4">
-            <div class="bg-white dark:bg-[#121b2b] rounded-2xl w-full max-w-lg card-shadow border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[85vh] overflow-hidden">
-                <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center bg-slate-50/50 dark:bg-[#0b1120]">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat flex items-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl w-full max-w-md card-shadow border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[85vh] overflow-hidden">
+                <div class="p-3.5 sm:p-4 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center bg-slate-50/50 dark:bg-[#0b1120]">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-cyan-400 font-montserrat flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                         Gestão de Contas
                     </h3>
                     <button type="button" onclick="fecharModalContas()" class="text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-500/10 dark:hover:bg-red-500/20 transition-colors active:scale-90 p-2 rounded-full">
@@ -279,7 +279,7 @@ select:focus, select:focus-visible {
                 </div>
 
                 <!-- LISTA DE CONTAS -->
-                <div id="viewContaList" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 no-scrollbar block">
+                <div id="viewContaList" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3 no-scrollbar block">
                     <button type="button" onclick="abrirEdicaoConta(null)" class="w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-extrabold py-3.5 px-4 rounded-full transition-all duration-300 shadow-lg shadow-[#0061F2]/20 active:scale-95 text-sm uppercase tracking-wide flex items-center justify-center gap-2 mb-4 h-[48px]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
                         Nova Conta
@@ -288,30 +288,30 @@ select:focus, select:focus-visible {
                 </div>
 
                 <!-- EDIÇÃO DE CONTA -->
-                <div id="viewContaEdit" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5 no-scrollbar hidden">
-                    <button type="button" onclick="voltarParaListaContas()" class="text-sm font-semibold text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-cyan-400 mb-2 flex items-center gap-1 transition-colors active:scale-95">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Voltar
+                <div id="viewContaEdit" class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2.5 no-scrollbar hidden">
+                    <button type="button" onclick="voltarParaListaContas()" class="text-xs font-semibold text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-cyan-400 flex items-center gap-1 transition-colors active:scale-95">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Voltar
                     </button>
                     
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-1.5">Nome da Conta</label>
-                        <input type="text" id="contaEditNome" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] dark:text-white shadow-sm text-base md:text-sm">
+                        <label class="block text-[11px] font-bold text-slate-700 dark:text-gray-300 mb-0.5">Nome da Conta</label>
+                        <input type="text" id="contaEditNome" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-2.5 py-2 focus:bg-white focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] dark:text-white shadow-sm text-sm">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-1.5">Saldo Inicial (R$)</label>
-                        <input type="text" id="contaEditSaldo" inputmode="numeric" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] dark:text-white shadow-sm text-base md:text-sm" placeholder="0,00">
+                        <label class="block text-[11px] font-bold text-slate-700 dark:text-gray-300 mb-0.5">Saldo Inicial (R$)</label>
+                        <input type="text" id="contaEditSaldo" inputmode="numeric" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-2.5 py-2 focus:bg-white focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] dark:text-white shadow-sm text-sm" placeholder="0,00">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 mb-2">Instituição / Ícone</label>
-                        <div id="gridBancos" class="grid grid-cols-4 sm:grid-cols-5 gap-2"></div>
+                        <label class="block text-[11px] font-bold text-slate-700 dark:text-gray-300 mb-0.5">Instituição / Ícone</label>
+                        <div id="gridBancos" class="grid grid-cols-6 gap-1"></div>
                         <input type="hidden" id="contaEditBanco">
                     </div>
 
-                    <div class="pt-5 mt-2 flex flex-col sm:flex-row gap-3">
-                        <button type="button" id="btnApagarConta" onclick="apagarContaAtual()" class="hidden flex-1 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 font-bold py-3 rounded-full transition-colors shadow-sm active:scale-95 h-[48px]">Excluir</button>
-                        <button type="button" onclick="salvarEdicaoConta()" class="flex-[2] bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-3 rounded-full transition-all duration-300 shadow-lg shadow-[#0061F2]/20 active:scale-95 h-[48px]">Salvar Conta</button>
+                    <div class="pt-1 flex flex-col sm:flex-row gap-2">
+                        <button type="button" id="btnApagarConta" onclick="apagarContaAtual()" class="hidden flex-1 border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 font-bold py-2 rounded-full transition-colors shadow-sm active:scale-95 h-[40px] text-sm">Excluir</button>
+                        <button type="button" onclick="salvarEdicaoConta()" class="flex-[2] bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-2 rounded-full transition-all duration-300 shadow-lg shadow-[#0061F2]/20 active:scale-95 h-[40px] text-sm">Salvar Conta</button>
                     </div>
                 </div>
             </div>
@@ -628,19 +628,8 @@ select:focus, select:focus-visible {
                     </div>
                 </div>
 
-                <!-- Campo de Descrição Discreto -->
-                <div class="bg-slate-50 dark:bg-[#0b1120] p-4 rounded-2xl border border-slate-200 dark:border-[#1e2a40] flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[#0061F2]/10 flex items-center justify-center text-[#0061F2] shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Motivo (Opcional)</label>
-                        <input type="text" id="inputAjusteDesc" placeholder="Ex: Acerto de contas..." class="w-full bg-transparent border-none text-sm font-medium text-slate-500 dark:text-gray-200 focus:outline-none focus:ring-0 p-0 placeholder-slate-300 dark:placeholder-slate-600">
-                    </div>
-                </div>
-
                 <!-- Opção de ocultar do Extrato -->
-                <div class="mt-4 flex items-center justify-between bg-slate-50 dark:bg-[#0b1120] p-4 rounded-2xl border border-slate-200 dark:border-[#1e2a40]">
+                <div class="flex items-center justify-between bg-slate-50 dark:bg-[#0b1120] p-4 rounded-2xl border border-slate-200 dark:border-[#1e2a40]">
                     <div class="flex flex-col pr-4">
                         <span class="text-sm font-bold text-slate-700 dark:text-gray-200">Ajuste Silencioso</span>
                         <span class="text-[10px] text-slate-500 dark:text-gray-400 mt-0.5 leading-tight">Atualiza o saldo sem gerar histórico no Extrato ou Relatório.</span>
@@ -648,6 +637,17 @@ select:focus, select:focus-visible {
                     <div class="relative inline-block w-10 shrink-0 align-middle select-none transition duration-200 ease-in mt-1">
                         <input type="checkbox" id="chkAjusteOculto" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300" checked/>
                         <label for="chkAjusteOculto" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
+                    </div>
+                </div>
+
+                <!-- Campo de Descrição Discreto (só aparece quando o Ajuste Silencioso está desligado) -->
+                <div id="boxAjusteMotivo" class="hidden mt-4 bg-slate-50 dark:bg-[#0b1120] p-4 rounded-2xl border border-slate-200 dark:border-[#1e2a40] flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-[#0061F2]/10 flex items-center justify-center text-[#0061F2] shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Motivo (Opcional)</label>
+                        <input type="text" id="inputAjusteDesc" placeholder="Ex: Acerto de contas..." class="w-full bg-transparent border-none text-sm font-medium text-slate-500 dark:text-gray-200 focus:outline-none focus:ring-0 p-0 placeholder-slate-300 dark:placeholder-slate-600">
                     </div>
                 </div>
 
@@ -760,7 +760,7 @@ select:focus, select:focus-visible {
                                                 <input type="hidden" id="tipoCompra" value="À Vista">
                                                 <button type="button" id="btnTipoCompra" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
                                                     <span id="lblTipoCompra" class="flex items-center gap-2 text-slate-700 dark:text-gray-200">
-                                                        <div class="w-2.5 h-2.5 rounded-full bg-[#0061F2]"></div> Não recorrente
+                                                        <div class="w-2.5 h-2.5 rounded-full bg-[#0061F2]"></div> À vista
                                                     </span>
                                                     <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                                 </button>
@@ -769,18 +769,78 @@ select:focus, select:focus-visible {
                                                 </div>
                                             </div>
                   
-                                            <!-- 4. Rateio (Oculto por padrão) -->
-                                            <div id="boxRateio" class="hidden bg-slate-50 dark:bg-[#0b1120] p-3 rounded-lg border border-slate-200 dark:border-[#1e2a40] transition-colors relative z-0 mt-2">
-                                                <div class="flex items-center justify-between gap-2 mb-2">
-                                                     <label class="text-xs font-medium text-slate-500 dark:text-gray-300">Qtd. Parcelas:</label>
-                                                     <input type="number" id="qtdParcelas" class="w-16 border-b border-slate-300 dark:border-[#1e2a40] bg-transparent p-1 text-center focus:ring-0 focus:border-[#0061F2] text-slate-800 dark:text-white text-sm" value="2">
-                                                     <input type="hidden" id="parcAtual" value="1">
-                                                </div>
-                                                <div class="flex flex-col gap-1 mt-1">
-                                                    <label class="flex items-center gap-2 cursor-pointer group"><input type="radio" name="tipoRateio" value="total" checked class="w-4 h-4 text-[#0061F2] focus:ring-[#0061F2] border-slate-300"><span class="text-xs font-medium text-slate-700 dark:text-gray-200">Ratear valor total</span></label>
-                                                    <label class="flex items-center gap-2 cursor-pointer group"><input type="radio" name="tipoRateio" value="parcela" class="w-4 h-4 text-[#0061F2] focus:ring-[#0061F2] border-slate-300"><span class="text-xs font-medium text-slate-700 dark:text-gray-200">Valor da parcela</span></label>
-                                                </div>
-                                            </div>
+                                            <!-- 4. Configurar Parcelamento (Oculto por padrão) -->
+<div id="boxRateio" class="hidden bg-slate-50 dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200 dark:border-[#1e2a40] transition-colors relative z-[200] mt-2">
+    <!-- Cabeçalho -->
+    <div class="flex justify-between items-center mb-2">
+        <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100">Configurar Parcelamento</h3>
+        <button type="button" onclick="concluirParcelamento()" class="text-xs font-bold text-[#0061F2] hover:text-[#004BB5] dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors active:scale-95">Concluir</button>
+    </div>
+    
+    <!-- Parcela inicial -->
+    <div class="flex justify-between items-center py-2 border-b border-slate-200/60 dark:border-[#1e2a40]/60">
+        <label class="text-sm font-medium text-slate-600 dark:text-gray-300">Parcela inicial</label>
+        <div class="flex items-center gap-0.5">
+            <button type="button" onclick="ajustarParcela('parcAtual', -1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <input type="number" id="parcAtual" value="1" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-base font-bold">
+            <button type="button" onclick="ajustarParcela('parcAtual', 1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Quantidade -->
+    <div class="flex justify-between items-center py-2 border-b border-slate-200/60 dark:border-[#1e2a40]/60">
+        <label class="text-sm font-medium text-slate-600 dark:text-gray-300">Quantidade</label>
+        <div class="flex items-center gap-0.5">
+            <button type="button" onclick="ajustarParcela('qtdParcelas', -1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <input type="number" id="qtdParcelas" value="2" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-base font-bold">
+            <button type="button" onclick="ajustarParcela('qtdParcelas', 1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Periodicidade -->
+    <div class="flex justify-between items-center py-2">
+        <label class="text-sm font-medium text-slate-600 dark:text-gray-300">Periodicidade</label>
+        <div class="relative">
+            <input type="hidden" id="periodicidadeParcelamento" value="Mensal">
+            <button type="button" id="btnPeriodicidade" class="flex items-center gap-1.5 text-sm font-semibold text-slate-800 dark:text-white hover:text-[#0061F2] dark:hover:text-cyan-400 transition-colors active:scale-95">
+                <span id="lblPeriodicidade">Mensal</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="menuPeriodicidade" class="hidden absolute right-0 top-full mt-1.5 w-40 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-2xl dropdown-anim overflow-hidden z-[9999]">
+                <ul class="text-sm py-1" id="listaPeriodicidade">
+                    <li data-valor="Mensal" class="cursor-pointer px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors font-medium text-slate-700 dark:text-gray-200 flex items-center justify-between" onclick="selecionarPeriodicidade('Mensal')">
+                        <span>Mensal</span>
+                        <svg class="check-periodicidade w-4 h-4 text-[#0061F2] dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </li>
+                    <li data-valor="Diário" class="cursor-pointer px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors font-medium text-slate-700 dark:text-gray-200 flex items-center justify-between border-t border-slate-100 dark:border-[#1e2a40]" onclick="selecionarPeriodicidade('Diário')">
+                        <span>Diário</span>
+                        <svg class="check-periodicidade w-4 h-4 text-[#0061F2] dark:text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </li>
+                    <li data-valor="Semanal" class="cursor-pointer px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors font-medium text-slate-700 dark:text-gray-200 flex items-center justify-between border-t border-slate-100 dark:border-[#1e2a40]" onclick="selecionarPeriodicidade('Semanal')">
+                        <span>Semanal</span>
+                        <svg class="check-periodicidade w-4 h-4 text-[#0061F2] dark:text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </li>
+                    <li data-valor="Trimestral" class="cursor-pointer px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors font-medium text-slate-700 dark:text-gray-200 flex items-center justify-between border-t border-slate-100 dark:border-[#1e2a40]" onclick="selecionarPeriodicidade('Trimestral')">
+                        <span>Trimestral</span>
+                        <svg class="check-periodicidade w-4 h-4 text-[#0061F2] dark:text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </li>
+                    <li data-valor="Anual" class="cursor-pointer px-4 py-2.5 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors font-medium text-slate-700 dark:text-gray-200 flex items-center justify-between border-t border-slate-100 dark:border-[#1e2a40]" onclick="selecionarPeriodicidade('Anual')">
+                        <span>Anual</span>
+                        <svg class="check-periodicidade w-4 h-4 text-[#0061F2] dark:text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
                   
                                             <!-- 5. Data de Vencimento -->
                                             <div class="relative w-full z-[130]">
@@ -1063,7 +1123,6 @@ select:focus, select:focus-visible {
                                 <div class="flex flex-col mt-auto">
                                     <p id="cardSaldoSalario" class="text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-500 font-montserrat tracking-tight valor-sensivel mb-1">R$ 0,00</p>
                                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-gray-400">Saldo do Salário</p>
-                                    <p class="text-[9px] text-slate-400 dark:text-gray-500 mt-0.5 tracking-wide">Base do Simulador Mensal</p>
                                 </div>
                             </div>
 
@@ -1085,7 +1144,6 @@ select:focus, select:focus-visible {
                                 <div class="flex flex-col mt-auto">
                                     <p id="cardSaldoVale" class="text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-500 font-montserrat tracking-tight valor-sensivel mb-1">R$ 0,00</p>
                                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-gray-400">Saldo do Vale</p>
-                                    <p class="text-[9px] text-slate-400 dark:text-gray-500 mt-0.5 tracking-wide">Base do Simulador Mensal</p>
                                 </div>
                             </div>
 
@@ -1548,6 +1606,7 @@ select:focus, select:focus-visible {
             { m: 'menuEditCategoria', b: 'btnEditCategoria' },
             { m: 'menuEditSubcategoria', b: 'btnEditSubcategoria' },
             { m: 'menuTipoCompra', b: 'btnTipoCompra' },
+            { m: 'menuPeriodicidade', b: 'btnPeriodicidade' },
             { m: 'menuConta', b: 'btnConta' },
             { m: 'menuEditConta', b: 'btnEditConta' },
             { m: 'menuContaSimulacao', b: 'btnContaSimulacao' },
@@ -2148,7 +2207,11 @@ select:focus, select:focus-visible {
                             contasGlobais.forEach(c => salvarContaFirestore(c));
                         }
 
-                        contasGlobais.sort((a, b) => a.nome.localeCompare(b.nome));
+                        if (contasGlobais.some(c => c.ordem === undefined)) {
+                            contasGlobais.sort((a, b) => a.nome.localeCompare(b.nome));
+                            contasGlobais.forEach((c, i) => { c.ordem = i; salvarContaFirestore(c); });
+                        }
+                        contasGlobais.sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));
                     } else {
                         categoriasGlobais = JSON.parse(JSON.stringify(CATEGORIAS_PADRAO));
                         categoriasGlobais.forEach(c => salvarCategoriaFirestore(c));
@@ -3176,10 +3239,26 @@ select:focus, select:focus-visible {
             
             // Ocultar do extrato marcado por padrão para facilitar ajustes silenciosos
             const chkOculto = document.getElementById('chkAjusteOculto');
-            if (chkOculto) chkOculto.checked = true; 
+            const boxMotivo = document.getElementById('boxAjusteMotivo');
+            if (chkOculto) chkOculto.checked = true;
+            if (boxMotivo) boxMotivo.classList.add('hidden');
             
             window.abrirModalGenerico('modalAjuste');
         }
+
+        // Mostra/esconde o campo Motivo conforme o toggle de Ajuste Silencioso
+        document.getElementById('chkAjusteOculto')?.addEventListener('change', function() {
+            const boxMotivo = document.getElementById('boxAjusteMotivo');
+            if (!boxMotivo) return;
+            if (this.checked) {
+                boxMotivo.classList.add('hidden');
+            } else {
+                boxMotivo.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('inputAjusteDesc')?.focus();
+                }, 50);
+            }
+        });
         
         window.fecharModalAjuste = function() {
             window.fecharModalGenerico('modalAjuste');
@@ -3453,7 +3532,7 @@ select:focus, select:focus-visible {
             
             listaTipoCompra.innerHTML = '';
             const mapTipos = [
-                {val: 'À Vista', label: 'Não recorrente', cor: 'bg-[#0061F2] shadow-[0_0_8px_rgba(0,97,242,0.6)]'},
+                {val: 'À Vista', label: 'À vista', cor: 'bg-[#0061F2] shadow-[0_0_8px_rgba(0,97,242,0.6)]'},
                 {val: 'A Prazo', label: 'Parcelar', cor: 'bg-amber-500'},
                 {val: 'Recorrente', label: 'Fixa mensal', cor: 'bg-purple-500'}
             ];
@@ -3472,6 +3551,17 @@ select:focus, select:focus-visible {
         }
         renderListaTiposCompra();
         btnTipoCompra.addEventListener('click', (e) => { window.abrirMenuExclusivo('menuTipoCompra', e); });
+        document.getElementById('btnPeriodicidade')?.addEventListener('click', (e) => {
+            // Sincroniza os checkmarks com o valor atual antes de abrir
+            const val = document.getElementById('periodicidadeParcelamento').value;
+            document.querySelectorAll('#listaPeriodicidade li').forEach(li => {
+                const check = li.querySelector('.check-periodicidade');
+                if (!check) return;
+                if (li.dataset.valor === val) check.classList.remove('hidden');
+                else check.classList.add('hidden');
+            });
+            window.abrirMenuExclusivo('menuPeriodicidade', e);
+        });
 
         // ===================== BOLINHA PAGO COM TIMESTAMP =====================
         window.togglePago = function(idUnico, anoMesStr) {
@@ -3959,9 +4049,63 @@ select:focus, select:focus-visible {
         const inputVencEl = document.getElementById('vencimento');
         if (inputVencEl) inputVencEl.addEventListener('blur', verificarVencimentoEfetivada);
 
+        window.ajustarParcela = function(campoId, delta) {
+            const el = document.getElementById(campoId);
+            if (!el) return;
+            let val = parseInt(el.value) || 1;
+            val += delta;
+
+            const parcEl = document.getElementById('parcAtual');
+            const qtdEl = document.getElementById('qtdParcelas');
+
+            if (campoId === 'parcAtual') {
+                if (val < 1) val = 1;
+                const qtdAtual = parseInt(qtdEl.value) || 2;
+                if (val > qtdAtual) val = qtdAtual;
+            } else if (campoId === 'qtdParcelas') {
+                const parcAtual = parseInt(parcEl.value) || 1;
+                if (val < parcAtual) val = parcAtual;
+            }
+            el.value = val;
+
+            // Ajusta min do campo Quantidade e força valor mínimo quando Parcela inicial cresce
+            if (campoId === 'parcAtual') {
+                qtdEl.min = val;
+                if ((parseInt(qtdEl.value) || 0) < val) qtdEl.value = val;
+            }
+            // Se Quantidade for maior que Parcela inicial, tudo OK
+        };
+
+        window.selecionarPeriodicidade = function(val) {
+            document.getElementById('periodicidadeParcelamento').value = val;
+            document.getElementById('lblPeriodicidade').textContent = val;
+            document.getElementById('menuPeriodicidade').classList.add('hidden');
+            // Atualiza os checkmarks
+            document.querySelectorAll('#listaPeriodicidade li').forEach(li => {
+                const check = li.querySelector('.check-periodicidade');
+                if (!check) return;
+                if (li.dataset.valor === val) check.classList.remove('hidden');
+                else check.classList.add('hidden');
+            });
+        };
+
+        window.concluirParcelamento = function() {
+            const box = document.getElementById('boxRateio');
+            if (!box) return;
+            box.style.transition = 'opacity 0.2s ease';
+            box.style.opacity = '0.6';
+            setTimeout(() => {
+                box.classList.add('hidden');
+                box.style.opacity = '';
+                box.style.transition = '';
+            }, 200);
+            window.mostrarAviso("Parcelamento configurado!", "sucesso");
+        };
+
         window.checkRateio = function() {
-            const tipo = inputTipoCompra.value; const total = parseInt(inputParcelas.value) || 0;
-            if (tipo === 'A Prazo' && total > 1) boxRateio.classList.remove('hidden'); else boxRateio.classList.add('hidden');
+            const tipo = inputTipoCompra.value;
+            if (tipo === 'A Prazo') boxRateio.classList.remove('hidden');
+            else boxRateio.classList.add('hidden');
         }
         inputParcelas.addEventListener('input', window.checkRateio);
 
@@ -3975,12 +4119,16 @@ select:focus, select:focus-visible {
                 inputVencimento.classList.replace('bg-white', 'bg-slate-50'); inputVencimento.classList.replace('dark:bg-[#0b1120]', 'dark:bg-[#1a2639]');
                 if(btnCalV) { btnCalV.disabled = true; }
             } else if (tipo === 'A Prazo') {
-                inputParcelas.disabled = false; inputParcelas.value = ''; inputParcelas.type = "number"; 
-                inputParcAtual.disabled = false; inputParcAtual.value = '1'; inputParcAtual.type = "number";
+                inputParcelas.disabled = false; 
+                if (!inputParcelas.value) inputParcelas.value = '2';
+                inputParcelas.type = "number"; 
+                inputParcAtual.disabled = false; 
+                if (!inputParcAtual.value) inputParcAtual.value = '1';
+                inputParcAtual.type = "number";
                 inputVencimento.disabled = false;
                 inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
                 if(btnCalV) { btnCalV.disabled = false; }
-                inputParcelas.focus(); window.checkRateio();
+                window.checkRateio();
             } else if (tipo === 'Recorrente') {
                 inputParcelas.type = "text"; inputParcelas.disabled = true; inputParcelas.value = ''; inputParcelas.placeholder = '-'; 
                 inputParcAtual.type = "text"; inputParcAtual.disabled = true; inputParcAtual.value = ''; inputParcAtual.placeholder = '-';
@@ -4015,11 +4163,11 @@ select:focus, select:focus-visible {
 
             if (tipoCompra === 'A Prazo') {
                 const qtd = parseInt(inputParcelas.value) || 1; const pAtual = parseInt(inputParcAtual.value) || 1;
-                if(pAtual > qtd) { window.mostrarAviso("A parcela atual não pode ser maior que o total!", "erro"); return; }
-                const tipoRateio = (qtd > 1) ? document.querySelector('input[name="tipoRateio"]:checked').value : 'total';
+                const periodicidade = document.getElementById('periodicidadeParcelamento').value || 'Mensal';
+                if(pAtual > qtd) { window.mostrarAviso("A parcela inicial não pode ser maior que a quantidade!", "erro"); return; }
                 
-                let valorFinal = tipoRateio === 'total' ? (valorBase / qtd) : valorBase;
-                let valorTotalCompra = tipoRateio === 'total' ? valorBase : (valorBase * qtd);
+                let valorFinal = valorBase / qtd;
+                let valorTotalCompra = valorBase;
                 
                 const pData = dataVencimentoStr.split('/'); 
                 const dBase = parseInt(pData[0], 10); 
@@ -4028,11 +4176,31 @@ select:focus, select:focus-visible {
 
                 for (let p = pAtual; p <= qtd; p++) {
                     let offset = p - pAtual; 
-                    let dM = new Date(aBase, mBase, 1, 12, 0, 0);
-                    dM.setMonth(mBase + offset);
+                    let dM;
                     
-                    let ultimoDiaDoMes = new Date(dM.getFullYear(), dM.getMonth() + 1, 0).getDate();
-                    dM.setDate(Math.min(dBase, ultimoDiaDoMes));
+                    if (periodicidade === 'Diário') {
+                        dM = new Date(aBase, mBase, dBase);
+                        dM.setDate(dM.getDate() + offset);
+                    } else if (periodicidade === 'Semanal') {
+                        dM = new Date(aBase, mBase, dBase);
+                        dM.setDate(dM.getDate() + offset * 7);
+                    } else if (periodicidade === 'Trimestral') {
+                        dM = new Date(aBase, mBase, 1, 12, 0, 0);
+                        dM.setMonth(mBase + offset * 3);
+                        let ultimoDiaDoMes = new Date(dM.getFullYear(), dM.getMonth() + 1, 0).getDate();
+                        dM.setDate(Math.min(dBase, ultimoDiaDoMes));
+                    } else if (periodicidade === 'Anual') {
+                        dM = new Date(aBase, mBase, 1, 12, 0, 0);
+                        dM.setFullYear(aBase + offset);
+                        let ultimoDiaDoMes = new Date(dM.getFullYear(), dM.getMonth() + 1, 0).getDate();
+                        dM.setDate(Math.min(dBase, ultimoDiaDoMes));
+                    } else {
+                        // Mensal (padrão)
+                        dM = new Date(aBase, mBase, 1, 12, 0, 0);
+                        dM.setMonth(mBase + offset);
+                        let ultimoDiaDoMes = new Date(dM.getFullYear(), dM.getMonth() + 1, 0).getDate();
+                        dM.setDate(Math.min(dBase, ultimoDiaDoMes));
+                    }
                     
                     let venc = `${String(dM.getDate()).padStart(2, '0')}/${String(dM.getMonth() + 1).padStart(2, '0')}/${dM.getFullYear()}`;
                 
@@ -4879,12 +5047,12 @@ select:focus, select:focus-visible {
                 btn.type = 'button';
                 btn.title = b.nome;
                 const isSelected = bancoSelecionado === b.id;
-                btn.className = `p-2 flex flex-col items-center justify-center rounded-xl transition-all border-2 ${isSelected ? 'border-[#3B4CB8] bg-blue-50/50' : 'border-transparent hover:bg-slate-100'}`;
+                btn.className = `p-1 flex flex-col items-center justify-center rounded-lg transition-all border-2 ${isSelected ? 'border-[#0061F2] bg-[#0061F2]/5' : 'border-transparent hover:bg-slate-100'}`;
                 btn.innerHTML = `
-                    <div class="w-10 h-10 mb-1.5 shrink-0">
+                    <div class="w-7 h-7 mb-0.5 shrink-0">
                         ${renderBankLogo(b)}
                     </div>
-                    <span class="text-[9px] font-semibold ${isSelected ? 'text-[#3B4CB8]' : 'text-slate-500'} truncate w-full text-center">${b.nome}</span>
+                    <span class="text-[7.5px] font-semibold leading-tight ${isSelected ? 'text-[#0061F2]' : 'text-slate-500'} truncate w-full text-center">${b.nome}</span>
                 `;
                 btn.onclick = () => {
                     document.getElementById('contaEditBanco').value = b.id;
@@ -4949,11 +5117,13 @@ select:focus, select:focus-visible {
                 contaObj = contasGlobais.find(c => c.id === editandoContaId);
                 if(contaObj) { contaObj.nome = nome; contaObj.saldoInicial = saldoIni; contaObj.banco = bancoId; }
             } else { 
-                contaObj = { id: `conta_${Date.now()}`, nome, saldoInicial: saldoIni, banco: bancoId };
+                let maxOrdem = -1;
+                contasGlobais.forEach(c => { if((c.ordem ?? -1) > maxOrdem) maxOrdem = c.ordem; });
+                contaObj = { id: `conta_${Date.now()}`, nome, saldoInicial: saldoIni, banco: bancoId, ordem: maxOrdem + 1 };
                 contasGlobais.push(contaObj); 
             }
             
-            contasGlobais.sort((a, b) => a.nome.localeCompare(b.nome));
+            contasGlobais.sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));
             salvarContaFirestore(contaObj); window.mostrarAviso("Conta salva com sucesso!");
             renderListaContasModal(); voltarParaListaContas();
         }
@@ -4990,6 +5160,9 @@ select:focus, select:focus-visible {
 
             const mesAnoFiltro = window.chaveMes(dataFiltro);
             let totRec = 0, totDesp = 0, totSaldo = 0, totPrev = 0;
+
+            // Garante que a ordem é a mesma do carrossel (ordem manual definida pelo usuário)
+            contasGlobais.sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));
 
             contasGlobais.forEach(c => {
                 let b = BANCOS[c.banco || 'carteira'] || BANCOS['outros'];
@@ -5075,7 +5248,206 @@ select:focus, select:focus-visible {
             if(document.getElementById('rodapeContasPrev')) document.getElementById('rodapeContasPrev').textContent = formatMoeda(totPrev);
         }
 
+        let dragState = null;
+        let dragHandlersAttached = false;
+
+        function ativarDrag(div, e) {
+            const container = document.getElementById('containerContas');
+            if (!container) return;
+            const rect = div.getBoundingClientRect();
+
+            dragState.offsetX = e.clientX - rect.left;
+            dragState.offsetY = e.clientY - rect.top;
+
+            // Salva estilos que serão modificados
+            dragState.savedStyles = {
+                position: div.style.position,
+                left: div.style.left,
+                top: div.style.top,
+                width: div.style.width,
+                height: div.style.height,
+                margin: div.style.margin,
+                zIndex: div.style.zIndex,
+                boxShadow: div.style.boxShadow,
+                transform: div.style.transform,
+                cursor: div.style.cursor,
+                pointerEvents: div.style.pointerEvents,
+                transition: div.style.transition,
+                hadCardTilt: div.classList.contains('card-tilt')
+            };
+
+            // Cria placeholder no lugar do card
+            const ph = document.createElement('div');
+            ph.style.minWidth = rect.width + 'px';
+            ph.style.width = rect.width + 'px';
+            ph.style.height = rect.height + 'px';
+            ph.style.flexShrink = '0';
+            ph.style.marginTop = '4px';
+            ph.className = '';
+            container.insertBefore(ph, div);
+            dragState.placeholder = ph;
+
+            // Transforma o próprio card em "flutuante"
+            div.style.position = 'fixed';
+            div.style.left = rect.left + 'px';
+            div.style.top = rect.top + 'px';
+            div.style.width = rect.width + 'px';
+            div.style.height = rect.height + 'px';
+            div.style.margin = '0';
+            div.style.zIndex = '9999';
+            div.style.pointerEvents = 'none';
+            div.style.cursor = 'grabbing';
+            div.style.transition = 'transform 0.15s cubic-bezier(0.34, 1.15, 0.64, 1), box-shadow 0.15s ease';
+            div.style.transform = 'scale(1.04) rotate(1.5deg)';
+            div.style.boxShadow = '0 18px 32px -10px rgba(0, 97, 242, 0.32)';
+            div.classList.remove('card-tilt');
+        }
+
+        function restaurarCard(div, estavaArrastando) {
+            if (!div || !dragState || !dragState.savedStyles) return;
+            const s = dragState.savedStyles;
+            const ph = dragState.placeholder;
+            const container = document.getElementById('containerContas');
+
+            if (estavaArrastando && container && ph) {
+                container.insertBefore(div, ph);
+            }
+            if (ph) ph.remove();
+
+            div.style.position = s.position;
+            div.style.left = s.left;
+            div.style.top = s.top;
+            div.style.width = s.width;
+            div.style.height = s.height;
+            div.style.margin = s.margin;
+            div.style.zIndex = s.zIndex;
+            div.style.boxShadow = s.boxShadow;
+            div.style.transform = s.transform;
+            div.style.cursor = s.cursor;
+            div.style.pointerEvents = s.pointerEvents;
+            div.style.transition = s.transition;
+            if (s.hadCardTilt) div.classList.add('card-tilt');
+        }
+
+        function attachDragHandlers() {
+            if (dragHandlersAttached) return;
+            dragHandlersAttached = true;
+
+            document.addEventListener('pointermove', (e) => {
+                if (!dragState) return;
+                const div = dragState.card;
+                if (!div || !div.isConnected) { finalizarDrag(); return; }
+                const container = document.getElementById('containerContas');
+                if (!container) return;
+
+                const dx = e.clientX - dragState.startX;
+                const dy = e.clientY - dragState.startY;
+
+                if (!dragState.active) {
+                    if (Math.hypot(dx, dy) < 6) return;
+                    dragState.active = true;
+                    ativarDrag(div, e);
+                }
+
+                if (dragState.active && dragState.placeholder) {
+                    // Move o card flutuante com o cursor
+                    div.style.left = (e.clientX - dragState.offsetX) + 'px';
+                    div.style.top = (e.clientY - dragState.offsetY) + 'px';
+
+                    // Captura posições atuais dos cards (exceto o que está sendo arrastado)
+                    const cardsBefore = {};
+                    container.querySelectorAll('[data-conta-id]').forEach(el => {
+                        if (el === div) return;
+                        cardsBefore[el.dataset.contaId] = el.getBoundingClientRect().left;
+                    });
+
+                    // Reorganiza o placeholder (não o div)
+                    let moveu = false;
+                    const cards = Array.from(container.querySelectorAll('[data-conta-id]'));
+                    for (const el of cards) {
+                        if (el === div) continue;
+                        const r = el.getBoundingClientRect();
+                        const midX = r.left + r.width / 2;
+                        if (e.clientX < midX) {
+                            if (el.previousElementSibling !== dragState.placeholder) {
+                                container.insertBefore(dragState.placeholder, el); moveu = true; break;
+                            }
+                        } else if (e.clientX < r.right) {
+                            if (el.nextElementSibling !== dragState.placeholder) {
+                                container.insertBefore(dragState.placeholder, el.nextElementSibling); moveu = true; break;
+                            }
+                        }
+                    }
+
+                    // FLIP nos demais
+                    if (moveu) {
+                        container.querySelectorAll('[data-conta-id]').forEach(el => {
+                            if (el === div) return;
+                            const id = el.dataset.contaId;
+                            const oldLeft = cardsBefore[id];
+                            if (oldLeft === undefined) return;
+                            const newLeft = el.getBoundingClientRect().left;
+                            const dxFlip = oldLeft - newLeft;
+                            if (Math.abs(dxFlip) > 1) {
+                                el.animate(
+                                    [{ transform: `translateX(${dxFlip}px)` }, { transform: 'translateX(0)' }],
+                                    { duration: 260, easing: 'cubic-bezier(0.34, 1.15, 0.64, 1)', fill: 'none' }
+                                );
+                            }
+                        });
+                    }
+                }
+            }, { passive: true });
+
+            document.addEventListener('pointerup', finalizarDrag);
+            document.addEventListener('pointercancel', finalizarDrag);
+
+            window.addEventListener('blur', () => {
+                if (!dragState) return;
+                const div = dragState.card;
+                restaurarCard(div, dragState.active);
+                dragState = null;
+            });
+        }
+
+        function finalizarDrag() {
+            if (!dragState) return;
+            const div = dragState.card;
+            const wasActive = dragState.active;
+            const container = document.getElementById('containerContas');
+
+            // Reordena contas antes de restaurar o card
+            if (wasActive && container && dragState.placeholder) {
+                const children = Array.from(container.children);
+                const novaOrdem = [];
+                children.forEach(child => {
+                    if (child === div) return; // Ignora o card arrastado (posição definida pelo placeholder)
+                    if (child === dragState.placeholder) {
+                        const ct = contasGlobais.find(x => x.id === div.dataset.contaId);
+                        if (ct) novaOrdem.push(ct);
+                    } else if (child.dataset && child.dataset.contaId) {
+                        const ct = contasGlobais.find(x => x.id === child.dataset.contaId);
+                        if (ct) novaOrdem.push(ct);
+                    }
+                });
+                if (novaOrdem.length === contasGlobais.length) {
+                    let mudou = false;
+                    for (let i = 0; i < novaOrdem.length; i++) {
+                        if (novaOrdem[i].id !== contasGlobais[i]?.id) { mudou = true; break; }
+                    }
+                    if (mudou) {
+                        contasGlobais = novaOrdem;
+                        contasGlobais.forEach((ct, i) => { ct.ordem = i; salvarContaFirestore(ct); });
+                    }
+                }
+            }
+
+            restaurarCard(div, wasActive);
+            dragState = null;
+        }
+
         window.renderizarCarrosselContas = function() {
+            attachDragHandlers();
             const container = document.getElementById('containerContas');
             if (!container) return;
             container.innerHTML = '';
@@ -5100,8 +5472,25 @@ select:focus, select:focus-visible {
                 let isNeg = saldoReal < 0;
                 let b = BANCOS[c.banco || 'carteira'] || BANCOS['outros'];
 
-                let div = document.createElement('div');
-                div.className = "min-w-[160px] sm:min-w-[200px] min-h-[140px] bg-gradient-to-br from-white to-[#F8FAFC] border border-blue-50/80 p-5 sm:p-6 rounded-[24px] snap-start flex-shrink-0 flex flex-col justify-between card-tilt shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative mt-1 cursor-default";
+                                let div = document.createElement('div');
+                div.className = "min-w-[160px] sm:min-w-[200px] min-h-[140px] bg-gradient-to-br from-white to-[#F8FAFC] border border-blue-50/80 p-5 sm:p-6 rounded-[24px] snap-start flex-shrink-0 flex flex-col justify-between card-tilt shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative mt-1 cursor-grab active:cursor-grabbing select-none";
+                div.dataset.contaId = c.id;
+
+                div.addEventListener('pointerdown', (e) => {
+                    if (e.button !== 0) return;
+                    if (e.target.closest('button')) return;
+                    dragState = {
+                        card: div,
+                        startX: e.clientX,
+                        startY: e.clientY,
+                        offsetX: 0,
+                        offsetY: 0,
+                        active: false,
+                        placeholder: null,
+                        savedStyles: null
+                    };
+                });
+
                 div.innerHTML = `
                     <div class="flex items-start justify-between mb-2 opacity-90">
                         <div class="flex items-center gap-3 overflow-hidden pr-2">

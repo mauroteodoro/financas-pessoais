@@ -2,8 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Finanças Pessoais | Mauro</title>
+    
+    <!-- 📱 PWA / iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Finanças">
+    <meta name="theme-color" content="#0061F2">
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+    <meta name="mobile-web-app-capable" content="yes">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -119,10 +127,168 @@ select:focus, select:focus-visible {
             background-color: transparent !important; 
             box-shadow: none !important;
         }
+                /* ========================================================== */
+        /* 📱 MOBILE OPTIMIZATION PACK — iPhone / Safari / Android     */
+        /* ========================================================== */
+
+        /* 1. Safe Area Variables (notch, Dynamic Island, home indicator) */
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --header-h: 4rem;
+        }
+        @media (min-width: 640px) {
+            :root { --header-h: 5rem; }
+        }
+
+        /* 2. Anti-zoom automático + anti-tap-highlight */
+        html { 
+            -webkit-text-size-adjust: 100%; 
+            text-size-adjust: 100%; 
+            scroll-behavior: smooth;
+        }
+        * { 
+            -webkit-tap-highlight-color: transparent; 
+            -webkit-tap-highlight-color: rgba(0,0,0,0); 
+        }
+
+        /* 3. Bloqueia seleção de texto acidental em botões/nav (mas libera em inputs) */
+        button, [role="button"], a, nav, header, label, .card-tilt, .tab-transition {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        input, textarea, select, [contenteditable] {
+            -webkit-user-select: text;
+            user-select: text;
+            -webkit-touch-callout: default;
+        }
+
+        /* 4. Font smoothing + altura real do viewport em iOS */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none;
+            min-height: 100dvh;
+        }
+        @supports not (min-height: 100dvh) {
+            body { min-height: 100vh; }
+        }
+
+        /* 5. Remove o delay de 300ms ao tocar */
+        button, a, input, select, textarea, [role="button"], .card-tilt {
+            touch-action: manipulation;
+        }
+
+        /* 6. Hover só existe em quem tem mouse de verdade */
+        @media (hover: none), (pointer: coarse) {
+            .card-tilt:hover {
+                transform: none !important;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.04) !important;
+            }
+            .hover-scrollbar::-webkit-scrollbar { display: none; }
+        }
+
+        /* 7. Header respeitando o notch / Dynamic Island */
+        #mainHeader {
+            height: calc(var(--header-h) + var(--safe-top)) !important;
+            padding-top: var(--safe-top) !important;
+            padding-left: var(--safe-left) !important;
+            padding-right: var(--safe-right) !important;
+        }
+        /* 8. Conteúdo abaixo do header — offset dinâmico */
+        header#mainHeader + div {
+            padding-top: calc(var(--header-h) + var(--safe-top) + 2rem) !important;
+            padding-bottom: calc(2rem + var(--safe-bottom)) !important;
+        }
+        @media (min-width: 640px) {
+            header#mainHeader + div {
+                padding-top: calc(var(--header-h) + var(--safe-top) + 2.25rem) !important;
+            }
+        }
+
+        /* 9. Modais: safe area + momentum scroll + bloqueio do overscroll */
+        [id^="modal"].fixed.inset-0,
+        #telaLogin.fixed.inset-0 {
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        [id^="modal"] .overflow-y-auto,
+        [id^="modal"].overflow-y-auto {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+
+        /* 10. Anti-zoom no foco do input (iOS Safari) */
+        @media (max-width: 767px) {
+            @supports (-webkit-touch-callout: none) {
+                input:not([class*="text-4xl"]):not([class*="text-3xl"]):not([class*="text-2xl"]):not([type="checkbox"]):not([type="radio"]),
+                select, 
+                textarea {
+                    font-size: 16px !important;
+                }
+            }
+        }
+
+        /* 11. Toasts respeitam safe area */
+        #toast-container { 
+            padding-top: calc(var(--safe-top) + 0.25rem);
+            padding-right: var(--safe-right);
+        }
+        #toast-obs-container { 
+            padding-bottom: calc(var(--safe-bottom) + 0.25rem);
+            padding-left: var(--safe-left);
+            padding-right: var(--safe-right);
+        }
+
+        /* 12. Botão "+" e ações do header — alvos de toque maiores no mobile */
+        @media (pointer: coarse) {
+            #btnAcaoPrincipal,
+            #btnOcultarSaldos,
+            #btnMesAnt, #btnMesProx {
+                min-width: 40px;
+                min-height: 40px;
+            }
+        }
+
+        /* 13. Momentum scroll nos carrosséis horizontais */
+        #containerContas,
+        [class*="overflow-x-auto"] {
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x proximity;
+        }
+
+        /* 14. Acessibilidade — respeita quem prefere menos animação */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            /* EXCEÇÃO: Spinners continuam animando porque são feedback essencial */
+            .spinner,
+            .spinner::before,
+            .spinner::after,
+            .animate-spin {
+                animation-duration: 1s !important;
+                animation-iteration-count: infinite !important;
+            }
+        }
+
+        /* 15. Impede "flash" branco ao tocar em links no iOS */
+        a, button { 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
         /* ========================================================== */
     </style>
 </head>
-<body class="bg-[#F0F4F8] text-slate-900 transition-colors duration-300 relative overflow-y-scroll min-h-screen">
+<body class="bg-[#F0F4F8] text-slate-900 transition-colors duration-300 relative overflow-y-scroll min-h-[100dvh]">
 
     <!-- Fundo Fixo Removido para o Light Mode -->
 
@@ -778,10 +944,11 @@ select:focus, select:focus-visible {
                                             </div>
                   
                                             <!-- 2. Valor -->
-                                            <div class="relative w-full z-[115]">
-                                              <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Valor (R$)</label>
-                                              <input type="text" id="valor" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0 font-bold" placeholder="0,00">
-                                            </div>
+<div class="relative w-full z-[115]">
+  <label id="lblValorForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Valor (R$)</label>
+  <input type="text" id="valor" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0 font-bold" placeholder="0,00">
+  <p id="hintValorParcelado" class="hidden text-[10px] text-[#0061F2] dark:text-cyan-400 font-bold mt-0.5 leading-tight"></p>
+</div>
                   
                                             <!-- 3. Repetição -->
                                             <div class="relative w-full z-[140]">
@@ -804,6 +971,16 @@ select:focus, select:focus-visible {
     <div class="flex justify-between items-center mb-2">
         <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100">Configurar Parcelamento</h3>
         <button type="button" onclick="concluirParcelamento()" class="text-xs font-bold text-[#0061F2] hover:text-[#004BB5] dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors active:scale-95">Concluir</button>
+    </div>
+    
+    <!-- NOVO: Tipo de valor digitado (Total ou Parcela) -->
+    <div class="flex justify-between items-center py-2 border-b border-slate-200/60 dark:border-[#1e2a40]/60">
+        <label class="text-sm font-medium text-slate-600 dark:text-gray-300">Valor digitado é</label>
+        <div class="flex gap-0.5 bg-slate-100 dark:bg-[#1a2639] p-0.5 rounded-lg">
+            <button type="button" id="btnTipoValorTotal" class="px-3 py-1 text-xs font-bold rounded-md transition-all bg-[#0061F2] text-white shadow-sm" onclick="selecionarTipoValorParcelado('total')">Total</button>
+            <button type="button" id="btnTipoValorParcela" class="px-3 py-1 text-xs font-bold rounded-md transition-all text-slate-500 hover:text-slate-700 dark:text-gray-400" onclick="selecionarTipoValorParcelado('parcela')">Parcela</button>
+        </div>
+        <input type="hidden" id="tipoValorParcelado" value="total">
     </div>
     
     <!-- Parcela inicial -->
@@ -2769,8 +2946,11 @@ select:focus, select:focus-visible {
             let filtrados = bancoDeDados.filter(d => {
                 if (d.ocultoExtrato) return false;
                 
-                let dataRef = d.vencimento;
-                if (!dataRef || dataRef === '--/--/----') dataRef = d.dataLancamento; 
+                // Parcelado/Recorrente usa vencimento; à vista usa data de compra
+                let dataRef = (d.totalParcelas > 1 || d.isRecorrente)
+                    ? (d.vencimento || d.vencimentoOriginal)
+                    : (d.dataLancamento || d.vencimento);
+                if (!dataRef || dataRef === '--/--/----') dataRef = d.dataLancamento;
                 
                 // Filtro Exato do Calendário
                 if (dataRef) {
@@ -2894,9 +3074,13 @@ select:focus, select:focus-visible {
             }
             
             document.getElementById('dataCompra').value = getHojeFormatado();
-            document.getElementById('vencimento').value = getHojeFormatado();
-            
-            const chkCompoe = document.getElementById('chkCompoeSaldo');
+document.getElementById('vencimento').value = getHojeFormatado();
+
+if (typeof window.selecionarTipoValorParcelado === 'function') {
+    window.selecionarTipoValorParcelado('total');
+}
+
+const chkCompoe = document.getElementById('chkCompoeSaldo');
             if (chkCompoe) chkCompoe.checked = false;
             
             const chkEf = document.getElementById('chkEfetivada');
@@ -3934,15 +4118,20 @@ select:focus, select:focus-visible {
             ajustarVencimentosRecorrentes(bancoDeDados, dataFiltro);
 
             const despesasFiltradas = bancoDeDados.filter(despesa => {
-                if (!despesa.vencimento && !despesa.vencimentoOriginal) return false;
+                if (!despesa.vencimento && !despesa.vencimentoOriginal && !despesa.dataLancamento) return false;
                 if (despesa.isRecorrente) {
                     const p = despesa.vencimentoOriginal.split('/'); const anoMesInicioNum = parseInt(p[2]) * 100 + parseInt(p[1]);
                     if (anoMesInicioNum > anoMesFiltroNum) return false; 
                     if (despesa.encerradoEm && anoMesFiltroNum >= despesa.encerradoEm) return false; 
                     if (despesa.mesesOcultos && despesa.mesesOcultos.includes(anoMesFiltroNum)) return false;
                     return true;
-                } else {
+                } else if (despesa.totalParcelas > 1) {
+                    // Parcelado: cada parcela tem seu próprio vencimento
                     return formatarDataComparacao(despesa.vencimento).substring(3) === mesAnoFiltro;
+                } else {
+                    // À Vista: o mês é determinado pela DATA DA COMPRA (dataLancamento)
+                    const dataRef = despesa.dataLancamento || despesa.vencimento;
+                    return formatarDataComparacao(dataRef).substring(3) === mesAnoFiltro;
                 }
             });
 
@@ -4177,7 +4366,9 @@ select:focus, select:focus-visible {
                                 }
                             }
                         } else {
-                            if (d.vencimento && formatarDataComparacao(d.vencimento).substring(3) === strMesAno) {
+                            // Parcelado usa vencimento; à vista usa data de compra
+                            let dataRefAcum = (d.totalParcelas > 1) ? d.vencimento : (d.dataLancamento || d.vencimento);
+                            if (dataRefAcum && formatarDataComparacao(dataRefAcum).substring(3) === strMesAno) {
                                 entra = true;
                             }
                         }
@@ -4210,21 +4401,27 @@ select:focus, select:focus-visible {
                 baseSalario = parseFloat(saldoBaseMensalGlobal[chave].salario || 0);
             }
             
-            // SOMENTE o que entra no Extrato — ajustes silenciosos (ocultoExtrato) ficam de fora do resumo mensal
-            const visiveis = despesasFiltradas.filter(d => !d.ocultoExtrato);
+            // Ajustes silenciosos ainda contam no saldo, mas não aparecem no Extrato nem no Relatório.
+            const visiveis = despesasFiltradas.filter(d => !d.ocultoExtrato || d.isAjuste);
             const isRec = d => (d.tipo === 'Receita' || d.natureza === 'Receita');
 
-            // DESPESAS: sempre compõem, usando a origem (Vale/Salário/Extra).
+            // AJUSTES: respeitam SEMPRE o alvo escolhido (Salário, Vale, ou Extra para Geral/Conta).
+            // DESPESAS: compõem pela origem (Vale/Salário/Extra).
             // RECEITAS: só compõem se o usuário ativou o toggle 'Compor Resumo do Mês'.
             const alvoComposicao = d => {
+                if (d.isAjuste) {
+                    if (d.alvoAjuste === 'Vale') return 'Vale';
+                    if (d.alvoAjuste === 'Salário') return 'Salário';
+                    return 'Extra'; // Ajuste 'Geral' ou de conta específica
+                }
                 if (isRec(d)) {
                     if (!d.compoeResumo) return 'Nenhum';
                     if (d.origem === 'Vale') return 'Vale';
                     if (d.origem === 'Salário') return 'Salário';
                     return 'Extra';
                 } else {
-                    if (d.origem === 'Vale' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Vale')) return 'Vale';
-                    if (d.origem === 'Salário' || (!d.origem && !d.isAjuste) || (d.origem === 'Ajuste' && d.alvoAjuste === 'Salário')) return 'Salário';
+                    if (d.origem === 'Vale') return 'Vale';
+                    if (d.origem === 'Salário' || (!d.origem && !d.isAjuste)) return 'Salário';
                     return 'Extra';
                 }
             };
@@ -4414,19 +4611,78 @@ select:focus, select:focus-visible {
         };
 
         window.concluirParcelamento = function() {
-            const box = document.getElementById('boxRateio');
-            if (!box) return;
-            box.style.transition = 'opacity 0.2s ease';
-            box.style.opacity = '0.6';
-            setTimeout(() => {
-                box.classList.add('hidden');
-                box.style.opacity = '';
-                box.style.transition = '';
-            }, 200);
-            window.mostrarAviso("Parcelamento configurado!", "sucesso");
-        };
+    const box = document.getElementById('boxRateio');
+    if (!box) return;
+    box.style.transition = 'opacity 0.2s ease';
+    box.style.opacity = '0.6';
+    setTimeout(() => {
+        box.classList.add('hidden');
+        box.style.opacity = '';
+        box.style.transition = '';
+    }, 200);
+    window.mostrarAviso("Parcelamento configurado!", "sucesso");
+};
 
-        window.checkRateio = function() {
+window.selecionarTipoValorParcelado = function(tipo) {
+    const inp = document.getElementById('tipoValorParcelado');
+    if (!inp) return;
+    inp.value = tipo;
+
+    const btnTotal = document.getElementById('btnTipoValorTotal');
+    const btnParcela = document.getElementById('btnTipoValorParcela');
+    if (!btnTotal || !btnParcela) return;
+
+    const active = ['bg-[#0061F2]', 'text-white', 'shadow-sm'];
+    const inactive = ['text-slate-500', 'dark:text-gray-400', 'hover:text-slate-700'];
+
+    const aplicar = (btnAtivo, btnInativo) => {
+        btnAtivo.classList.remove(...inactive);
+        btnAtivo.classList.add(...active);
+        btnInativo.classList.remove(...active);
+        btnInativo.classList.add(...inactive);
+    };
+
+    if (tipo === 'parcela') aplicar(btnParcela, btnTotal);
+    else aplicar(btnTotal, btnParcela);
+
+    window.atualizarHintValorParcelado();
+};
+
+window.atualizarHintValorParcelado = function() {
+    const hint = document.getElementById('hintValorParcelado');
+    const lbl = document.getElementById('lblValorForm');
+    if (!hint || !lbl) return;
+
+    const tipoCompra = document.getElementById('tipoCompra')?.value;
+
+    if (tipoCompra !== 'A Prazo') {
+        hint.classList.add('hidden');
+        lbl.textContent = 'Valor (R$)';
+        return;
+    }
+
+    const tipoValor = document.getElementById('tipoValorParcelado')?.value || 'total';
+    const valorBase = valorFloat(document.getElementById('valor').value);
+    const qtd = parseInt(document.getElementById('qtdParcelas').value) || 1;
+    const pAtual = parseInt(document.getElementById('parcAtual').value) || 1;
+    const numParcelas = qtd - pAtual + 1;
+
+    lbl.textContent = tipoValor === 'parcela' ? 'Valor da Parcela (R$)' : 'Valor Total (R$)';
+
+    if (valorBase <= 0 || numParcelas <= 0) {
+        hint.classList.add('hidden');
+        return;
+    }
+
+    if (tipoValor === 'parcela') {
+        hint.innerHTML = `Total da compra: <strong>${formatMoeda(valorBase * numParcelas)}</strong> &nbsp;·&nbsp; ${numParcelas}x de ${formatMoeda(valorBase)}`;
+    } else {
+        hint.innerHTML = `${numParcelas}x de <strong>${formatMoeda(valorBase / numParcelas)}</strong> &nbsp;·&nbsp; Total: ${formatMoeda(valorBase)}`;
+    }
+    hint.classList.remove('hidden');
+};
+
+window.checkRateio = function() {
             const tipo = inputTipoCompra.value;
             if (tipo === 'A Prazo') boxRateio.classList.remove('hidden');
             else boxRateio.classList.add('hidden');
@@ -4434,42 +4690,45 @@ select:focus, select:focus-visible {
         inputParcelas.addEventListener('input', window.checkRateio);
 
         window.dispararMudancaTipo = function() {
-            const tipo = inputTipoCompra.value; window.checkRateio();
-            const btnCalV = document.getElementById('btnCalVencimento');
-            const boxVenc = document.getElementById('boxVencimento');
-            if (tipo === 'À Vista') {
-                inputParcelas.disabled = true; inputParcelas.value = '1'; inputParcelas.type = "text"; 
-                inputParcAtual.disabled = true; inputParcAtual.value = '1'; inputParcAtual.type = "text";
-                inputVencimento.disabled = false;
-                inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
-                if(btnCalV) { btnCalV.disabled = false; }
-                if (boxVenc) boxVenc.classList.remove('hidden');
-                // Se estiver vazio, preenche com a data de lançamento
-                if (!inputVencimento.value || inputVencimento.value.length < 10) {
-                    inputVencimento.value = inputDataCompra.value || getHojeFormatado();
-                }
-            } else if (tipo === 'A Prazo') {
-                if (boxVenc) boxVenc.classList.remove('hidden');
-                inputParcelas.disabled = false; 
-                if (!inputParcelas.value) inputParcelas.value = '2';
-                inputParcelas.type = "number"; 
-                inputParcAtual.disabled = false; 
-                if (!inputParcAtual.value) inputParcAtual.value = '1';
-                inputParcAtual.type = "number";
-                inputVencimento.disabled = false;
-                inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
-                if(btnCalV) { btnCalV.disabled = false; }
-                window.checkRateio();
-            } else if (tipo === 'Recorrente') {
-                if (boxVenc) boxVenc.classList.remove('hidden');
-                inputParcelas.type = "text"; inputParcelas.disabled = true; inputParcelas.value = ''; inputParcelas.placeholder = '-'; 
-                inputParcAtual.type = "text"; inputParcAtual.disabled = true; inputParcAtual.value = ''; inputParcAtual.placeholder = '-';
-                inputVencimento.disabled = false;
-                inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]'); 
-                if(btnCalV) { btnCalV.disabled = false; }
-                inputVencimento.focus();
-            }
+    const tipo = inputTipoCompra.value; window.checkRateio();
+    const btnCalV = document.getElementById('btnCalVencimento');
+    const boxVenc = document.getElementById('boxVencimento');
+    if (tipo === 'À Vista') {
+        inputParcelas.disabled = true; inputParcelas.value = '1'; inputParcelas.type = "text"; 
+        inputParcAtual.disabled = true; inputParcAtual.value = '1'; inputParcAtual.type = "text";
+        inputVencimento.disabled = false;
+        inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
+        if(btnCalV) { btnCalV.disabled = false; }
+        if (boxVenc) boxVenc.classList.remove('hidden');
+        // Se estiver vazio, preenche com a data de lançamento
+        if (!inputVencimento.value || inputVencimento.value.length < 10) {
+            inputVencimento.value = inputDataCompra.value || getHojeFormatado();
         }
+    } else if (tipo === 'A Prazo') {
+        if (boxVenc) boxVenc.classList.remove('hidden');
+        inputParcelas.disabled = false; 
+        if (!inputParcelas.value) inputParcelas.value = '2';
+        inputParcelas.type = "number"; 
+        inputParcAtual.disabled = false; 
+        if (!inputParcAtual.value) inputParcAtual.value = '1';
+        inputParcAtual.type = "number";
+        inputVencimento.disabled = false;
+        inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
+        if(btnCalV) { btnCalV.disabled = false; }
+        window.checkRateio();
+    } else if (tipo === 'Recorrente') {
+        if (boxVenc) boxVenc.classList.remove('hidden');
+        inputParcelas.type = "text"; inputParcelas.disabled = true; inputParcelas.value = ''; inputParcelas.placeholder = '-'; 
+        inputParcAtual.type = "text"; inputParcAtual.disabled = true; inputParcAtual.value = ''; inputParcAtual.placeholder = '-';
+        inputVencimento.disabled = false;
+        inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]'); 
+        if(btnCalV) { btnCalV.disabled = false; }
+        inputVencimento.focus();
+    }
+    
+    // Atualiza o hint de valor total/parcela
+    if (typeof window.atualizarHintValorParcelado === 'function') window.atualizarHintValorParcelado();
+}
 
         btnLancar.addEventListener('click', function() {
             const valorBase = valorFloat(inputValorForm.value);
@@ -4497,12 +4756,20 @@ select:focus, select:focus-visible {
             const compoeResumoVal = (nat === 'Receita') ? !!document.getElementById('chkCompoeSaldo')?.checked : false;
 
             if (tipoCompra === 'A Prazo') {
-                const qtd = parseInt(inputParcelas.value) || 1; const pAtual = parseInt(inputParcAtual.value) || 1;
-                const periodicidade = document.getElementById('periodicidadeParcelamento').value || 'Mensal';
-                if(pAtual > qtd) { window.mostrarAviso("A parcela inicial não pode ser maior que a quantidade!", "erro"); return; }
-                
-                let valorFinal = valorBase / qtd;
-                let valorTotalCompra = valorBase;
+    const qtd = parseInt(inputParcelas.value) || 1; const pAtual = parseInt(inputParcAtual.value) || 1;
+    const periodicidade = document.getElementById('periodicidadeParcelamento').value || 'Mensal';
+    if(pAtual > qtd) { window.mostrarAviso("A parcela inicial não pode ser maior que a quantidade!", "erro"); return; }
+    
+    const tipoValor = document.getElementById('tipoValorParcelado')?.value || 'total';
+    let valorFinal, valorTotalCompra;
+    
+    if (tipoValor === 'parcela') {
+        valorFinal = valorBase;
+        valorTotalCompra = valorBase * qtd;
+    } else {
+        valorTotalCompra = valorBase;
+        valorFinal = valorBase / qtd;
+    }
                 
                 const pData = dataVencimentoStr.split('/'); 
                 const dBase = parseInt(pData[0], 10); 
@@ -4553,7 +4820,7 @@ select:focus, select:focus-visible {
                 bancoDeDados.push(novaDespesa);
                 salvarDespesaFirestore(novaDespesa);
             }
-            window.mostrarAviso(`Parcelado em ${qtd}x com sucesso!`);
+            window.mostrarAviso(`Parcelado em ${qtd}x de ${formatMoeda(valorFinal)} (Total: ${formatMoeda(valorTotalCompra)})!`);
         } else if (tipoCompra === 'Recorrente') {
             let novaDespesa = {
                 id: Date.now(), transacaoId: idMestreTransacao, dataLancamento: dataLancamento,
@@ -5909,8 +6176,10 @@ select:focus, select:focus-visible {
                     let isR = d.tipo === 'Receita' || d.natureza === 'Receita';
                     let noMes = false;
                     
-                    if (d.vencimento) {
-                        noMes = formatarDataComparacao(d.vencimento).substring(3) === mesAnoFiltro;
+                    // Parcelado usa vencimento; à vista usa data de compra
+                    let dataRefConta = (d.totalParcelas > 1) ? d.vencimento : (d.dataLancamento || d.vencimento);
+                    if (dataRefConta) {
+                        noMes = formatarDataComparacao(dataRefConta).substring(3) === mesAnoFiltro;
                     }
 
                     let ehAjusteSilencioso = d.isAjuste || d.ocultoExtrato;
@@ -6460,10 +6729,24 @@ const inputDesc = document.getElementById('descricao');
         const menuAuto = document.getElementById('menuAutocomplete');
         const listaAuto = document.getElementById('listaAutocomplete');
 
+        // ============ AUTOCOMPLETE COM Z-INDEX CORRETO ============
+        // Sobe o container da Descrição para z-index 999 quando o menu abre,
+        // fazendo o dropdown sobrepor Repetição, Parcelamento, Vencimento etc.
+        const autocompleteContainer = menuAuto.parentElement.parentElement;
+
+        function mostrarAutocomplete() {
+            autocompleteContainer.style.zIndex = '999';
+            menuAuto.classList.remove('hidden');
+        }
+        function esconderAutocomplete() {
+            menuAuto.classList.add('hidden');
+            autocompleteContainer.style.zIndex = '';
+        }
+
         inputDesc.addEventListener('input', function() {
             const val = this.value.toLowerCase().trim();
             if (val.length < 2) {
-                menuAuto.classList.add('hidden');
+                esconderAutocomplete();
                 return;
             }
 
@@ -6515,21 +6798,35 @@ const inputDesc = document.getElementById('descricao');
                             document.getElementById('lblSubcategoria').innerHTML = `<span>${item.subcategoria}</span>`;
                         }
 
-                        menuAuto.classList.add('hidden');
+                        esconderAutocomplete();
                     });
                     listaAuto.appendChild(li);
                 });
-                menuAuto.classList.remove('hidden');
+                mostrarAutocomplete();
             } else {
-                menuAuto.classList.add('hidden');
+                esconderAutocomplete();
             }
         });
 
+        // Fecha ao perder o foco (com pequeno delay para o clique no item funcionar)
+        inputDesc.addEventListener('blur', () => {
+            setTimeout(() => esconderAutocomplete(), 200);
+        });
+
+        // Fecha ao clicar fora
         document.addEventListener('click', (e) => {
             if (menuAuto && !menuAuto.contains(e.target) && e.target !== inputDesc) {
-                menuAuto.classList.add('hidden');
+                esconderAutocomplete();
             }
         });
+
+        // Garante que fechar o modal também fecha o autocomplete
+        window.fecharModalLancamento = (function(orig) {
+            return function() {
+                esconderAutocomplete();
+                return orig.apply(this, arguments);
+            };
+        })(window.fecharModalLancamento);
 
         // Conecta os botões da aba Relatórios ao motor exclusivo para abrirem as listas
         document.getElementById('btnFiltroPeriodo')?.addEventListener('click', (e) => window.abrirCalendarioRelatorio(e));
@@ -6537,6 +6834,15 @@ const inputDesc = document.getElementById('descricao');
         document.getElementById('btnFiltroConta')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroConta', e));
         document.getElementById('btnFiltroCategoria')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroCategoria', e));
         
+        // Atualiza o preview do parcelamento em tempo real
+        ['valor', 'qtdParcelas', 'parcAtual'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => window.atualizarHintValorParcelado());
+                el.addEventListener('blur', () => window.atualizarHintValorParcelado());
+            }
+        });
+
         setTimeout(() => { renderizarCarrosselContas(); }, 1500);        
     </script>
 </body>

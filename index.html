@@ -318,26 +318,26 @@ select:focus, select:focus-visible {
         </div>
         <!-- MODAL DE PERFIL -->
         <div id="modalPerfil" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[1000] backdrop-blur-sm transition-opacity px-4">
-            <div class="bg-white dark:bg-[#121b2b] p-5 sm:p-6 rounded-3xl w-full max-w-lg shadow-xl border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[90vh]">
-                <div class="flex justify-between items-center mb-5 border-b border-slate-100 dark:border-[#1e2a40] pb-3 shrink-0">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat">Configurações do Perfil</h3>
+            <div class="bg-white dark:bg-[#121b2b] p-4 sm:p-5 rounded-3xl w-full max-w-lg shadow-xl border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[90vh]">
+                <div class="flex justify-between items-center mb-4 border-b border-slate-100 dark:border-[#1e2a40] pb-2.5 shrink-0">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-cyan-400 font-montserrat">Configurações do Perfil</h3>
                     <button type="button" onclick="fecharModalPerfil()" class="text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-500/10 dark:hover:bg-red-500/20 transition-colors active:scale-90 p-2 rounded-full">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
                 
-                <div class="space-y-4 px-1 -mx-1 pb-4 pt-1 flex-1">
+                <div class="space-y-3 px-1 -mx-1 pb-3 pt-0.5 flex-1 overflow-y-auto no-scrollbar">
                     <div>
-                        <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Nome no Sistema</label>
-                        <input type="text" id="perfilNome" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-base md:text-sm">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Nome no Sistema</label>
+                        <input type="text" id="perfilNome" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-sm">
                     </div>
                     
                     <!-- REGIME DE TRABALHO E CIDADE -->
-                    <div id="gridRegimeCidade" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-100 dark:border-[#1e2a40] transition-all">
+                    <div id="gridRegimeCidade" class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100 dark:border-[#1e2a40] transition-all">
                         <div class="relative w-full z-[120]">
-                            <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Regime</label>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Regime</label>
                             <input type="hidden" id="perfilRegime" value="CLT">
-                            <button type="button" id="btnPerfilRegime" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-base md:text-sm h-[48px]">
+                            <button type="button" id="btnPerfilRegime" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-sm h-[40px]">
                                 <span id="lblPerfilRegime" class="truncate whitespace-nowrap">CLT</span>
                                 <svg class="h-4 w-4 text-slate-500 flex-shrink-0 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
@@ -349,9 +349,9 @@ select:focus, select:focus-visible {
                             </div>
                         </div>
                         <div class="relative w-full z-[110]" id="boxPerfilVale">
-                            <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Recebe Vale?</label>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Recebe Vale?</label>
                             <input type="hidden" id="perfilTemVale" value="Sim">
-                            <button type="button" id="btnPerfilTemVale" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-base md:text-sm h-[48px]">
+                            <button type="button" id="btnPerfilTemVale" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-sm h-[40px]">
                                 <span id="lblPerfilTemVale" class="truncate whitespace-nowrap">Sim</span>
                                 <svg class="h-4 w-4 text-slate-500 flex-shrink-0 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
@@ -363,9 +363,9 @@ select:focus, select:focus-visible {
                             </div>
                         </div>
                         <div class="relative w-full z-[105]">
-                            <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Cidade Base</label>
+                            <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Cidade Base</label>
                             <input type="hidden" id="perfilCidade" value="Iperó - SP">
-                            <button type="button" id="btnPerfilCidade" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-base md:text-sm h-[48px]">
+                            <button type="button" id="btnPerfilCidade" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all shadow-sm text-left text-sm h-[40px]">
                                 <span id="lblPerfilCidade" class="truncate whitespace-nowrap">Iperó - SP</span>
                                 <svg class="h-4 w-4 text-slate-500 flex-shrink-0 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
@@ -378,27 +378,31 @@ select:focus, select:focus-visible {
                         </div>
                     </div>
                     
-                    <div id="boxPerfilPadroes" class="pt-4 border-t border-slate-100 dark:border-[#1e2a40] mt-4">
-                        <p class="text-[11px] font-bold text-[#0061F2] dark:text-cyan-400 uppercase tracking-[0.15em] mb-3">Padrões do Simulador</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div id="boxPerfilPadroes" class="pt-3 border-t border-slate-100 dark:border-[#1e2a40] mt-3">
+                        <p class="text-[10px] font-bold text-[#0061F2] dark:text-cyan-400 uppercase tracking-[0.15em] mb-2">Padrões do Simulador</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
-                                <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Salário Bruto</label>
-                                <input type="text" inputmode="numeric" id="perfilSalario" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-base md:text-sm">
+                                <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Salário Bruto</label>
+                                <input type="text" inputmode="numeric" id="perfilSalario" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Horas/Mês</label>
-                                <input type="number" id="perfilHoras" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-base md:text-sm">
+                                <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Horas/Mês</label>
+                                <input type="number" id="perfilHoras" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-500 dark:text-gray-300 mb-1.5">Dep. (IRRF)</label>
-                                <input type="number" id="perfilDependentes" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-base md:text-sm text-center">
+                                <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Dep. (IRRF)</label>
+                                <input type="number" id="perfilDependentes" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-sm text-center">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 pt-4 border-t border-slate-100 dark:border-[#1e2a40] shrink-0 flex flex-col gap-3">
-                    <button type="button" id="btnSalvarPerfil" class="w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-extrabold py-3.5 px-4 rounded-full transition-all duration-300 active:scale-95 shadow-lg shadow-[#0061F2]/20 font-montserrat tracking-wide text-sm uppercase">SALVAR CONFIGURAÇÕES</button>
-                    <button type="button" onclick="abrirModalReset()" class="w-full bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 dark:text-red-400 font-bold py-3 px-4 rounded-full transition duration-200 active:scale-95 border border-red-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-500/50 font-montserrat tracking-wide text-xs flex items-center justify-center gap-2">
+                <div class="mt-2 pt-3 border-t border-slate-100 dark:border-[#1e2a40] shrink-0 flex flex-col gap-2">
+                    <button type="button" id="btnSalvarPerfil" class="w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-extrabold py-3 px-4 rounded-full transition-all duration-300 active:scale-95 shadow-lg shadow-[#0061F2]/20 font-montserrat tracking-wide text-xs uppercase h-[44px]">SALVAR CONFIGURAÇÕES</button>
+                    <button type="button" onclick="abrirModalBackups()" class="w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-600 dark:text-gray-300 font-bold py-2.5 px-4 rounded-full transition duration-200 active:scale-95 border border-slate-200 dark:border-[#1e2a40] font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[40px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Backups e Restauração
+                    </button>
+                    <button type="button" onclick="abrirModalReset()" class="w-full bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 dark:text-red-400 font-bold py-2.5 px-4 rounded-full transition duration-200 active:scale-95 border border-red-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-500/50 font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[40px]">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         Zerar Sistema (Hard Reset)
                     </button>
@@ -703,6 +707,31 @@ select:focus, select:focus-visible {
             </div>
         </div>
 
+        <!-- Modal de Backups / Checkpoints -->
+        <div id="modalBackups" class="fixed inset-0 bg-slate-900/80 dark:bg-black/90 hidden items-center justify-center z-[3000] backdrop-blur-sm transition-opacity px-4">
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl w-full max-w-md card-shadow border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[85vh] overflow-hidden">
+                <div class="p-4 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center bg-slate-50/50 dark:bg-[#0b1120]">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-cyan-400 font-montserrat flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Backups e Restauração
+                    </h3>
+                    <button type="button" onclick="fecharModalBackups()" class="text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-500/10 dark:hover:bg-red-500/20 transition-colors active:scale-90 p-2 rounded-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="p-4 border-b border-slate-100 dark:border-[#1e2a40] bg-white dark:bg-[#121b2b]">
+                    <button type="button" onclick="criarBackupManual()" class="w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-3 rounded-full transition-all duration-300 shadow-md shadow-[#0061F2]/20 active:scale-95 text-xs uppercase tracking-wide flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                        Criar Checkpoint Agora
+                    </button>
+                    <p class="text-[10px] text-slate-500 dark:text-gray-400 text-center mt-2 leading-tight">Guardamos até 10 checkpoints. Os mais antigos saem automaticamente.</p>
+                </div>
+                <div id="listaBackups" class="flex-1 overflow-y-auto p-4 space-y-2.5 no-scrollbar bg-slate-50/30 dark:bg-[#0b1120]/50">
+                    <p class="text-center py-8 text-slate-400 text-sm">Carregando...</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal de Reset/Limpeza -->
         <div id="modalReset" class="fixed inset-0 bg-slate-900/80 dark:bg-black/90 hidden items-center justify-center z-[3000] backdrop-blur-sm transition-opacity px-4">
             <div class="bg-white dark:bg-[#121b2b] p-6 sm:p-8 rounded-3xl w-full max-w-md card-shadow border border-red-200 dark:border-red-900/50 transform scale-95 transition-transform text-center relative overflow-hidden">
@@ -760,7 +789,7 @@ select:focus, select:focus-visible {
                                                 <input type="hidden" id="tipoCompra" value="À Vista">
                                                 <button type="button" id="btnTipoCompra" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
                                                     <span id="lblTipoCompra" class="flex items-center gap-2 text-slate-700 dark:text-gray-200">
-                                                        <div class="w-2.5 h-2.5 rounded-full bg-[#0061F2]"></div> À vista
+                                                        <div class="w-2.5 h-2.5 rounded-full bg-[#0061F2]"></div> Não recorrente
                                                     </span>
                                                     <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                                 </button>
@@ -784,7 +813,7 @@ select:focus, select:focus-visible {
             <button type="button" onclick="ajustarParcela('parcAtual', -1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <input type="number" id="parcAtual" value="1" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-base font-bold">
+            <input type="number" id="parcAtual" value="1" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-sm font-bold">
             <button type="button" onclick="ajustarParcela('parcAtual', 1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
             </button>
@@ -798,7 +827,7 @@ select:focus, select:focus-visible {
             <button type="button" onclick="ajustarParcela('qtdParcelas', -1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <input type="number" id="qtdParcelas" value="2" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-base font-bold">
+            <input type="number" id="qtdParcelas" value="2" min="1" class="w-12 text-center bg-transparent border-none focus:ring-0 focus:outline-none text-slate-800 dark:text-white text-sm font-bold">
             <button type="button" onclick="ajustarParcela('qtdParcelas', 1)" class="w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-[#0061F2] hover:bg-white dark:hover:bg-[#1a2639] transition-colors active:scale-90">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
             </button>
@@ -843,8 +872,8 @@ select:focus, select:focus-visible {
 </div>
                   
                                             <!-- 5. Data de Vencimento -->
-                                            <div class="relative w-full z-[130]">
-                                                <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Vencimento</label>
+                                            <div id="boxVencimento" class="relative w-full z-[130]">
+                                                <label id="lblVencimentoForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Vencimento</label>
                                                 <div class="relative w-full">
                                                     <input type="text" id="vencimento" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0">
                                                     <button type="button" id="btnCalVencimento" onclick="abrirCalendarioSimples('vencimento', 'menuCalVencimento', event)" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#0061F2] transition-colors p-1 focus:outline-none">
@@ -854,27 +883,14 @@ select:focus, select:focus-visible {
                                                 <div id="menuCalVencimento" class="hidden absolute w-[210px] mt-1 left-0 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-2xl shadow-2xl dropdown-anim overflow-hidden z-[9999]"></div>
                                             </div>
                   
-                                            <!-- 6. Multicategorias (Apenas visual conforme imagem) -->
-                                            <div class="relative w-full z-[105]">
-                                                <button type="button" onclick="window.mostrarAviso('Multicategorias em breve!', 'info')" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent text-slate-700 dark:text-gray-200 transition-all font-medium text-sm h-[36px] px-0">
-                                                    <span class="flex items-center gap-2 text-slate-500 dark:text-gray-400">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                                                        Multicategorias
-                                                    </span>
-                                                    <div class="flex items-center gap-2">
-                                                        <div class="relative inline-block w-8 align-middle select-none opacity-50 cursor-not-allowed">
-                                                            <input type="checkbox" class="absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none border-slate-300" disabled/>
-                                                            <label class="block overflow-hidden h-4 rounded-full bg-slate-300"></label>
-                                                        </div>
-                                                        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z"></path></svg>
-                                                    </div>
-                                                </button>
-                                            </div>
+
                   
                                             <!-- 7. Efetivada (Interruptor) -->
-                                            <div class="flex justify-between items-center mt-1 border-t border-slate-100 dark:border-[#1e2a40] pt-2">
+                                            <div class="flex justify-between items-center mt-1 md:mt-auto">
                                                 <div class="flex items-center gap-2">
-                                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    <span id="iconEfetivada" class="flex items-center justify-center shrink-0">
+                                                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    </span>
                                                     <label class="text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none" id="lblEfetivadaText">Efetivada</label>
                                                 </div>
                                                 <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
@@ -932,6 +948,20 @@ select:focus, select:focus-visible {
                                                     </div>
                                                 </div>
                                                 
+                                                <!-- Compor Resumo do Mês? (Só aparece para Receita) -->
+                                                <div id="boxCompoeSaldo" class="relative w-full hidden bg-slate-50 dark:bg-[#0b1120] p-3 rounded-xl border border-slate-200 dark:border-[#1e2a40]">
+                                                    <div class="flex justify-between items-center gap-3">
+                                                        <div class="flex flex-col pr-2">
+                                                            <span class="text-xs font-bold text-slate-700 dark:text-gray-200">Compor Projeção do Mês</span>
+                                                            <span class="text-[10px] text-slate-500 dark:text-gray-400 mt-0.5 leading-tight">Ative para esta receita entrar na projeção dos cards. Deixe desligado se a simulação já cobre esse valor.</span>
+                                                        </div>
+                                                        <div class="relative inline-block w-10 shrink-0">
+                                                            <input type="checkbox" id="chkCompoeSaldo" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300"/>
+                                                            <label for="chkCompoeSaldo" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <!-- 4. Data de Lançamento (Compra) -->
                                                 <div class="relative w-full z-[100]">
                                                     <label id="lblDataForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Lançamento</label>
@@ -1089,7 +1119,7 @@ select:focus, select:focus-visible {
 
                         <!-- CARDS GLOBAIS DE SALDO (REAIS) -->
                         <div class="bg-white p-5 md:p-6 rounded-[24px] shadow-sm border border-slate-200">
-                            <h2 class="text-lg font-semibold text-slate-800 dark:text-cyan-400 font-montserrat mb-4">Resumo do Mês</h2>
+                            <h2 class="text-lg font-semibold text-slate-800 dark:text-cyan-400 font-montserrat mb-4">Projeção do Mês</h2>
                             <div id="cardsDeSaldoGlobais" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             
                             <!-- CARD 1: Despesas do Mês -->
@@ -1217,10 +1247,23 @@ select:focus, select:focus-visible {
             <div class="bg-white rounded-[24px] card-shadow overflow-hidden transition-colors border border-white/40 dark:border-white/5 relative z-0 w-full flex flex-col">
                 <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center">
                     <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400">Minhas Contas</h2>
-                    <button type="button" onclick="abrirModalContas()" class="bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-2 sm:py-2.5 px-4 sm:px-5 rounded-full transition-all duration-300 shadow-md shadow-[#0061F2]/20 active:scale-95 text-xs sm:text-sm flex items-center gap-1.5 font-montserrat uppercase tracking-wide">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                        Nova Conta
-                    </button>
+                    <div class="relative z-[100]">
+                        <button type="button" id="btnAcoesContas" class="bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-2 sm:py-2.5 px-4 sm:px-5 rounded-full transition-all duration-300 shadow-md shadow-[#0061F2]/20 active:scale-95 text-xs sm:text-sm flex items-center gap-1.5 font-montserrat uppercase tracking-wide">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                            Gerenciar
+                            <svg class="w-3.5 h-3.5 ml-0.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="menuAcoesContas" class="hidden absolute right-0 top-full mt-2 w-56 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-2xl dropdown-anim overflow-hidden py-2 z-[9999]">
+                            <button type="button" onclick="abrirNovaContaDireto()" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                                <span>Nova conta</span>
+                            </button>
+                            <button type="button" onclick="abrirGerenciarConta()" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors border-t border-slate-100 dark:border-[#1e2a40]">
+                                <svg class="w-4 h-4 text-[#0061F2] dark:text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h10"/></svg>
+                                <span>Editar contas</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="w-full">
@@ -1298,10 +1341,7 @@ select:focus, select:focus-visible {
                                         <input type="text" id="holBruto" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg p-2.5 text-right font-semibold focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white shadow-sm" placeholder="0,00">
                                     </div>
                                 </div>
-                                <div class="flex justify-between items-center clt-only">
-                                    <label class="text-sm font-medium text-slate-500 dark:text-gray-300">Horas Mensais</label>
-                                    <input type="number" id="holHoras" class="w-32 border border-slate-300 dark:border-[#1e2a40] rounded-lg p-2.5 text-right focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white shadow-sm" placeholder="220">
-                                </div>
+                                <input type="hidden" id="holHoras" value="220">
                                 <div class="flex justify-between items-center clt-only">
                                     <label class="text-sm font-medium text-slate-500 dark:text-gray-300">Conv. Médico (R$)</label>
                                     <input type="text" id="holConvMed" class="w-32 border border-slate-300 dark:border-[#1e2a40] rounded-lg p-2.5 text-right focus:bg-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white shadow-sm" placeholder="0,00">
@@ -1379,9 +1419,15 @@ select:focus, select:focus-visible {
                                             </div>
                                             Férias no Período?
                                         </label>
-                                        <div id="boxDiasFerias" class="hidden flex items-center gap-2 opacity-0 transition-opacity duration-300">
-                                            <span class="text-xs text-slate-500">Dias:</span>
-                                            <input type="number" id="holDiasFerias" value="30" class="w-16 border border-slate-300 dark:border-[#1e2a40] focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500 transition-all rounded-md p-1.5 text-center text-sm font-bold bg-white dark:bg-[#1a2639] text-slate-800 dark:text-white">
+                                    </div>
+                                    <div id="boxDiasFerias" class="hidden mt-3 pt-3 border-t border-blue-100 dark:border-[#1e2a40] space-y-2.5 opacity-0 transition-opacity duration-300">
+                                        <div class="flex justify-between items-center">
+                                            <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Início das Férias</label>
+                                            <input type="text" id="holDataInicioFerias" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-28 border border-slate-300 dark:border-[#1e2a40] rounded-md p-1.5 text-center text-sm font-bold bg-white dark:bg-[#1a2639] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500">
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Dias de Férias</label>
+                                            <input type="number" id="holDiasFerias" value="30" min="5" max="30" class="w-20 border border-slate-300 dark:border-[#1e2a40] rounded-md p-1.5 text-center text-sm font-bold bg-white dark:bg-[#1a2639] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-[#0061F2] dark:focus:ring-cyan-500">
                                         </div>
                                     </div>
                                 </div>
@@ -1444,7 +1490,7 @@ select:focus, select:focus-visible {
                         <div class="mt-4">
                             <button type="button" id="btnAplicarFolha" class="w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-extrabold py-3.5 px-4 rounded-full transition-all duration-300 shadow-lg shadow-[#0061F2]/20 active:scale-95 text-sm uppercase tracking-wide flex items-center justify-center gap-2 h-[48px]">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
-                                <span id="txtBtnAplicarFolha">Salvar no Resumo</span>
+                                <span id="txtBtnAplicarFolha">Salvar Projeção</span>
                             </button>
                         </div>
                               
@@ -1615,6 +1661,7 @@ select:focus, select:focus-visible {
             { m: 'menuPerfilCidade', b: 'btnPerfilCidade' },
             { m: 'painelSeletorMes', b: 'btnAbrirSeletorMes' },
             { m: 'menuAcaoPrincipal', b: 'btnAcaoPrincipal' },
+            { m: 'menuAcoesContas', b: 'btnAcoesContas' },
             { m: 'menuAutocomplete', b: 'descricao' },
             { m: 'menuFiltroPeriodo', b: 'btnFiltroPeriodo' },
             { m: 'menuFiltroTipo', b: 'btnFiltroTipo' },
@@ -1883,9 +1930,9 @@ select:focus, select:focus-visible {
         window.mostrarObservacao = function(texto) {
             const container = document.getElementById('toast-obs-container');
             const toast = document.createElement('div');
-            toast.className = "bg-slate-800 dark:bg-cyan-950 text-white px-5 py-3.5 rounded-full shadow-2xl text-sm font-medium transform transition-all duration-300 translate-y-full opacity-0 w-full flex items-center gap-3 border border-slate-700 dark:border-cyan-800";
+            toast.className = "bg-[#0061F2] dark:bg-[#004BB5] text-white px-5 py-3.5 rounded-full shadow-2xl text-sm font-medium transform transition-all duration-300 translate-y-full opacity-0 w-full flex items-center gap-3 border border-[#004BB5] dark:border-[#003580]";
             toast.innerHTML = `
-                <svg class="w-5 h-5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <svg class="w-5 h-5 text-white/90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 <div class="flex-1 leading-relaxed truncate">${texto}</div>
             `;
             container.appendChild(toast);
@@ -1906,24 +1953,33 @@ select:focus, select:focus-visible {
             const lblDesc = document.getElementById('lblDescForm');
             const btnLancar = document.getElementById('btnLancar');
 
+            const lblVenc = document.getElementById('lblVencimentoForm');
+            const boxCompoe = document.getElementById('boxCompoeSaldo');
+
             if (nat === 'Despesa') {
                 if(tituloModal) tituloModal.textContent = "Nova Despesa";
-                lblData.textContent = "Data da Compra";
+                lblData.textContent = "Data de Lançamento";
+                if (lblVenc) lblVenc.textContent = "Data de Vencimento";
                 lblDesc.textContent = "Descrição da Despesa";
                 btnLancar.innerHTML = "LANÇAR DESPESA";
                 btnLancar.className = "w-full bg-[#0061F2] hover:bg-[#004BB5] text-white font-extrabold py-4 px-4 rounded-full transition-all duration-300 shadow-lg shadow-[#0061F2]/20 tracking-wide font-montserrat active:scale-95 mt-2";
+                if (boxCompoe) boxCompoe.classList.add('hidden');
             } else {
                 if(tituloModal) tituloModal.textContent = "Nova Receita";
-                lblData.textContent = "Data do Recebimento";
+                lblData.textContent = "Data de Lançamento";
+                if (lblVenc) lblVenc.textContent = "Data de Vencimento";
                 lblDesc.textContent = "Descrição da Receita";
                 btnLancar.innerHTML = "LANÇAR RECEITA";
                 btnLancar.className = "w-full bg-[#00A650] hover:bg-[#008f45] text-white font-extrabold py-4 px-4 rounded-full transition-all duration-300 shadow-lg shadow-[#00A650]/20 tracking-wide font-montserrat active:scale-95 mt-2";
+                if (boxCompoe) boxCompoe.classList.remove('hidden');
             }
             
             // Recarrega as categorias baseadas na escolha
             if (typeof setupDropdownCategorias === 'function') {
                 setupDropdownCategorias(); 
             }
+            // Sincroniza o ícone Efetivada/Pendente
+            if (typeof atualizarLabelEfetivada === 'function') atualizarLabelEfetivada();
         }
         
         // ===================== MOTOR DE COMPRESSÃO E UPLOAD (STORAGE) =====================
@@ -2233,6 +2289,9 @@ select:focus, select:focus-visible {
                     renderizarMesTopo();
                     setupDropdownCategorias();
                     renderizarCarrosselContas();
+                    
+                    // Auto-backup: cria um checkpoint se o último tiver mais de 24h
+                    setTimeout(() => { criarBackupAutomaticoSeNecessario(); }, 3000);
                 }, 500);
 
             } else {
@@ -2337,8 +2396,54 @@ select:focus, select:focus-visible {
             }
             window.calSimplesDataFiltro = d;
             
-            window.abrirMenuExclusivo(menuId, e);
+            const menu = document.getElementById(menuId);
+            if (!menu) return;
+            
+            // Fecha todos os outros menus
+            TODOS_OS_MENUS.forEach(item => {
+                const m = document.getElementById(item.m);
+                if (m && m.id !== menuId) m.classList.add('hidden');
+            });
+            
+            // MOVE o menu para o body — assim escapa do transform do modal
+            // e o position: fixed passa a funcionar em relação à viewport
+            if (menu.parentElement !== document.body) {
+                document.body.appendChild(menu);
+            }
+            
+            // Mostra fora da tela temporariamente para medir a altura real
+            menu.style.position = 'fixed';
+            menu.style.left = '-9999px';
+            menu.style.top = '0';
+            menu.style.right = 'auto';
+            menu.style.bottom = 'auto';
+            menu.style.margin = '0';
+            menu.classList.remove('hidden');
+            
+            // Renderiza o conteúdo
             window.renderizarCalendarioSimples();
+            
+            // Mede altura real e posiciona corretamente
+            const rect = input.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            const largura = menuRect.width || 240;
+            const altura = menuRect.height || 320;
+            
+            // Horizontal — alinha com o input, sem sair da tela
+            let left = rect.left;
+            if (left + largura > window.innerWidth - 10) left = window.innerWidth - largura - 10;
+            if (left < 10) left = 10;
+            menu.style.left = left + 'px';
+            
+            // Vertical — abre para baixo se couber; senão, para cima
+            const espacoAbaixo = window.innerHeight - rect.bottom;
+            if (espacoAbaixo >= altura + 12) {
+                menu.style.top = (rect.bottom + 6) + 'px';
+                menu.style.bottom = 'auto';
+            } else {
+                menu.style.top = 'auto';
+                menu.style.bottom = (window.innerHeight - rect.top + 6) + 'px';
+            }
         }
 
         window.renderizarCalendarioSimples = function() {
@@ -2762,6 +2867,8 @@ select:focus, select:focus-visible {
             if (!document.getElementById('modalEdicao').classList.contains('hidden')) fecharModalEdicao();
 
             setNatureza(natureza);
+            // Reseta para garantir estado limpo (tipo À Vista, datas, toggle Compor, Efetivada)
+            if (typeof resetarFormularioLancamento === 'function') resetarFormularioLancamento();
             window.abrirModalGenerico('modalNovoLancamento', 'block', 'formArea');
         }
 
@@ -2789,15 +2896,14 @@ select:focus, select:focus-visible {
             document.getElementById('dataCompra').value = getHojeFormatado();
             document.getElementById('vencimento').value = getHojeFormatado();
             
+            const chkCompoe = document.getElementById('chkCompoeSaldo');
+            if (chkCompoe) chkCompoe.checked = false;
+            
             const chkEf = document.getElementById('chkEfetivada');
             if(chkEf) {
                 chkEf.checked = true;
-                const lblEf = document.getElementById('lblEfetivadaText');
-                if(lblEf) {
-                    lblEf.textContent = 'Efetivada';
-                    lblEf.className = 'text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none';
-                }
                 hasManuallyToggledEfetivada = false;
+                if (typeof atualizarLabelEfetivada === 'function') atualizarLabelEfetivada();
             }
             
             const dataEfNovo = document.getElementById('dataEfetivacaoNovo');
@@ -2833,6 +2939,9 @@ select:focus, select:focus-visible {
                 try {
                     const lido = JSON.parse(e.target.result);
                     if(Array.isArray(lido)) {
+                        // 0. Snapshot de segurança antes de importar
+                        try { await criarBackup('Antes de Importar'); } catch(err) { console.error(err); }
+                        
                         // 1. Apaga tudo que existe no Firestore atual
                         bancoDeDados.forEach(d => apagarDespesaFirestore(d.id));
                         
@@ -2847,6 +2956,187 @@ select:focus, select:focus-visible {
             };
             reader.readAsText(file);
         });
+        // ===================== BACKUPS / CHECKPOINTS =====================
+        const MAX_BACKUPS = 10;
+        const INTERVALO_AUTO_BACKUP_MS = 24 * 60 * 60 * 1000; // 24h
+
+        function capturarSnapshot() {
+            return {
+                bancoDeDados: JSON.parse(JSON.stringify(bancoDeDados)),
+                categoriasGlobais: JSON.parse(JSON.stringify(categoriasGlobais)),
+                contasGlobais: JSON.parse(JSON.stringify(contasGlobais)),
+                meuPerfil: JSON.parse(JSON.stringify(meuPerfil)),
+                configHoleriteGlobal: JSON.parse(JSON.stringify(configHoleriteGlobal)),
+                saldoBaseMensalGlobal: JSON.parse(JSON.stringify(saldoBaseMensalGlobal))
+            };
+        }
+
+        async function carregarBackups() {
+            if (!currentUserUID) return [];
+            const snap = await getDocs(collection(db, "userData", currentUserUID, "backups"));
+            const lista = [];
+            snap.forEach(d => lista.push(d.data()));
+            lista.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+            return lista;
+        }
+
+        async function limparBackupsAntigos() {
+            if (!currentUserUID) return;
+            const lista = await carregarBackups();
+            if (lista.length > MAX_BACKUPS) {
+                const remover = lista.slice(MAX_BACKUPS);
+                for (const b of remover) {
+                    try { await deleteDoc(doc(db, "userData", currentUserUID, "backups", b.id)); } catch(e) {}
+                }
+            }
+        }
+
+        async function criarBackup(nome) {
+            if (!currentUserUID) return null;
+            try {
+                const snapshot = capturarSnapshot();
+                const id = Date.now().toString();
+                const payload = {
+                    id,
+                    data: getTimestampAtual(),
+                    nome: nome || 'Manual',
+                    resumo: {
+                        despesas: snapshot.bancoDeDados.length,
+                        contas: snapshot.contasGlobais.length,
+                        categorias: snapshot.categoriasGlobais.length
+                    },
+                    dados: JSON.stringify(snapshot)
+                };
+                await setDoc(doc(db, "userData", currentUserUID, "backups", id), payload);
+                await limparBackupsAntigos();
+                return id;
+            } catch(e) {
+                console.error("Erro ao criar backup:", e);
+                return null;
+            }
+        }
+
+        async function criarBackupAutomaticoSeNecessario() {
+            if (!currentUserUID) return;
+            try {
+                const lista = await carregarBackups();
+                const agora = Date.now();
+                if (lista.length === 0) { await criarBackup('Automático'); return; }
+                const ultimo = parseInt(lista[0].id);
+                if (agora - ultimo > INTERVALO_AUTO_BACKUP_MS) { await criarBackup('Automático'); }
+            } catch(e) { console.error("Erro no auto-backup:", e); }
+        }
+
+        window.criarBackupManual = async function() {
+            const id = await criarBackup('Manual');
+            if (id) {
+                window.mostrarAviso("Checkpoint criado!", "sucesso");
+                await renderListaBackups();
+            } else {
+                window.mostrarAviso("Erro ao criar checkpoint.", "erro");
+            }
+        };
+
+        window.renderListaBackups = async function() {
+            const container = document.getElementById('listaBackups');
+            if (!container) return;
+            container.innerHTML = '<p class="text-center py-8 text-slate-400 text-sm">Carregando...</p>';
+            const lista = await carregarBackups();
+            if (lista.length === 0) {
+                container.innerHTML = '<p class="text-center py-8 text-slate-400 text-sm">Nenhum checkpoint salvo ainda.<br><span class="text-[10px]">Crie um agora para garantir.</span></p>';
+                return;
+            }
+            container.innerHTML = '';
+            lista.forEach(b => {
+                const div = document.createElement('div');
+                div.className = "bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] p-3.5 rounded-xl flex flex-col gap-2.5 shadow-sm";
+                div.innerHTML = `
+                    <div class="flex justify-between items-start gap-2">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold text-slate-800 dark:text-gray-200 truncate">${b.data}</p>
+                            <p class="text-[10px] uppercase tracking-wider font-bold text-[#0061F2] dark:text-cyan-400 mt-0.5">${b.nome}</p>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-semibold whitespace-nowrap shrink-0">${b.resumo.despesas} lanç. · ${b.resumo.contas} contas</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="restaurarBackup('${b.id}')" class="flex-1 bg-[#0061F2] hover:bg-[#004BB5] text-white font-bold py-2 rounded-lg text-xs transition-all active:scale-95">Restaurar</button>
+                        <button type="button" onclick="apagarBackup('${b.id}')" class="bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-500 dark:text-red-400 border border-red-200 dark:border-red-900/30 font-bold py-2 px-3 rounded-lg text-xs transition-colors active:scale-95">Apagar</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        };
+
+        window.abrirModalBackups = function() {
+            if (!document.getElementById('modalPerfil').classList.contains('hidden')) fecharModalPerfil();
+            setTimeout(() => {
+                window.abrirModalGenerico('modalBackups');
+                renderListaBackups();
+            }, 160);
+        };
+
+        window.fecharModalBackups = function() {
+            window.fecharModalGenerico('modalBackups');
+        };
+
+        window.apagarBackup = async function(id) {
+            if (!confirm("Apagar este checkpoint permanentemente?")) return;
+            try {
+                await deleteDoc(doc(db, "userData", currentUserUID, "backups", id));
+                window.mostrarAviso("Checkpoint removido.");
+                await renderListaBackups();
+            } catch(e) { window.mostrarAviso("Erro ao apagar.", "erro"); }
+        };
+
+        window.restaurarBackup = async function(id) {
+            if (!confirm("Restaurar este checkpoint? Todos os dados atuais serão substituídos.\n\nUm backup de segurança dos dados atuais será criado antes, então você pode reverter.")) return;
+            
+            window.mostrarAviso("Restaurando...", "info");
+            
+            try {
+                // 1. Backup de segurança do estado atual
+                await criarBackup('Segurança (pré-restauração)');
+                
+                // 2. Lê o snapshot escolhido
+                const snap = await getDoc(doc(db, "userData", currentUserUID, "backups", id));
+                if (!snap.exists()) { window.mostrarAviso("Checkpoint não encontrado.", "erro"); return; }
+                const dados = JSON.parse(snap.data().dados);
+                
+                // 3. Apaga tudo do atual no Firestore
+                for (const d of bancoDeDados) await apagarDespesaFirestore(d.id);
+                for (const c of categoriasGlobais) await apagarCategoriaFirestore(c.id);
+                for (const c of contasGlobais) await apagarContaFirestore(c.id);
+                
+                // 4. Aplica o snapshot
+                bancoDeDados = dados.bancoDeDados || [];
+                categoriasGlobais = dados.categoriasGlobais || [];
+                contasGlobais = dados.contasGlobais || [];
+                meuPerfil = dados.meuPerfil || meuPerfil;
+                configHoleriteGlobal = dados.configHoleriteGlobal || {};
+                saldoBaseMensalGlobal = dados.saldoBaseMensalGlobal || {};
+                cacheSaldoAcumulado = {};
+                
+                // 5. Repopula o Firestore com os dados restaurados
+                for (const d of bancoDeDados) await salvarDespesaFirestore(d);
+                for (const c of categoriasGlobais) await salvarCategoriaFirestore(c);
+                for (const c of contasGlobais) await salvarContaFirestore(c);
+                await syncToFirebase();
+                
+                // 6. Atualiza toda a UI
+                aplicarPerfilVisual();
+                setupDropdownCategorias();
+                renderizarCarrosselContas();
+                atualizarTabela();
+                if (typeof renderTabelaContasTela === 'function') renderTabelaContasTela();
+                
+                window.mostrarAviso("Checkpoint restaurado com sucesso!", "sucesso");
+                window.fecharModalBackups();
+            } catch(e) {
+                console.error("Erro ao restaurar:", e);
+                window.mostrarAviso("Erro ao restaurar checkpoint.", "erro");
+            }
+        };
+
         // ===================== RESET DO SISTEMA =====================
         const modalReset = document.getElementById('modalReset');
         window.abrirModalReset = function() {
@@ -2860,10 +3150,13 @@ select:focus, select:focus-visible {
             window.fecharModalGenerico('modalReset');
         }
         
-        document.getElementById('btnConfirmarReset').addEventListener('click', function() {
-            if(confirm("ÚLTIMO AVISO: Tem certeza ABSOLUTA que deseja apagar todos os dados da nuvem? Esta ação não tem volta!")) {
+        document.getElementById('btnConfirmarReset').addEventListener('click', async function() {
+            if(confirm("ÚLTIMO AVISO: Tem certeza ABSOLUTA que deseja apagar todos os dados da nuvem? Esta ação não tem volta!\n\nUm checkpoint automático será criado antes, então você poderá restaurar depois.")) {
                 
-                // 0. Apaga todas as subcoleções no Firestore individualmente
+                // 0. Snapshot de segurança (sobrevive ao reset — fica na subcoleção "backups")
+                try { await criarBackup('Antes do Hard Reset'); } catch(e) { console.error(e); }
+                
+                // 1. Apaga todas as subcoleções conhecidas no Firestore
                 bancoDeDados.forEach(d => apagarDespesaFirestore(d.id));
                 categoriasGlobais.forEach(c => apagarCategoriaFirestore(c.id));
                 contasGlobais.forEach(c => apagarContaFirestore(c.id));
@@ -3532,7 +3825,7 @@ select:focus, select:focus-visible {
             
             listaTipoCompra.innerHTML = '';
             const mapTipos = [
-                {val: 'À Vista', label: 'À vista', cor: 'bg-[#0061F2] shadow-[0_0_8px_rgba(0,97,242,0.6)]'},
+                {val: 'À Vista', label: 'Não recorrente', cor: 'bg-[#0061F2] shadow-[0_0_8px_rgba(0,97,242,0.6)]'},
                 {val: 'A Prazo', label: 'Parcelar', cor: 'bg-amber-500'},
                 {val: 'Recorrente', label: 'Fixa mensal', cor: 'bg-purple-500'}
             ];
@@ -3729,8 +4022,8 @@ select:focus, select:focus-visible {
                     else corOrigem = "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"; // Cor do "Extra"
                     
                     let obsTexto = transacao.observacao ? transacao.observacao.replace(/'/g, "\\'") : '';
-                    let obsIcon = transacao.observacao ? `<button type="button" onclick="mostrarObservacao('${obsTexto}')" class="text-slate-400 hover:text-cyan-500 transition-colors p-1 shrink-0 active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></button>` : '';
-                    let anexoIcon = transacao.anexo ? `<button type="button" onclick="visualizarAnexo(${transacao.id})" title="Visualizar Anexo" class="text-cyan-500 hover:text-cyan-400 transition-colors p-1 shrink-0 active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg></button>` : '';
+                    let obsIcon = transacao.observacao ? `<button type="button" onclick="mostrarObservacao('${obsTexto}')" class="text-slate-400 hover:text-[#0061F2] dark:text-gray-400 dark:hover:text-cyan-400 transition-colors p-1 shrink-0 active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></button>` : '';
+                    let anexoIcon = transacao.anexo ? `<button type="button" onclick="visualizarAnexo(${transacao.id})" title="Visualizar Anexo" class="text-slate-400 hover:text-[#0061F2] dark:text-gray-400 dark:hover:text-cyan-400 transition-colors p-1 shrink-0 active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg></button>` : '';
                     let infoIcons = (obsIcon || anexoIcon) ? `<div class="flex items-center ml-1">${obsIcon}${anexoIcon}</div>` : '';
                     
                     let descDisplay = `<span class="flex-wrap">${transacao.descricaoOriginal || transacao.descricao}</span>${infoIcons}`;
@@ -3782,7 +4075,7 @@ select:focus, select:focus-visible {
                     // --- FIM: LÓGICA DE CONTA ATRASADA ---
 
                     let btnAcaoEspecial = "";
-                    btnAcaoEspecial += `<button type="button" onclick="abrirModalEdicao(${transacao.id})" class="text-blue-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-cyan-400 transition-colors p-2 md:p-1.5" title="Editar"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-4 md:w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>`;
+                    btnAcaoEspecial += `<button type="button" onclick="abrirModalEdicao(${transacao.id})" class="text-[#0061F2] hover:text-[#004BB5] dark:text-slate-400 dark:hover:text-cyan-400 transition-colors p-2 md:p-1.5" title="Editar"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-4 md:w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>`;
                     if (transacao.isRecorrente && !transacao.encerradoEm) { btnAcaoEspecial += `<button type="button" onclick="encerrarRecorrencia(${transacao.transacaoId})" class="text-orange-500 hover:text-orange-700 dark:text-slate-400 dark:hover:text-orange-400 transition-colors p-2 md:p-1.5" title="Encerrar Recorrência"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-4 md:w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg></button>`; }
                     btnAcaoEspecial += `<button type="button" onclick="abrirModalApagar(${transacao.id})" class="text-red-500 hover:text-red-700 dark:text-slate-400 dark:hover:text-red-400 transition-colors p-2 md:p-1.5" title="Apagar"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-4 md:w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>`;
 
@@ -3867,6 +4160,9 @@ select:focus, select:focus-visible {
                     let rec = 0; let desp = 0;
                     
                     bancoDeDados.forEach(d => {
+                        // Ajustes silenciosos NÃO entram no acumulado de meses passados
+                        if (d.ocultoExtrato) return;
+                        
                         let entra = false;
                         if (d.isRecorrente) {
                             if (d.vencimentoOriginal) {
@@ -3914,15 +4210,33 @@ select:focus, select:focus-visible {
                 baseSalario = parseFloat(saldoBaseMensalGlobal[chave].salario || 0);
             }
             
-            const gastoVale = despesasFiltradas.filter(d => (d.origem === 'Vale' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Vale')) && d.tipo !== 'Receita' && d.natureza !== 'Receita').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaVale = despesasFiltradas.filter(d => (d.origem === 'Vale' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Vale')) && (d.tipo === 'Receita' || d.natureza === 'Receita')).reduce((s, d) => s + valorFloat(d.valor), 0);
+            // SOMENTE o que entra no Extrato — ajustes silenciosos (ocultoExtrato) ficam de fora do resumo mensal
+            const visiveis = despesasFiltradas.filter(d => !d.ocultoExtrato);
+            const isRec = d => (d.tipo === 'Receita' || d.natureza === 'Receita');
+
+            // DESPESAS: sempre compõem, usando a origem (Vale/Salário/Extra).
+            // RECEITAS: só compõem se o usuário ativou o toggle 'Compor Resumo do Mês'.
+            const alvoComposicao = d => {
+                if (isRec(d)) {
+                    if (!d.compoeResumo) return 'Nenhum';
+                    if (d.origem === 'Vale') return 'Vale';
+                    if (d.origem === 'Salário') return 'Salário';
+                    return 'Extra';
+                } else {
+                    if (d.origem === 'Vale' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Vale')) return 'Vale';
+                    if (d.origem === 'Salário' || (!d.origem && !d.isAjuste) || (d.origem === 'Ajuste' && d.alvoAjuste === 'Salário')) return 'Salário';
+                    return 'Extra';
+                }
+            };
+
+            const gastoVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
             
-            const gastoSalario = despesasFiltradas.filter(d => (d.origem === 'Salário' || (!d.origem && !d.isAjuste) || (d.origem === 'Ajuste' && d.alvoAjuste === 'Salário')) && d.tipo !== 'Receita' && d.natureza !== 'Receita').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaSalario = despesasFiltradas.filter(d => (d.origem === 'Salário' || (!d.origem && !d.isAjuste) || (d.origem === 'Ajuste' && d.alvoAjuste === 'Salário')) && (d.tipo === 'Receita' || d.natureza === 'Receita')).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoSalario = visiveis.filter(d => alvoComposicao(d) === 'Salário' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaSalario = visiveis.filter(d => alvoComposicao(d) === 'Salário' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
             
-            // PJ - Usando "Caixa" e as regras de natureza
-            const rendaExtra = despesasFiltradas.filter(d => (d.origem === 'Extra' || d.origem === 'Caixa' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Geral')) && (d.tipo === 'Receita' || d.natureza === 'Receita')).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoExtra = despesasFiltradas.filter(d => (d.origem === 'Extra' || d.origem === 'Caixa' || (d.origem === 'Ajuste' && d.alvoAjuste === 'Geral')) && d.tipo !== 'Receita' && d.natureza !== 'Receita').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const rendaExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
             
             const saldoVale = baseVale + receitaVale - gastoVale; 
             const saldoSalario = baseSalario + receitaSalario - gastoSalario; 
@@ -4007,6 +4321,7 @@ select:focus, select:focus-visible {
         aplicarMascaraData(inputDataCompra); 
         aplicarMascaraData(document.getElementById('editDataCompra'));
         aplicarMascaraData(document.getElementById('editDataEfetivacao'));
+        aplicarMascaraData(document.getElementById('holDataInicioFerias'));
 
         inputDataCompra.value = getHojeFormatado();
         document.getElementById('vencimento').value = getHojeFormatado();
@@ -4027,6 +4342,15 @@ select:focus, select:focus-visible {
     lblEfetivadaText.className = chkEfetivada.checked 
         ? 'text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none' 
         : 'text-sm font-bold text-slate-400 cursor-pointer select-none';
+
+    const iconBox = document.getElementById('iconEfetivada');
+    if (iconBox) {
+        if (chkEfetivada.checked) {
+            iconBox.innerHTML = `<svg class="w-4 h-4 text-green-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        } else {
+            iconBox.innerHTML = `<svg class="w-4 h-4 text-amber-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        }
+    }
 }
 
         function verificarVencimentoEfetivada() {
@@ -4112,13 +4436,20 @@ select:focus, select:focus-visible {
         window.dispararMudancaTipo = function() {
             const tipo = inputTipoCompra.value; window.checkRateio();
             const btnCalV = document.getElementById('btnCalVencimento');
+            const boxVenc = document.getElementById('boxVencimento');
             if (tipo === 'À Vista') {
                 inputParcelas.disabled = true; inputParcelas.value = '1'; inputParcelas.type = "text"; 
                 inputParcAtual.disabled = true; inputParcAtual.value = '1'; inputParcAtual.type = "text";
-                inputVencimento.disabled = true; inputVencimento.value = '';
-                inputVencimento.classList.replace('bg-white', 'bg-slate-50'); inputVencimento.classList.replace('dark:bg-[#0b1120]', 'dark:bg-[#1a2639]');
-                if(btnCalV) { btnCalV.disabled = true; }
+                inputVencimento.disabled = false;
+                inputVencimento.classList.replace('bg-slate-50', 'bg-white'); inputVencimento.classList.replace('dark:bg-[#1a2639]', 'dark:bg-[#0b1120]');
+                if(btnCalV) { btnCalV.disabled = false; }
+                if (boxVenc) boxVenc.classList.remove('hidden');
+                // Se estiver vazio, preenche com a data de lançamento
+                if (!inputVencimento.value || inputVencimento.value.length < 10) {
+                    inputVencimento.value = inputDataCompra.value || getHojeFormatado();
+                }
             } else if (tipo === 'A Prazo') {
+                if (boxVenc) boxVenc.classList.remove('hidden');
                 inputParcelas.disabled = false; 
                 if (!inputParcelas.value) inputParcelas.value = '2';
                 inputParcelas.type = "number"; 
@@ -4130,6 +4461,7 @@ select:focus, select:focus-visible {
                 if(btnCalV) { btnCalV.disabled = false; }
                 window.checkRateio();
             } else if (tipo === 'Recorrente') {
+                if (boxVenc) boxVenc.classList.remove('hidden');
                 inputParcelas.type = "text"; inputParcelas.disabled = true; inputParcelas.value = ''; inputParcelas.placeholder = '-'; 
                 inputParcAtual.type = "text"; inputParcAtual.disabled = true; inputParcAtual.value = ''; inputParcAtual.placeholder = '-';
                 inputVencimento.disabled = false;
@@ -4148,7 +4480,9 @@ select:focus, select:focus-visible {
             if (inputDataCompra.value.length < 10) { window.mostrarAviso("Data da Compra inválida!", "erro"); return; }
             
             const dataLancamento = inputDataCompra.value; 
-            const dataVencimentoStr = tipoCompra === 'À Vista' ? dataLancamento : inputVencimento.value;
+            // Se o vencimento estiver vazio/inválido, usa a data de lançamento como fallback
+            let dataVencimentoStr = inputVencimento.value;
+            if (!dataVencimentoStr || dataVencimentoStr.length < 10) dataVencimentoStr = dataLancamento;
             
             const arrC = dataLancamento.split('/'); const dtCompraObj = new Date(arrC[2], arrC[1] - 1, arrC[0]);
             const arrV = dataVencimentoStr.split('/'); const dtVencObj = new Date(arrV[2], arrV[1] - 1, arrV[0]);
@@ -4160,6 +4494,7 @@ select:focus, select:focus-visible {
             const idContaSelecionada = document.getElementById('contaSelecionada').value || 'c_padrao';
             
             const nat = document.getElementById('naturezaLancamento') ? document.getElementById('naturezaLancamento').value : 'Despesa';
+            const compoeResumoVal = (nat === 'Receita') ? !!document.getElementById('chkCompoeSaldo')?.checked : false;
 
             if (tipoCompra === 'A Prazo') {
                 const qtd = parseInt(inputParcelas.value) || 1; const pAtual = parseInt(inputParcAtual.value) || 1;
@@ -4207,7 +4542,7 @@ select:focus, select:focus-visible {
                 let novaDespesa = {
                     id: Date.now() + p, transacaoId: idMestreTransacao, dataLancamento: dataLancamento,
                     descricaoOriginal: desc, descricao: desc, categoria: cat, subcategoria: subcat, contaId: idContaSelecionada,
-                    valorCompraOriginal: valorTotalCompra, valor: valorFinal.toFixed(2), tipo: tipoCompra, natureza: nat,
+                    valorCompraOriginal: valorTotalCompra, valor: valorFinal.toFixed(2), tipo: tipoCompra, natureza: nat, compoeResumo: compoeResumoVal,
                     origem: determinarOrigem(venc, nat), totalParcelas: qtd, parcelaAtual: p,
                     vencimentoOriginal: dataVencimentoStr, vencimento: venc, observacao: obsValue, 
                     pago: p === 1 ? (document.getElementById('chkEfetivada')?.checked || false) : false, 
@@ -4222,7 +4557,7 @@ select:focus, select:focus-visible {
         } else if (tipoCompra === 'Recorrente') {
             let novaDespesa = {
                 id: Date.now(), transacaoId: idMestreTransacao, dataLancamento: dataLancamento,
-                descricaoOriginal: desc, descricao: desc, categoria: cat, subcategoria: subcat, contaId: idContaSelecionada, valorCompraOriginal: valorBase, valor: valorBase.toFixed(2), tipo: tipoCompra, natureza: nat,
+                descricaoOriginal: desc, descricao: desc, categoria: cat, subcategoria: subcat, contaId: idContaSelecionada, valorCompraOriginal: valorBase, valor: valorBase.toFixed(2), tipo: tipoCompra, natureza: nat, compoeResumo: compoeResumoVal,
                 origem: determinarOrigem(dataVencimentoStr, nat), vencimentoOriginal: dataVencimentoStr, vencimento: '',
                 isRecorrente: true, encerradoEm: null, observacao: obsValue, 
                 pago: document.getElementById('chkEfetivada')?.checked || false, 
@@ -4237,7 +4572,7 @@ select:focus, select:focus-visible {
         } else {
             let novaDespesa = {
                 id: Date.now(), transacaoId: idMestreTransacao, dataLancamento: dataLancamento,
-                descricaoOriginal: desc, descricao: desc, categoria: cat, subcategoria: subcat, contaId: idContaSelecionada, valorCompraOriginal: valorBase, valor: valorBase.toFixed(2), tipo: tipoCompra, natureza: nat,
+                descricaoOriginal: desc, descricao: desc, categoria: cat, subcategoria: subcat, contaId: idContaSelecionada, valorCompraOriginal: valorBase, valor: valorBase.toFixed(2), tipo: tipoCompra, natureza: nat, compoeResumo: compoeResumoVal,
                 origem: determinarOrigem(dataVencimentoStr, nat), vencimentoOriginal: dataVencimentoStr, vencimento: dataVencimentoStr, observacao: obsValue, 
                 pago: document.getElementById('chkEfetivada')?.checked || false, 
                 dataPagamento: document.getElementById('chkEfetivada')?.checked ? getTimestampAtual() : null, 
@@ -4336,6 +4671,9 @@ select:focus, select:focus-visible {
             
             renderSubcategoriaDropdown(itemSendoEditado.categoria, 'editSubcategoria', 'lblEditSubcategoria', 'listaEditSubcategoria', true);
             document.getElementById('editSubcategoria').value = itemSendoEditado.subcategoria || '';
+            if (itemSendoEditado.subcategoria) {
+                document.getElementById('lblEditSubcategoria').innerHTML = `<span>${itemSendoEditado.subcategoria}</span>`;
+            }
             
             const isAj = !!itemSendoEditado.isAjuste;
             document.getElementById('btnEditCategoria').disabled = isAj;
@@ -4461,7 +4799,6 @@ select:focus, select:focus-visible {
 
         function determinarOrigem(dataStr, natureza = 'Despesa') {
             if (meuPerfil.regime === 'PJ') return natureza === 'Receita' ? 'Recebimento' : 'Caixa';
-            if (natureza === 'Receita') return 'Extra';
             if (meuPerfil.temVale === 'Não') return 'Salário'; 
             const p = dataStr.split('/'); const dV = new Date(p[2], p[1] - 1, p[0]); const qDU = getQuintoDiaUtil(p[2], p[1] - 1);
             return (parseInt(p[0]) >= 20 || dV < qDU) ? 'Vale' : 'Salário';
@@ -4484,10 +4821,20 @@ select:focus, select:focus-visible {
 
         const chkFerias = document.getElementById('checkFerias'); const boxFerias = document.getElementById('boxDiasFerias');
         chkFerias.addEventListener('change', function() {
-            if(this.checked) { boxFerias.classList.remove('hidden'); setTimeout(() => boxFerias.classList.remove('opacity-0'), 10); } 
+            if(this.checked) { 
+                boxFerias.classList.remove('hidden'); 
+                setTimeout(() => boxFerias.classList.remove('opacity-0'), 10);
+                // Pré-preenche com o primeiro dia do mês seguinte ao filtro atual
+                const dtEl = document.getElementById('holDataInicioFerias');
+                if (dtEl && (!dtEl.value || dtEl.value.length < 10)) {
+                    const proxMes = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() + 1, 1);
+                    dtEl.value = `01/${String(proxMes.getMonth()+1).padStart(2,'0')}/${proxMes.getFullYear()}`;
+                }
+            } 
             else { boxFerias.classList.add('opacity-0'); setTimeout(() => boxFerias.classList.add('hidden'), 300); }
             calcularMotorFolha();
         });
+        document.getElementById('holDataInicioFerias')?.addEventListener('input', calcularMotorFolha);
 
         function carregarOuCalcularFolha() {
             const elsCLT = document.querySelectorAll('.clt-only');
@@ -4535,6 +4882,8 @@ select:focus, select:focus-visible {
             const dVal5 = document.getElementById('holDescVal5'); if(dVal5) dVal5.value = ''; 
             
             chkFerias.checked = false; boxFerias.classList.add('opacity-0', 'hidden'); document.getElementById('holDiasFerias').value = '30';
+            const inputDataInicioFerias = document.getElementById('holDataInicioFerias');
+            if (inputDataInicioFerias) inputDataInicioFerias.value = '';
             const inputHolDespesasPJ = document.getElementById('holDespesasPJ');
             if (inputHolDespesasPJ) inputHolDespesasPJ.value = '';
 
@@ -4550,7 +4899,12 @@ select:focus, select:focus-visible {
                 if(dVal5) dVal5.value = formatarParaMascara(hol.descVal5);
                 
                 if (inputHolDespesasPJ) inputHolDespesasPJ.value = formatarParaMascara(hol.despesasPJ);
-                if(hol.temFerias) { chkFerias.checked = true; document.getElementById('holDiasFerias').value = hol.diasFerias || 30; boxFerias.classList.remove('hidden', 'opacity-0'); }
+                if(hol.temFerias) { 
+                    chkFerias.checked = true; 
+                    document.getElementById('holDiasFerias').value = hol.diasFerias || 30; 
+                    if (hol.dataInicioFerias) document.getElementById('holDataInicioFerias').value = hol.dataInicioFerias;
+                    boxFerias.classList.remove('hidden', 'opacity-0'); 
+                }
             } else {
                 document.getElementById('holBruto').value = formatarParaMascara(meuPerfil.salario); document.getElementById('holHoras').value = meuPerfil.horas || '220';
                 document.getElementById('holConvMed').value = ''; document.getElementById('holConvOdo').value = ''; document.getElementById('holFretadoPct').value = '';
@@ -4559,8 +4913,210 @@ select:focus, select:focus-visible {
             calcularMotorFolha();
         }
 
+        // ===================== MOTOR DE SIMULAÇÃO DE FÉRIAS =====================
+        function calcularImpactoFerias(sB, dataInicioStr, diasFerias, dependentes, temVale) {
+            const p = dataInicioStr.split('/');
+            if (p.length !== 3) return null;
+            const diaInicio = parseInt(p[0]);
+            const mesInicio = parseInt(p[1]) - 1;
+            const anoInicio = parseInt(p[2]);
+            if (isNaN(diaInicio) || isNaN(mesInicio) || isNaN(anoInicio)) return null;
+
+            const dtInicio = new Date(anoInicio, mesInicio, diaInicio);
+            const dtFim = new Date(anoInicio, mesInicio, diaInicio + diasFerias - 1);
+            const mesFim = dtFim.getMonth();
+            const anoFim = dtFim.getFullYear();
+            const ultimoDiaGozo = dtFim.getDate();
+
+            const diasTrabalhadosGozo = diaInicio - 1;
+
+            let mesRetorno, anoRetorno, diasTrabalhadosRetorno;
+            if (mesFim !== mesInicio || anoFim !== anoInicio) {
+                mesRetorno = mesFim;
+                anoRetorno = anoFim;
+                diasTrabalhadosRetorno = new Date(anoRetorno, mesRetorno + 1, 0).getDate() - ultimoDiaGozo;
+            } else {
+                mesRetorno = mesInicio + 1;
+                anoRetorno = anoInicio;
+                if (mesRetorno > 11) { mesRetorno = 0; anoRetorno++; }
+                diasTrabalhadosRetorno = new Date(anoRetorno, mesRetorno + 1, 0).getDate();
+            }
+
+            // Mês seguinte ao gozo (onde cai o 5º dia útil)
+            let mesSeguinteGozo, anoSeguinteGozo;
+            if (mesInicio === 11) { mesSeguinteGozo = 0; anoSeguinteGozo = anoInicio + 1; }
+            else { mesSeguinteGozo = mesInicio + 1; anoSeguinteGozo = anoInicio; }
+
+            // Mês de volta ao normal (mês seguinte ao retorno)
+            let mesNormal, anoNormal;
+            if (mesRetorno === 11) { mesNormal = 0; anoNormal = anoRetorno + 1; }
+            else { mesNormal = mesRetorno + 1; anoNormal = anoRetorno; }
+
+            const salarioDia = sB / 30;
+
+            // Mês do gozo
+            const salPropGozo = salarioDia * diasTrabalhadosGozo;
+            const feriasBrutas = salarioDia * diasFerias;
+            const tercoFerias = feriasBrutas / 3;
+            const inssSalGozo = calcularINSS(salPropGozo);
+            const irrfSalGozo = calcularIRRF(salPropGozo, dependentes);
+            const inssFerias = calcularINSS(feriasBrutas);
+            const irrfFerias = calcularIRRF(feriasBrutas, dependentes);
+            const vtGozo = temVale === 'Sim' ? salarioDia * diasTrabalhadosGozo * 0.06 : 0;
+            const liqFerias = feriasBrutas + tercoFerias - inssFerias - irrfFerias;
+            const liqSalGozo = salPropGozo - inssSalGozo - irrfSalGozo - vtGozo;
+
+            // Mês de retorno
+            const salPropRetorno = salarioDia * diasTrabalhadosRetorno;
+            const inssSalRetorno = calcularINSS(salPropRetorno);
+            const irrfSalRetorno = calcularIRRF(salPropRetorno, dependentes);
+            const vtRetorno = temVale === 'Sim' ? salarioDia * diasTrabalhadosRetorno * 0.06 : 0;
+            const liqSalRetorno = salPropRetorno - inssSalRetorno - irrfSalRetorno - vtRetorno;
+
+            // Vale (40% do bruto)
+            const valorVale = temVale === 'Sim' ? sB * 0.40 : 0;
+
+            // Datas de crédito
+            const qDUSalGozo = getQuintoDiaUtil(anoSeguinteGozo, mesSeguinteGozo);
+            const dtSalGozo = `${String(qDUSalGozo.getDate()).padStart(2,'0')}/${String(mesSeguinteGozo+1).padStart(2,'0')}/${anoSeguinteGozo}`;
+            const dtValeGozo = `20/${String(mesSeguinteGozo+1).padStart(2,'0')}/${anoSeguinteGozo}`;
+
+            const qDUSalRetorno = getQuintoDiaUtil(anoNormal, mesNormal);
+            const dtSalRetorno = `${String(qDUSalRetorno.getDate()).padStart(2,'0')}/${String(mesNormal+1).padStart(2,'0')}/${anoNormal}`;
+            const dtValeRetorno = `20/${String(mesNormal+1).padStart(2,'0')}/${anoNormal}`;
+
+            return {
+                diaInicio, mesInicio, anoInicio, mesFim, anoFim, diasTrabalhadosGozo, ultimoDiaGozo,
+                salPropGozo, feriasBrutas, tercoFerias,
+                inssSalGozo, irrfSalGozo, inssFerias, irrfFerias, vtGozo,
+                liqFerias, liqSalGozo,
+                mesRetorno, anoRetorno, diasTrabalhadosRetorno,
+                salPropRetorno, inssSalRetorno, irrfSalRetorno, vtRetorno, liqSalRetorno,
+                valorVale,
+                salarioDia,
+                bruto: sB,
+                valorValeGozo: temVale === 'Sim' ? (salarioDia * diasTrabalhadosGozo * 0.40) : 0,
+                // Vale do mês pós-férias = 40% × base × (24/30) — política da empresa
+                valorValeRetorno: temVale === 'Sim'
+                    ? (diasTrabalhadosRetorno >= 30
+                        ? sB * 0.40
+                        : sB * (24/30) * 0.40)
+                    : 0,
+                mesSeguinteGozo, anoSeguinteGozo,
+                dtSalGozo, dtValeGozo,
+                mesNormal, anoNormal,
+                dtSalRetorno, dtValeRetorno,
+                diasFerias
+            };
+        }
+
+        const _nomeMesArr = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        function _nomeMes(m) { return _nomeMesArr[m]; }
+
+        // Bloco do MÊS DAS FÉRIAS (mês do gozo) — só mostra Férias + 1/3
+        function renderBlocoMesDoGozo(sim) {
+            const diaRetorno = sim.ultimoDiaGozo + 1;
+            const strDataRetorno = `${String(diaRetorno).padStart(2,'0')}/${String(sim.mesFim+1).padStart(2,'0')}/${sim.anoFim}`;
+
+            let html = `<div class="mt-4 pt-3 border-t-2 border-amber-200 dark:border-amber-800">`;
+            html += `<div class="flex items-center gap-2 mb-3 px-2">
+                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Férias — ${_nomeMes(sim.mesInicio)}/${sim.anoInicio}</span>
+            </div>`;
+            html += `<p class="text-[11px] text-slate-500 dark:text-gray-400 mb-3 px-2 leading-relaxed">Você sai de férias em <strong>${String(sim.diaInicio).padStart(2,'0')}/${String(sim.mesInicio+1).padStart(2,'0')}/${sim.anoInicio}</strong> por <strong>${sim.diasFerias} dias</strong> e retorna em <strong>${strDataRetorno}</strong>.</p>`;
+
+            html += `<div class="bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3">
+                <p class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">💰 Férias + 1/3 (pago 2 dias antes do gozo)</p>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Férias (${sim.diasFerias} dias)</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(sim.feriasBrutas)}</span></div>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">1/3 Constitucional</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(sim.tercoFerias)}</span></div>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">INSS (sobre Férias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(sim.inssFerias)}</span></div>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">IRRF (sobre Férias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(sim.irrfFerias)}</span></div>
+                <div class="flex justify-between items-center py-2 mt-1 border-t border-amber-200 dark:border-amber-800 text-sm"><span class="font-bold text-slate-700 dark:text-gray-200">Líquido de Férias</span><span class="font-extrabold text-green-600 dark:text-green-500">${formatMoeda(sim.liqFerias)}</span></div>
+            </div>`;
+
+            html += `<div class="mt-2 bg-slate-50 dark:bg-[#0b1120] rounded-lg p-3 text-[11px] text-slate-500 dark:text-gray-400 flex items-start gap-2">
+                <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>O salário referente aos ${sim.diasTrabalhadosGozo} dias trabalhados antes do gozo será pago no 5º dia útil de <strong>${_nomeMes(sim.mesSeguinteGozo)}/${sim.anoSeguinteGozo}</strong>.</span>
+            </div>`;
+
+            html += `</div>`;
+            return html;
+        }
+
+        // Bloco de SALÁRIO PARCIAL (mês de recebimento) — quando o trabalhador só trabalhou parte do mês referência
+        // tipo='gozo' → salário dos dias trabalhados no mês do gozo (pago no mês seguinte)
+        // tipo='retorno' → salário dos dias trabalhados no mês de retorno (pago no mês seguinte)
+                function renderBlocoSalarioParcial(sim, tipo) {
+            const isGozo = tipo === 'gozo';
+            const diasTrab = isGozo ? sim.diasTrabalhadosGozo : sim.diasTrabalhadosRetorno;
+            const mesTrabalhado = isGozo ? sim.mesInicio : sim.mesRetorno;
+            const anoTrabalhado = isGozo ? sim.anoInicio : sim.anoRetorno;
+            const salProp = isGozo ? sim.salPropGozo : sim.salPropRetorno;
+            const inss = isGozo ? sim.inssSalGozo : sim.inssSalRetorno;
+            const irrf = isGozo ? sim.irrfSalGozo : sim.irrfSalRetorno;
+            const vt = isGozo ? sim.vtGozo : sim.vtRetorno;
+            const liq = isGozo ? sim.liqSalGozo : sim.liqSalRetorno;
+            const dtVale = isGozo ? sim.dtValeGozo : sim.dtValeRetorno;
+            const mesReceb = isGozo ? sim.mesSeguinteGozo : sim.mesNormal;
+            const anoReceb = isGozo ? sim.anoSeguinteGozo : sim.anoNormal;
+            
+            // Vale proporcional aos dias efetivamente trabalhados no mês de referência
+            const valorVale = isGozo ? sim.valorValeGozo : sim.valorValeRetorno;
+
+            const aviso = isGozo
+                ? `Este é o salário referente aos <strong>${diasTrab} dias</strong> em que você trabalhou em ${_nomeMes(mesTrabalhado)}/${anoTrabalhado}, antes do início das férias. Os descontos e o vale foram recalculados proporcionalmente.`
+                : `Este é o salário referente aos <strong>${diasTrab} dias</strong> em que você trabalhou em ${_nomeMes(mesTrabalhado)}/${anoTrabalhado}, já que você retornou das férias no meio do mês. Os descontos e o vale também foram reduzidos proporcionalmente.`;
+
+            let html = `<div class="mt-4 pt-3 border-t-2 border-amber-200 dark:border-amber-800">`;
+            html += `<div class="flex items-center gap-2 mb-3 px-2">
+                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 10v2"/><circle cx="12" cy="12" r="9"/></svg>
+                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Recibo de ${_nomeMes(mesReceb)}/${anoReceb}</span>
+            </div>`;
+            html += `<p class="text-[11px] text-slate-500 dark:text-gray-400 mb-3 px-2 leading-relaxed">${aviso}</p>`;
+
+            html += `<div class="bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3">
+                <p class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">💼 Salário dos ${diasTrab} dias trabalhados em ${_nomeMes(mesTrabalhado)}</p>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Salário Bruto (${diasTrab} dias)</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(salProp)}</span></div>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">INSS</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(inss)}</span></div>
+                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">IRRF</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(irrf)}</span></div>
+                ${vt > 0 ? `<div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Vale Transporte (${diasTrab} dias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(vt)}</span></div>` : ''}
+                <div class="flex justify-between items-center py-2 mt-1 border-t border-amber-200 dark:border-amber-800 text-sm"><span class="font-bold text-slate-700 dark:text-gray-200">Líquido do Salário</span><span class="font-extrabold text-green-600 dark:text-green-500">${formatMoeda(liq)}</span></div>
+            </div>`;
+
+            if (valorVale > 0) {
+                html += `<div class="mt-2 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg p-3">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-600 dark:text-gray-300">💳 Vale (adiantamento, dia ${dtVale})</span>
+                        <span class="font-bold text-blue-600 dark:text-blue-400">+ ${formatMoeda(valorVale)}</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 dark:text-gray-400 mt-1 leading-relaxed">O vale também foi proporcional ao salário parcial do mês (${diasTrab} dias), e não ao salário integral.</p>
+                </div>`;
+            }
+
+            html += `</div>`;
+            return html;
+        }
+
+        // Bloco do MÊS DE VOLTA AO NORMAL (mensagem informativa)
+        function renderBlocoVoltaNormal(sim) {
+            let mesIntegral = sim.mesNormal + 1;
+            let anoIntegral = sim.anoNormal;
+            if (mesIntegral > 11) { mesIntegral = 0; anoIntegral++; }
+
+            let html = `<div class="mt-4 pt-3 border-t-2 border-emerald-200 dark:border-emerald-800">`;
+            html += `<div class="flex items-center gap-2 mb-2 px-2">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Recibo de ${_nomeMes(mesIntegral)}/${anoIntegral} — Volta ao Normal</span>
+            </div>`;
+            html += `<div class="bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg p-3">
+                <p class="text-[11px] text-slate-600 dark:text-gray-300 leading-relaxed">Este é o primeiro salário integral após as férias de ${_nomeMes(sim.mesInicio)}/${sim.anoInicio}. Nenhuma redução a partir daqui — os valores voltam ao normal.</p>
+            </div>`;
+            html += `</div>`;
+            return html;
+        }
+
         function calcularMotorFolha() {
-            const sB = valorFloat(document.getElementById('holBruto').value); const hM = valorFloat(document.getElementById('holHoras').value) || 220; const cM = valorFloat(document.getElementById('holConvMed').value); const cO = valorFloat(document.getElementById('holConvOdo').value); const fP = valorFloat(document.getElementById('holFretadoPct').value); const he50 = valorFloat(document.getElementById('holExt50').value); const he100 = valorFloat(document.getElementById('holExt100').value); const bN = document.getElementById('holBonusNome').value; const bV = valorFloat(document.getElementById('holBonusVal').value); const dU = valorFloat(document.getElementById('holDiasUteis').value); const dNU = valorFloat(document.getElementById('holDiasNaoUteis').value); const dn1 = document.getElementById('holDescNome1').value; const dv1 = valorFloat(document.getElementById('holDescVal1').value); const dn2 = document.getElementById('holDescNome2').value; const dv2 = valorFloat(document.getElementById('holDescVal2').value); const dn3 = document.getElementById('holDescNome3').value; const dv3 = valorFloat(document.getElementById('holDescVal3').value); 
+            let sB = valorFloat(document.getElementById('holBruto').value); const hM = valorFloat(document.getElementById('holHoras').value) || 220; const cM = valorFloat(document.getElementById('holConvMed').value); const cO = valorFloat(document.getElementById('holConvOdo').value); const fP = valorFloat(document.getElementById('holFretadoPct').value); const he50 = valorFloat(document.getElementById('holExt50').value); const he100 = valorFloat(document.getElementById('holExt100').value); const bN = document.getElementById('holBonusNome').value; const bV = valorFloat(document.getElementById('holBonusVal').value); const dU = valorFloat(document.getElementById('holDiasUteis').value); const dNU = valorFloat(document.getElementById('holDiasNaoUteis').value); const dn1 = document.getElementById('holDescNome1').value; const dv1 = valorFloat(document.getElementById('holDescVal1').value); const dn2 = document.getElementById('holDescNome2').value; const dv2 = valorFloat(document.getElementById('holDescVal2').value); const dn3 = document.getElementById('holDescNome3').value; const dv3 = valorFloat(document.getElementById('holDescVal3').value); 
             
             const dNome4 = document.getElementById('holDescNome4'); const dn4 = dNome4 ? dNome4.value : ''; 
             const dVal4 = document.getElementById('holDescVal4'); const dv4 = dVal4 ? valorFloat(dVal4.value) : 0; 
@@ -4569,6 +5125,47 @@ select:focus, select:focus-visible {
             
             const dPJEl = document.getElementById('holDespesasPJ');
             const dPJ = dPJEl ? valorFloat(dPJEl.value) : 0;
+            
+    // ===== DETECÇÃO DE CENÁRIO DE FÉRIAS (afeta salário e vale do mês visualizado) =====
+    const mesAtualCalc = dataFiltro.getMonth();
+    const anoAtualCalc = dataFiltro.getFullYear();
+    let cenarioFeriasCalc = null;
+    if (meuPerfil.regime === 'CLT') {
+        for (const chave in configHoleriteGlobal) {
+            const cfg = configHoleriteGlobal[chave];
+            if (!cfg.temFerias || !cfg.dataInicioFerias || cfg.dataInicioFerias.length !== 10) continue;
+            const simC = calcularImpactoFerias(cfg.bruto || sB, cfg.dataInicioFerias, parseInt(cfg.diasFerias) || 30, meuPerfil.dependentes, meuPerfil.temVale);
+            if (!simC) continue;
+            let mInt = simC.mesNormal + 1; let aInt = simC.anoNormal;
+            if (mInt > 11) { mInt = 0; aInt++; }
+            if (mesAtualCalc === simC.mesSeguinteGozo && anoAtualCalc === simC.anoSeguinteGozo) { cenarioFeriasCalc = { tipo: 'posGozo', sim: simC }; break; }
+            if (mesAtualCalc === simC.mesNormal && anoAtualCalc === simC.anoNormal && simC.diasTrabalhadosRetorno < 30) { cenarioFeriasCalc = { tipo: 'retorno', sim: simC }; break; }
+            if (mesAtualCalc === simC.mesInicio && anoAtualCalc === simC.anoInicio) { cenarioFeriasCalc = { tipo: 'gozo', sim: simC }; break; }
+            if (mesAtualCalc === mInt && anoAtualCalc === aInt) { cenarioFeriasCalc = { tipo: 'normal', sim: simC }; break; }
+        }
+    }
+
+    let isPosGozo = cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'posGozo';
+    let valeOverride = null;
+    let rotuloSalarioBase = 'Salário Base';
+
+        if (isPosGozo) {
+        const s = cenarioFeriasCalc.sim;
+        // Salário parcial = salário dos dias trabalhados no mês do gozo (pago no mês pós-gozo)
+        rotuloSalarioBase = `Salário Parcial (${s.diasTrabalhadosGozo} dias trab. em ${_nomeMes(s.mesInicio)}/${s.anoInicio})`;
+        sB = s.salPropGozo;
+        // Vale pós-férias = 40% × base × (24/30)
+        valeOverride = meuPerfil.temVale === 'Sim' ? s.valorValeRetorno : 0;
+    } else if (cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'retorno') {
+        const s = cenarioFeriasCalc.sim;
+        // Salário reduzido (dias trabalhados após o retorno das férias)
+        rotuloSalarioBase = `Salário de ${_nomeMes(s.mesRetorno)}/${s.anoRetorno} (${s.diasTrabalhadosRetorno} dias trab.)`;
+        sB = s.salPropRetorno;
+        // Vale pós-férias — mesmo valor do crédito de janeiro, agora como desconto
+        valeOverride = meuPerfil.temVale === 'Sim' ? s.valorValeRetorno : 0;
+    }
+    // ===== FIM DA DETECÇÃO =====
+
 
             let vF = 0; let vTF = 0; if(chkFerias.checked && meuPerfil.regime === 'CLT') { let d = parseInt(document.getElementById('holDiasFerias').value) || 30; vF = (sB / 30) * d; vTF = vF / 3; }
             let v13P1 = 0; let v13P2 = 0; let inss13 = 0; let irrf13 = 0; let mF = dataFiltro.getMonth(); let isNov = mF === 10; let isDez = mF === 11;
@@ -4592,7 +5189,7 @@ select:focus, select:focus-visible {
                 vH = sB / hM; vH50 = vH * 1.5 * he50; vH100 = vH * 2.0 * he100; tE = vH50 + vH100; 
                 dsr = (dU > 0 && tE > 0) ? (tE / dU) * dNU : 0;
                 tP_Trib += tE + dsr + vF + vTF; 
-                if (meuPerfil.temVale === 'Sim') vale = sB * 0.40;
+                if (meuPerfil.temVale === 'Sim') vale = (valeOverride !== null) ? valeOverride : sB * 0.40;
                 inss = calcularINSS(tP_Trib); 
                 irrf = calcularIRRF(tP_Trib, meuPerfil.dependentes); 
                 fret = sB * (fP / 100); 
@@ -4601,42 +5198,128 @@ select:focus, select:focus-visible {
                 tempCm = 0; tempCo = 0;
             }
 
-            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2) : sB + bV; 
-            const totD = meuPerfil.regime === 'CLT' ? (inss + irrf + inss13 + irrf13 + vale + tempCm + tempCo + fret + descC) : descC; 
+            const valeEhProvento = isPosGozo;
+            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2 + (valeEhProvento ? vale : 0)) : sB + bV; 
+            const totD = meuPerfil.regime === 'CLT' ? (inss + irrf + inss13 + irrf13 + (valeEhProvento ? 0 : vale) + tempCm + tempCo + fret + descC) : descC; 
             const liq = totP - totD;
 
             const tbody = document.getElementById('corpoHoleritePremium'); tbody.innerHTML = '';
-            const addRow = (desc, isProv, val) => { if(val <= 0 && desc !== 'Salário Base' && desc !== 'Faturamento Bruto') return; tbody.innerHTML += `<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-[#1e2a40] last:border-0 hover:bg-slate-50 dark:hover:bg-[#1a2639] transition-colors px-2 rounded"><span class="text-slate-600 dark:text-gray-300 font-medium">${desc}</span><span class="font-bold tracking-wide ${isProv ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${isProv ? '+' : '-'} ${formatMoeda(val)}</span></div>`; };
+            const addRow = (desc, isProv, val) => { if(val <= 0 && !desc.startsWith('Salário') && desc !== 'Faturamento Bruto' && !desc.startsWith('Faturamento')) return; tbody.innerHTML += `<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-[#1e2a40] last:border-0 hover:bg-slate-50 dark:hover:bg-[#1a2639] transition-colors px-2 rounded"><span class="text-slate-600 dark:text-gray-300 font-medium">${desc}</span><span class="font-bold tracking-wide ${isProv ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${isProv ? '+' : '-'} ${formatMoeda(val)}</span></div>`; };
 
-            if (meuPerfil.regime === 'CLT') {
-                addRow('Salário Base', true, sB); addRow('Horas Extras 50%', true, vH50); addRow('Horas Extras 100%', true, vH100); addRow('DSR s/ Extras', true, dsr); addRow(bN || 'Bônus/Premiação', true, bV); addRow('Férias', true, vF); addRow('1/3 Férias', true, vTF); addRow('13º Salário (1ª Parcela)', true, v13P1); addRow('13º Salário (2ª Parcela)', true, v13P2);
-                addRow('INSS Previsto', false, inss); addRow('IRRF Previsto', false, irrf); if(isDez) addRow('INSS (Sobre 13º Salário)', false, inss13); if(isDez) addRow('IRRF (Sobre 13º Salário)', false, irrf13); addRow('Vale (Adiantamento)', false, vale); addRow('Fretado', false, fret); addRow('Convênio Médico', false, tempCm); addRow('Convênio Odontológico', false, tempCo); 
-                addRow(dn1 || 'Desconto 1', false, dv1); addRow(dn2 || 'Desconto 2', false, dv2); addRow(dn3 || 'Desconto 3', false, dv3); addRow(dn4 || 'Desconto 4', false, dv4); addRow(dn5 || 'Desconto 5', false, dv5);
-            } else {
-                addRow('Faturamento Bruto', true, sB); 
-                if(bV > 0) addRow(bN || 'Receita Extra', true, bV);
-                addRow('Custos e Despesas do Mês', false, dPJ);
-            }
+                if (meuPerfil.regime === 'CLT') {
+                    addRow(rotuloSalarioBase, true, sB); addRow('Horas Extras 50%', true, vH50); addRow('Horas Extras 100%', true, vH100); addRow('DSR s/ Extras', true, dsr); addRow(bN || 'Bônus/Premiação', true, bV); addRow('Férias', true, vF); addRow('1/3 Férias', true, vTF); addRow('13º Salário (1ª Parcela)', true, v13P1); addRow('13º Salário (2ª Parcela)', true, v13P2); if (isPosGozo) addRow('Vale (Adiantamento)', true, vale);
+                    addRow('INSS Previsto', false, inss); addRow('IRRF Previsto', false, irrf); if(isDez) addRow('INSS (Sobre 13º Salário)', false, inss13); if(isDez) addRow('IRRF (Sobre 13º Salário)', false, irrf13); if (!isPosGozo) addRow('Vale (Adiantamento)', false, vale); addRow('Fretado', false, fret); addRow('Convênio Médico', false, tempCm); addRow('Convênio Odontológico', false, tempCo); 
+                    addRow(dn1 || 'Desconto 1', false, dv1); addRow(dn2 || 'Desconto 2', false, dv2); addRow(dn3 || 'Desconto 3', false, dv3); addRow(dn4 || 'Desconto 4', false, dv4); addRow(dn5 || 'Desconto 5', false, dv5);
+                } else {
+                    addRow('Faturamento Bruto', true, sB); 
+                    if(bV > 0) addRow(bN || 'Receita Extra', true, bV);
+                    addRow('Custos e Despesas do Mês', false, dPJ);
+                }
 
-            document.getElementById('totProv').textContent = formatMoeda(totP); 
-            document.getElementById('totDesc').textContent = formatMoeda(totD); 
-            
-            const elLiq = document.getElementById('liqReceber');
-            elLiq.textContent = formatMoeda(liq);
-            if (liq < 0) {
-                elLiq.classList.remove('text-green-600', 'dark:text-green-500');
-                elLiq.classList.add('text-red-600', 'dark:text-red-400');
-            } else {
-                elLiq.classList.remove('text-red-600', 'dark:text-red-400');
-                elLiq.classList.add('text-green-600', 'dark:text-green-500');
-            }
+                document.getElementById('totProv').textContent = formatMoeda(totP); 
+                document.getElementById('totDesc').textContent = formatMoeda(totD); 
+                
+                const elLiq = document.getElementById('liqReceber');
+                elLiq.textContent = formatMoeda(liq);
+                if (liq < 0) {
+                    elLiq.classList.remove('text-green-600', 'dark:text-green-500');
+                    elLiq.classList.add('text-red-600', 'dark:text-red-400');
+                } else {
+                    elLiq.classList.remove('text-red-600', 'dark:text-red-400');
+                    elLiq.classList.add('text-green-600', 'dark:text-green-500');
+                }
 
             let aF = dataFiltro.getFullYear(); let diaValeStr = `20/${String(mF+1).padStart(2,'0')}/${aF}`; let qDia = getQuintoDiaUtil(aF, mF); let diaSalarioStr = `${String(qDia.getDate()).padStart(2,'0')}/${String(mF+1).padStart(2,'0')}/${aF}`;
             document.getElementById('lblDataVale').textContent = diaValeStr; document.getElementById('lblDataSalario').textContent = diaSalarioStr;
 
+            // Bloco extra: simulação de férias (só CLT)
+            // - Mês do gozo: rende bloco de férias se a checkbox estiver marcada
+            // - Mês pós-gozo: já foi tratado no cálculo (salário parcial + vale do próximo mês) — só adiciona informativo
+            // - Mês de retorno: mostra aviso explicativo
+            // - Mês integral: mensagem "volta ao normal"
+            if (meuPerfil.regime === 'CLT') {
+                const mesAtual = dataFiltro.getMonth();
+                const anoAtual = dataFiltro.getFullYear();
+
+                // Caso 1: mês do gozo (checkbox marcada)
+                if (chkFerias.checked) {
+                    const dtUI = document.getElementById('holDataInicioFerias')?.value;
+                    const diasUI = parseInt(document.getElementById('holDiasFerias')?.value) || 30;
+                    if (dtUI && dtUI.length === 10) {
+                        const sUI = calcularImpactoFerias(sB, dtUI, diasUI, meuPerfil.dependentes, meuPerfil.temVale);
+                        if (sUI && mesAtual === sUI.mesInicio && anoAtual === sUI.anoInicio) {
+                            tbody.innerHTML += renderBlocoMesDoGozo(sUI);
+                        }
+                    }
+                }
+
+                // Caso 2: mês pós-gozo — informativo do salário parcial + vale recalculado
+                if (isPosGozo) {
+                    const s = cenarioFeriasCalc.sim;
+                    let mesValeReceb = s.mesNormal; let anoValeReceb = s.anoNormal;
+
+                    let infoHTML = `<div class="mt-4 pt-3 border-t-2 border-blue-200 dark:border-blue-800">`;
+                    infoHTML += `<div class="flex items-center gap-2 mb-2 px-2">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">📋 Entenda este recibo (pós-férias)</span>
+                    </div>`;
+                    infoHTML += `<p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed px-2 mb-2">
+                        Este é o <strong>salário parcial</strong> referente aos <strong>${s.diasTrabalhadosGozo} dias</strong> que você trabalhou em <strong>${_nomeMes(s.mesInicio)}/${s.anoInicio}</strong>, antes do início das férias.
+                    </p>`;
+                    infoHTML += `<p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed px-2 mb-2">
+                        O <strong>Vale Adiantamento</strong> foi calculado como 40% do salário de <strong>${_nomeMes(mesValeReceb)}/${anoValeReceb}</strong>, que por sua vez é proporcional aos <strong>${s.diasTrabalhadosRetorno} dias</strong> que você trabalhará em <strong>${_nomeMes(s.mesRetorno)}/${s.anoRetorno}</strong> após retornar das férias.
+                    </p>`;
+                    infoHTML += `<p class="text-[11px] text-slate-400 dark:text-gray-500 italic leading-relaxed px-2">
+                        Por isso os valores não seguem o padrão do mês cheio.
+                    </p>`;
+                    infoHTML += `</div>`;
+                    tbody.innerHTML += infoHTML;
+                }
+
+                // Caso 3: mês do retorno (informativo)
+                if (cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'retorno') {
+                    const s = cenarioFeriasCalc.sim;
+                    let infoHTML = `<div class="mt-4 pt-3 border-t-2 border-emerald-200 dark:border-emerald-800">`;
+                    infoHTML += `<div class="flex items-center gap-2 mb-2 px-2">
+                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">📋 Entenda este recibo (retorno de férias)</span>
+                    </div>`;
+                    infoHTML += `<p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed px-2 mb-2">
+                        Este é o salário referente aos <strong>${s.diasTrabalhadosRetorno} dias</strong> trabalhados em <strong>${_nomeMes(s.mesRetorno)}/${s.anoRetorno}</strong>, logo após o retorno das férias de ${_nomeMes(s.mesInicio)}/${s.anoInicio}. Por isso o valor é proporcional e não cheio.
+                    </p>`;
+                    infoHTML += `<p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed px-2 mb-2">
+                        O <strong>Vale (Adiantamento)</strong> de <strong>${formatMoeda(s.valorValeRetorno)}</strong> foi creditado em <strong>${_nomeMes(s.mesRetorno)}/${s.anoRetorno}</strong> (dia 20) e por isso aparece agora como <strong>desconto</strong> neste recibo.
+                    </p>`;
+                    infoHTML += `</div>`;
+                    tbody.innerHTML += infoHTML;
+                }
+
+                // Caso 4: mês normal (tudo volta ao padrão)
+                if (cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'normal') {
+                    const s = cenarioFeriasCalc.sim;
+                    let mesIntegral = s.mesNormal + 1; let anoIntegral = s.anoNormal;
+                    if (mesIntegral > 11) { mesIntegral = 0; anoIntegral++; }
+
+                    let infoHTML = `<div class="mt-4 pt-3 border-t-2 border-emerald-200 dark:border-emerald-800">`;
+                    infoHTML += `<div class="flex items-center gap-2 mb-2 px-2">
+                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">📋 Recibo de ${_nomeMes(mesIntegral)}/${anoIntegral} — Volta ao Normal</span>
+                    </div>`;
+                    infoHTML += `<p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed px-2 mb-2">
+                        Este é o <strong>primeiro salário integral</strong> após o ciclo de férias de <strong>${_nomeMes(s.mesInicio)}/${s.anoInicio}</strong>. Sem reduções, sem créditos ou débitos pendentes — os valores voltam ao padrão do mês cheio.
+                    </p>`;
+                    infoHTML += `<p class="text-[11px] text-slate-400 dark:text-gray-500 italic leading-relaxed px-2">
+                        A partir daqui, os próximos meses seguem normalmente.
+                    </p>`;
+                    infoHTML += `</div>`;
+                    tbody.innerHTML += infoHTML;
+                }
+            }
+
             simulacaoAtualGlobal = { 
                 ano: aF, mes: mF, valeAdiantamento: vale, diaValeStr, salarioLiquido: liq, diaSalarioStr, bruto: sB, horasMensais: hM, convMed: tempCm, convOdo: tempCo, fretadoPct: fP,
                 ext50: he50, ext100: he100, bonusNome: bN, bonusVal: bV, temFerias: chkFerias.checked, diasFerias: document.getElementById('holDiasFerias').value,
+                dataInicioFerias: document.getElementById('holDataInicioFerias')?.value || '',
                 descNome1: dn1, descVal1: dv1, descNome2: dn2, descVal2: dv2, descNome3: dn3, descVal3: dv3, descNome4: dn4, descVal4: dv4, descNome5: dn5, descVal5: dv5,
                 despesasPJ: dPJ
             };
@@ -4915,6 +5598,7 @@ select:focus, select:focus-visible {
                 else if (!document.getElementById('modalApagar').classList.contains('hidden')) fecharModalApagar();
                 else if (!document.getElementById('modalEncerrar').classList.contains('hidden')) fecharModalEncerrar();
                 else if (!document.getElementById('modalImportar').classList.contains('hidden')) fecharModalImportar();
+                else if (!document.getElementById('modalBackups').classList.contains('hidden')) fecharModalBackups();
                 else if (!document.getElementById('modalReset').classList.contains('hidden')) fecharModalReset();
                 else if (!document.getElementById('modalExplicacao').classList.contains('hidden')) fecharModalExplicacao();
             }
@@ -4994,6 +5678,45 @@ select:focus, select:focus-visible {
             observadorDeSaldos.observe(el, { childList: true, characterData: true, subtree: true }); el.textContent = el.textContent; 
         });
         // ===================== MOTOR DE CONTAS E CARTEIRAS =====================
+        window.abrirNovaContaDireto = function() {
+            document.getElementById('menuAcoesContas').classList.add('hidden');
+            if (!document.getElementById('modalNovoLancamento').classList.contains('hidden')) fecharModalLancamento();
+            if (!document.getElementById('modalPerfil').classList.contains('hidden')) fecharModalPerfil();
+            if (!document.getElementById('modalEdicao').classList.contains('hidden')) fecharModalEdicao();
+            renderListaContasModal();
+            abrirEdicaoConta(null);
+            window.abrirModalGenerico('modalContas');
+        };
+
+        window.abrirGerenciarConta = function() {
+            document.getElementById('menuAcoesContas').classList.add('hidden');
+            if (!document.getElementById('modalNovoLancamento').classList.contains('hidden')) fecharModalLancamento();
+            if (!document.getElementById('modalPerfil').classList.contains('hidden')) fecharModalPerfil();
+            if (!document.getElementById('modalEdicao').classList.contains('hidden')) fecharModalEdicao();
+            
+            renderListaContasModal();
+            document.getElementById('viewContaList').classList.remove('hidden'); 
+            document.getElementById('viewContaEdit').classList.add('hidden');
+            window.abrirModalGenerico('modalContas');
+        };
+
+        window.apagarContaDireto = function(id) {
+            if (contasGlobais.length <= 1) {
+                window.mostrarAviso("Você precisa ter pelo menos uma conta!", "erro");
+                return;
+            }
+            const conta = contasGlobais.find(c => c.id === id);
+            if (!conta) return;
+            if (confirm(`Apagar a conta "${conta.nome}"?\n\nOs lançamentos antigos atrelados a ela continuarão existindo, mas ficarão vinculados à Carteira Física.`)) {
+                apagarContaFirestore(id);
+                contasGlobais = contasGlobais.filter(c => c.id !== id);
+                window.mostrarAviso("Conta excluída.");
+                renderListaContasModal();
+                if (typeof renderTabelaContasTela === 'function') renderTabelaContasTela();
+                if (typeof renderizarCarrosselContas === 'function') renderizarCarrosselContas();
+            }
+        };
+
         window.abrirModalContas = function() {
             // Garante que outras telas sejam fechadas primeiro para não encavalar
             if (!document.getElementById('modalNovoLancamento').classList.contains('hidden')) fecharModalLancamento();
@@ -5031,9 +5754,14 @@ select:focus, select:focus-visible {
                             <p class="text-xs font-semibold text-slate-400">Inicial: ${formatMoeda(c.saldoInicial || 0)}</p>
                         </div>
                     </div>
-                    <button type="button" onclick="abrirEdicaoConta('${c.id}')" class="text-slate-400 hover:text-cyan-500 transition-colors p-2 active:scale-90 shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" onclick="abrirEdicaoConta('${c.id}')" title="Editar conta" class="text-slate-400 hover:text-[#0061F2] dark:hover:text-cyan-400 transition-colors p-2 active:scale-90 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                        </button>
+                        <button type="button" onclick="apagarContaDireto('${c.id}')" title="Apagar conta" class="text-slate-400 hover:text-red-500 transition-colors p-2 active:scale-90 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        </button>
+                    </div>
                 `;
                 container.appendChild(div);
             });
@@ -5726,6 +6454,7 @@ select:focus, select:focus-visible {
         // Usa o motor exclusivo nas Contas
         document.getElementById('btnConta')?.addEventListener('click', (e) => { window.abrirMenuExclusivo('menuConta', e); });
         document.getElementById('btnEditConta')?.addEventListener('click', (e) => { window.abrirMenuExclusivo('menuEditConta', e); });
+        document.getElementById('btnAcoesContas')?.addEventListener('click', (e) => { window.abrirMenuExclusivo('menuAcoesContas', e); });
 // ===================== AUTOCOMPLETE INTELIGENTE =====================
 const inputDesc = document.getElementById('descricao');
         const menuAuto = document.getElementById('menuAutocomplete');

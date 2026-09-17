@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -4307,6 +4307,8 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             const corpoTabela = document.getElementById('tabelaDespesas'); const mensagemVazio = document.getElementById('mensagemVazio');
             const labelMesTabela = document.getElementById('labelMesTabela'); const cardDespesasMes = document.getElementById('cardDespesasMes');
             corpoTabela.innerHTML = ''; let totalDespesasDoMes = 0; let totalReceitasDoMes = 0;
+            // Declarado aqui no topo para não virar variable out-of-scope no rodapé
+            let totalRecFiltro = 0; let totalDespFiltro = 0;
             const mesAnoFiltro = window.chaveMes(dataFiltro); labelMesTabela.textContent = mesAnoFiltro;
 
             const anoMesFiltroNum = dataFiltro.getFullYear() * 100 + (dataFiltro.getMonth() + 1);
@@ -4410,8 +4412,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 }
 
                 // Totais baseados no filtro ativo (para o rodapé do Extrato)
-                let totalRecFiltro = 0;
-                let totalDespFiltro = 0;
                 arrayTransacoes.forEach(t => {
                     if (t.ocultoExtrato || t.isAjuste) return;
                     const isR = (t.tipo === 'Receita' || t.natureza === 'Receita');

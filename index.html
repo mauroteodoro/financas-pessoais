@@ -4466,8 +4466,8 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     const catDisplay = `<div class="opacity-80 flex-shrink-0 flex items-center justify-center mr-1.5">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-xs truncate flex-1 min-w-0 pt-[1px]">${transacao.categoria || 'Outros'}${subVal}</div>`;
                     
                     // Versão mobile: sem truncate, sem uppercase, com quebra de linha
-                    const subValMobile = transacao.subcategoria ? `<span class="opacity-50 mx-1 font-normal">›</span><span class="opacity-80 font-semibold">${transacao.subcategoria}</span>` : '';
-                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 flex items-center justify-center mr-3 mt-[2px]">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
+                    const subValMobile = transacao.subcategoria ? `<span class="opacity-50 mx-2 font-normal">›</span><span class="opacity-80 font-semibold">${transacao.subcategoria}</span>` : '';
+                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 flex items-center justify-center mr-3.5 mt-[2px]">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
                     
                     let htmlValor = `<div class="font-bold tracking-tight valor-sensivel ${ehReceita ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${ehReceita ? '+' : '-'} ${formatMoeda(transacao.valorTotalNoMes)}</div>`;
                     if (transacao.totalParcelas > 1 && !transacao.isRecorrente) {
@@ -4580,11 +4580,11 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                                 </div>
                             </div>
                             <div class="flex items-start justify-between gap-3 mt-1 pl-11">
-                                <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 shrink-0 pt-0.5">
+                                <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 shrink-0 pt-1">
                                     <span class="w-[60px] inline-block font-semibold">Lançado:</span>
                                     ${transacao.dataLancamento}
                                 </div>
-                                <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                                <div class="flex flex-col items-end shrink-0 min-w-[70px] pt-0.5">
                                     ${htmlValor}
                                 </div>
                             </div>

@@ -1266,12 +1266,12 @@ select:focus, select:focus-visible {
                         </button>
                         <div id="painelSeletorMes" class="hidden popover-anim fixed sm:absolute top-[calc(var(--header-h)+var(--safe-top)+0.75rem)] sm:top-full left-1/2 -translate-x-1/2 sm:mt-3 bg-white rounded-2xl shadow-[0_12px_40px_-8px_rgba(0,97,242,0.12)] border border-blue-50 p-5 w-[calc(100vw-2rem)] max-w-[300px] sm:w-[280px] sm:max-w-none z-[400]">
                             <div class="flex items-center justify-between mb-4">
-                                <button type="button" id="btnAnoAnt" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 font-medium text-xl text-slate-900 active:scale-90 transition-colors">&lsaquo;</button>
-                                <span id="anoSeletorDisplay" class="font-semibold font-montserrat text-slate-800 tracking-tight">2026</span>
-                                <button type="button" id="btnAnoProx" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-50 font-medium text-xl text-slate-900 active:scale-90 transition-colors">&rsaquo;</button>
+                                <button type="button" id="btnAnoAnt" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&lsaquo;</button>
+                                <span id="anoSeletorDisplay" class="font-semibold font-montserrat text-[#4D6BFE] tracking-tight">2026</span>
+                                <button type="button" id="btnAnoProx" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&rsaquo;</button>
                             </div>
                             <div id="gridMeses" class="grid grid-cols-3 gap-2"></div>
-                            <button type="button" id="btnHoje" class="w-full text-center text-sm font-semibold text-slate-900 hover:bg-blue-50 mt-4 py-2.5 rounded-full active:scale-95 transition-colors">Ir para o mês atual</button>
+                            <button type="button" id="btnHoje" class="w-full text-center text-sm font-semibold text-[#4D6BFE] hover:bg-[#4D6BFE]/10 mt-4 py-2.5 rounded-full active:scale-95 transition-colors">Ir para o mês atual</button>
                         </div>
                         <button type="button" id="btnMesProx" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&rsaquo;</button>
                     </div>
@@ -4163,7 +4163,7 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 const btn = document.createElement('button'); const ativo = (idx === dataFiltro.getMonth() && anoSeletor === dataFiltro.getFullYear());
                 btn.type = 'button'; 
                 // Atualizado para rounded-full e hover azuladinho
-                btn.className = `text-xs font-semibold py-2 rounded-full transition-colors ${ativo ? 'bg-slate-900 text-white shadow-md shadow-[#4D6BFE]/20' : 'hover:bg-blue-50 text-slate-600'}`;
+                btn.className = `text-xs font-semibold py-2 rounded-full transition-colors ${ativo ? 'bg-[#4D6BFE] text-white shadow-md shadow-[#4D6BFE]/20' : 'hover:bg-[#4D6BFE]/10 text-slate-600'}`;
                 btn.textContent = nome.substring(0, 3);
                 btn.addEventListener('click', () => { dataFiltro.setFullYear(anoSeletor); dataFiltro.setMonth(idx); renderizarMesTopo(); fecharPainelMes(); });
                 gridMeses.appendChild(btn);

@@ -4470,7 +4470,7 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     
                     // Versão mobile: sem truncate, sem uppercase, com quebra de linha
                     const subValMobile = transacao.subcategoria ? `<span class="opacity-50 px-2.5 shrink-0">›</span><span class="opacity-80 font-semibold">${transacao.subcategoria}</span>` : '';
-                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 self-center mr-2.5">${getSVGIcon(iconeSvgStr, 'w-4 h-4')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
+                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 self-center mr-5">${getSVGIcon(iconeSvgStr, 'w-4 h-4')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
                     
                     let htmlValor = `<div class="font-bold tracking-tight valor-sensivel ${ehReceita ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${ehReceita ? '+' : '-'} ${formatMoeda(transacao.valorTotalNoMes)}</div>`;
                     if (transacao.totalParcelas > 1 && !transacao.isRecorrente) {

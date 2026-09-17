@@ -4409,6 +4409,16 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     });
                 }
 
+                // Totais baseados no filtro ativo (para o rodapé do Extrato)
+                let totalRecFiltro = 0;
+                let totalDespFiltro = 0;
+                arrayTransacoes.forEach(t => {
+                    if (t.ocultoExtrato || t.isAjuste) return;
+                    const isR = (t.tipo === 'Receita' || t.natureza === 'Receita');
+                    if (isR) totalRecFiltro += t.valorTotalNoMes;
+                    else totalDespFiltro += t.valorTotalNoMes;
+                });
+
                 let diaAnterior = null;
                 const nomesDiasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
                 
@@ -4599,14 +4609,14 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             cardDespesasMes.textContent = formatMoeda(totalDespesasDoMes);
             cardDespesasMes.style.color = totalDespesasDoMes > 0.005 ? '#E11D48' : '#0F172A';
             
-            // Totalizador do rodapé do Extrato
+            // Totalizador do rodapé do Extrato — reflete o filtro ativo
             const elRodRec = document.getElementById('rodapeExtratoRec');
             const elRodDesp = document.getElementById('rodapeExtratoDesp');
             const elRodSaldo = document.getElementById('rodapeExtratoSaldo');
-            if (elRodRec) elRodRec.textContent = formatMoeda(totalReceitasDoMes);
-            if (elRodDesp) elRodDesp.textContent = formatMoeda(totalDespesasDoMes);
+            if (elRodRec) elRodRec.textContent = formatMoeda(totalRecFiltro);
+            if (elRodDesp) elRodDesp.textContent = formatMoeda(totalDespFiltro);
             if (elRodSaldo) {
-                const saldoMes = totalReceitasDoMes - totalDespesasDoMes;
+                const saldoMes = totalRecFiltro - totalDespFiltro;
                 elRodSaldo.textContent = formatMoeda(saldoMes);
                 elRodSaldo.className = 'text-slate-900 dark:text-gray-200 font-bold valor-sensivel';
                 if (saldoMes < -0.005) elRodSaldo.classList.add('text-red-600', 'dark:text-red-400');

@@ -4469,8 +4469,8 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     const catDisplay = `<div class="opacity-80 flex-shrink-0 flex items-center justify-center mr-1.5">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-xs truncate flex-1 min-w-0 pt-[1px]">${transacao.categoria || 'Outros'}${subVal}</div>`;
                     
                     // Versão mobile: sem truncate, sem uppercase, com quebra de linha
-                    const subValMobile = transacao.subcategoria ? `<span class="opacity-50 mx-2 font-normal">›</span><span class="opacity-80 font-semibold">${transacao.subcategoria}</span>` : '';
-                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 flex items-center justify-center mr-3.5 mt-[2px]">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
+                    const subValMobile = transacao.subcategoria ? `<span class="opacity-50 mx-3.5 font-normal">›</span><span class="opacity-80 font-semibold">${transacao.subcategoria}</span>` : '';
+                    const catDisplayMobile = `<div class="opacity-70 flex-shrink-0 flex items-center justify-center mr-4">${getSVGIcon(iconeSvgStr, 'w-3.5 h-3.5')}</div><div class="text-[11.5px] flex-1 min-w-0 leading-snug break-words">${transacao.categoria || 'Outros'}${subValMobile}</div>`;
                     
                     let htmlValor = `<div class="font-bold tracking-tight valor-sensivel ${ehReceita ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${ehReceita ? '+' : '-'} ${formatMoeda(transacao.valorTotalNoMes)}</div>`;
                     if (transacao.totalParcelas > 1 && !transacao.isRecorrente) {
@@ -4571,7 +4571,7 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                                     <div class="font-semibold text-slate-800 dark:text-gray-200 text-sm leading-tight flex items-center gap-1.5 flex-wrap">
                                         ${descDisplay}
                                     </div>
-                                    <div class="text-slate-500 dark:text-gray-400 mt-1.5 flex items-start font-medium w-full">
+                                    <div class="text-slate-500 dark:text-gray-400 mt-1.5 flex items-center font-medium w-full">
                                         ${catDisplayMobile}
                                     </div>
                                 </div>

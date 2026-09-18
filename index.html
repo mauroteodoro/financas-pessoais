@@ -878,7 +878,7 @@ select:focus, select:focus-visible {
         </div>
 
         <!-- Modal Importar -->
-        <div id="modalImportar" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[500] backdrop-blur-sm transition-opacity px-4">
+        <div id="modalImportar" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[6000] backdrop-blur-sm transition-opacity px-4">
             <div class="bg-white dark:bg-[#121b2b] p-5 sm:p-6 rounded-2xl w-full max-w-md card-shadow border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform">
                 <h3 class="text-lg font-bold text-slate-900 mb-3 font-montserrat">Importar Backup</h3>
                 <p class="text-sm text-slate-600 dark:text-gray-300 mb-4">Isso vai <strong>substituir todos os dados atuais</strong> pelos do arquivo de backup selecionado. Essa ação não pode ser desfeita. Continuar?</p>
@@ -2182,6 +2182,16 @@ select:focus, select:focus-visible {
             const modal = document.getElementById(idModal);
             if (!modal) return;
             const content = idConteudo ? document.getElementById(idConteudo) : modal.children[0];
+            
+            // 🎯 TELEPORTE: move o modal para o <body> na primeira abertura.
+            // Isso é essencial porque o conteúdo principal vive num wrapper com
+            // "relative z-[90]", que cria um stacking context isolado. Qualquer z-index
+            // dentro dele fica PRESO abaixo da faixa sticky de datas. Movendo o modal
+            // para o <body>, ele escapa do contexto e sobrepõe tudo — mobile e desktop.
+            if (modal.parentElement !== document.body) {
+                document.body.appendChild(modal);
+            }
+            
             travarScroll();
             modal.classList.remove('hidden');
             modal.classList.add(displayClass);
@@ -4227,7 +4237,9 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
         window.togglePago = function(idUnico, anoMesStr) {
             let item = bancoDeDados.find(d => d.id === idUnico);
             if(item) {
-                if (item.tipo === 'À Vista' || item.subcategoria === 'Ajuste Manual') return;
+                // 🎯 Só Ajustes Manuais são imutáveis (nascem pagos e representam correções de saldo).
+                // Qualquer outro lançamento — mesmo À Vista — pode ser pendente e depois efetivado.
+                if (item.subcategoria === 'Ajuste Manual' || item.isAjuste) return;
                 
                 let timestamp = getTimestampAtual();
                 let efData = item.dataEfetivacao || item.vencimento;
@@ -4364,8 +4376,10 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     }
                     transacoesAgrupadas[idGrupo].valorTotalNoMes += valorFloat(despesa.valor);
                     let isR = despesa.tipo === 'Receita' || despesa.natureza === 'Receita';
-                    if(!isR && !despesa.isAjuste) totalDespesasDoMes += valorFloat(despesa.valor);
-                    if(isR && !despesa.isAjuste && !despesa.ocultoExtrato) totalReceitasDoMes += valorFloat(despesa.valor);
+                    // 🎯 Os totais do topo só contam lançamentos JÁ EFETIVADOS.
+                    // Pendentes aparecem no Extrato, mas NÃO compõem os cards de saldo.
+                    if(!isR && !despesa.isAjuste && despesa.pago) totalDespesasDoMes += valorFloat(despesa.valor);
+                    if(isR && !despesa.isAjuste && !despesa.ocultoExtrato && despesa.pago) totalReceitasDoMes += valorFloat(despesa.valor);
                 }); 
 
                 let arrayTransacoes = Object.values(transacoesAgrupadas);
@@ -4492,11 +4506,12 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                         htmlValor += `<div class="text-[10px] text-slate-400/80 dark:text-gray-500 mt-0.5 font-normal leading-tight" title="Valor total da compra">Total: ${formatMoeda(valorTotalDaCompra)}</div>`;
                     }
 
-                    let isImutavel = transacao.tipo === 'À Vista' || transacao.subcategoria === 'Ajuste Manual';
+                    // 🎯 Só Ajustes Manuais são imutáveis. Qualquer outro lançamento pode alternar pago/pendente.
+                    let isImutavel = transacao.subcategoria === 'Ajuste Manual' || transacao.isAjuste;
                     let iconeCheck = `<svg class="w-6 h-6 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
                     let iconeClock = `<svg class="w-6 h-6 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
                     
-                    let statusTooltip = isImutavel ? 'Este lançamento já está efetivado e não pode ser alterado.' : (transacao.pago ? (transacao.dataPagamento ? `Pago em ${transacao.dataPagamento}. Clique p/ reabrir.` : `Efetuado. Clique p/ reabrir.`) : `Pendente. Clique para marcar como efetuado.`);
+                    let statusTooltip = isImutavel ? 'Lançamento gerado por reajuste de saldo. Não pode ser alterado.' : (transacao.pago ? (transacao.dataPagamento ? `Pago em ${transacao.dataPagamento}. Clique p/ reabrir.` : `Efetuado. Clique p/ reabrir.`) : `Pendente. Clique para marcar como efetuado.`);
                     let statusBtnClass = transacao.pago ? `text-green-500 ${!isImutavel ? 'hover:text-green-600 dark:text-green-400' : ''}` : `text-amber-500 hover:text-green-500 dark:text-amber-500 dark:hover:text-green-400`;
                     let cursorClass = isImutavel ? 'cursor-not-allowed opacity-80' : 'cursor-pointer';
                     let disabledAttr = isImutavel ? 'disabled' : '';
@@ -4685,14 +4700,17 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 baseSalario = parseFloat(saldoBaseMensalGlobal[strMesAno].salario || 0);
             }
 
-            // 3. Aplica as MESMAS regras do card atual (origem define o balde)
-            const receitaSalario = visiveis.filter(d => isRec(d) && d.pago && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoSalario = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+            // 3. Aplica as MESMAS regras do card atual (origem define o balde).
+            // 🎯 Só conta o que foi efetivado — coerente com o comportamento dos cards de Resumo.
+            const visiveisEfetivados = visiveis.filter(d => d.pago === true);
 
-            const gastoVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const rendaExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaSalario = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoSalario = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+
+            const gastoVale = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Vale' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaVale = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Vale' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const rendaExtra = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Extra' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoExtra = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Extra' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
 
             // 4. Verifica se há override no Salário desse mês
             const overrideSal = saldoBaseMensalGlobal[strMesAno]?.overrideSalario;
@@ -4745,6 +4763,10 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             const visiveis = despesasFiltradas.filter(d => !d.ocultoExtrato && !d.isAjuste);
             const isRec = d => (d.tipo === 'Receita' || d.natureza === 'Receita');
 
+            // 🎯 REGRA CENTRAL: os cards de Resumo refletem apenas a REALIDADE já efetivada.
+            // Lançamentos pendentes NÃO compõem os saldos — eles aparecem somente nas projeções.
+            const visiveisEfetivados = visiveis.filter(d => d.pago === true);
+
             // AJUSTES: respeitam SEMPRE o alvo escolhido (Salário, Vale, ou Extra para Geral/Conta).
             // DESPESAS: compõem pela origem (Vale/Salário/Extra).
             // RECEITAS: só compõem se o usuário ativou o toggle 'Compor Resumo do Mês'.
@@ -4766,18 +4788,18 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 }
             };
 
-            // === SALÁRIO === (só o que tem origem='Salário' compõe este card)
-            const receitaSalarioItens = visiveis.filter(d => isRec(d) && d.pago && alvoComposicao(d) === 'Salário');
+            // === SALÁRIO === (só o que tem origem='Salário' E já foi efetivado compõe este card)
+            const receitaSalarioItens = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Salário');
             const receitaSalario = receitaSalarioItens.reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoSalario = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoSalario = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
 
-            // === VALE === (só o que tem origem='Vale' compõe este card)
-            const gastoVale = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaVale = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
+            // === VALE === (só o que tem origem='Vale' E já foi efetivado compõe este card)
+            const gastoVale = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaVale = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
             
-            // === EXTRA === (receitas/despesas que não são do Salário nem do Vale)
-            const rendaExtra = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoExtra = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
+            // === EXTRA === (receitas/despesas efetivadas que não são do Salário nem do Vale)
+            const rendaExtra = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoExtra = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
             
             // Verifica se o usuário fez override manual no card do Salário
             const chaveOverride = window.chaveMes(dataFiltro);

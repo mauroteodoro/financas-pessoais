@@ -227,12 +227,26 @@ select:focus, select:focus-visible {
             .hover-scrollbar::-webkit-scrollbar { display: none; }
         }
 
-        /* 7. Header respeitando o notch / Dynamic Island */
+        /* 7. Header respeitando o notch / Dynamic Island.
+           O padding lateral SOMA a safe-area (notch) com um respiro fixo,
+           para que os botões nunca colem na borda — nem no mobile, nem no desktop. */
         #mainHeader {
             min-height: calc(var(--header-h) + var(--safe-top)) !important;
             padding-top: var(--safe-top) !important;
-            padding-left: var(--safe-left) !important;
-            padding-right: var(--safe-right) !important;
+            padding-left: calc(var(--safe-left) + 1rem) !important;   /* 16px de respiro */
+            padding-right: calc(var(--safe-right) + 1rem) !important;
+        }
+        @media (min-width: 640px) {
+            #mainHeader {
+                padding-left: calc(var(--safe-left) + 2rem) !important;   /* 32px */
+                padding-right: calc(var(--safe-right) + 2rem) !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            #mainHeader {
+                padding-left: calc(var(--safe-left) + 2.5rem) !important; /* 40px */
+                padding-right: calc(var(--safe-right) + 2.5rem) !important;
+            }
         }
         /* 8. Conteúdo abaixo do header — offset dinâmico.
            Usamos padding-top generoso o suficiente para acomodar o header mesmo
@@ -532,6 +546,26 @@ select:focus, select:focus-visible {
                 </div>
                 
                 <div class="space-y-3 px-1 -mx-1 pb-3 pt-0.5 flex-1 overflow-y-auto no-scrollbar">
+                    <!-- 🎯 NOVO: Histórico de Ações (apenas mobile) -->
+                    <div class="sm:hidden pb-1">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-2">Histórico de Ações</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="desfazer()" disabled title="Desfazer"
+                                    class="js-undo-btn flex items-center justify-center gap-2 bg-slate-100 dark:bg-[#1a2639] hover:bg-slate-200 dark:hover:bg-[#2a3850] text-slate-700 dark:text-gray-200 font-semibold py-2.5 rounded-xl transition-colors active:scale-95 opacity-40 cursor-not-allowed">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                                </svg>
+                                <span class="text-xs">Desfazer</span>
+                            </button>
+                            <button type="button" onclick="refazer()" disabled title="Refazer"
+                                    class="js-redo-btn flex items-center justify-center gap-2 bg-slate-100 dark:bg-[#1a2639] hover:bg-slate-200 dark:hover:bg-[#2a3850] text-slate-700 dark:text-gray-200 font-semibold py-2.5 rounded-xl transition-colors active:scale-95 opacity-40 cursor-not-allowed">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+                                </svg>
+                                <span class="text-xs">Refazer</span>
+                            </button>
+                        </div>
+                    </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-1">Nome no Sistema</label>
                         <input type="text" id="perfilNome" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg px-3 py-2 focus:bg-white focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-sm">
@@ -1259,10 +1293,10 @@ select:focus, select:focus-visible {
           </div> <!-- Fim Wrapper Invisível -->
         </div> <!-- Fim modalNovoLancamento -->
         
-                                <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 flex flex-wrap sm:flex-nowrap items-center gap-x-1 sm:gap-x-2 gap-y-2 px-2 sm:px-8 lg:px-10 py-2 z-[300] shadow-sm border-b border-slate-200">
+                                        <!-- CABEÇALHO PRINCIPAL -->
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 flex flex-wrap sm:flex-nowrap items-center gap-x-2 gap-y-2 px-4 sm:px-8 lg:px-10 py-2 z-[300] shadow-sm border-b border-slate-200">
 
-            <!-- IDENTIDADE — linha própria no mobile (w-full), inline no desktop -->
+            <!-- IDENTIDADE — linha própria no mobile -->
             <div class="w-full sm:w-auto flex items-center gap-2.5 min-w-0 shrink-0">
                 <button type="button" onclick="abrirModalPerfil()" title="Configurações do Perfil"
                         class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 transition-all active:scale-95">
@@ -1274,30 +1308,21 @@ select:focus, select:focus-visible {
                 </div>
             </div>
 
-            <!-- DESFAZER — 1º na linha 2 mobile · 4º à direita no desktop -->
-            <button type="button" id="btnUndo" onclick="desfazer()" title="Desfazer" disabled
-                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-2 sm:order-5 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </svg>
-            </button>
-
-            <!-- REFAZER — 2º na linha 2 mobile · 5º à direita no desktop -->
-            <button type="button" id="btnRedo" onclick="refazer()" title="Refazer" disabled
-                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-3 sm:order-6 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" />
-                </svg>
-            </button>
-
-            <!-- LUPA — 3º na linha 2 mobile · 1º à direita no desktop (ml-auto abre o bloco da direita) -->
+            <!-- LUPA — 1º da linha 2 mobile · ponta direita no desktop (ml-auto) -->
             <button type="button" id="btnBuscaGlobal" title="Buscar em todos os meses"
-                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-4 sm:order-2 sm:ml-auto bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-2 sm:order-2 sm:ml-auto bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"></path></svg>
             </button>
 
-            <!-- SELETOR DE MÊS — centro da linha 2 no mobile · centro absoluto no desktop -->
-            <div class="order-5 flex-1 sm:flex-initial sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex justify-center min-w-0">
+            <!-- OLHO — 2º da linha 2 mobile · 3º à direita no desktop -->
+            <button type="button" id="btnOcultarSaldos"
+                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-3 sm:order-4 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                <svg id="iconOlhoAberto" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                <svg id="iconOlhoFechado" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
+            </button>
+
+            <!-- SELETOR DE MÊS — centro da linha 2 mobile · centro absoluto no desktop -->
+            <div class="order-4 flex-1 sm:flex-initial sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex justify-center min-w-0">
                 <div class="flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 h-8 sm:h-11 shadow-sm">
                     <button type="button" id="btnMesAnt"
                             class="w-6 h-6 sm:w-9 sm:h-9 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&lsaquo;</button>
@@ -1310,8 +1335,8 @@ select:focus, select:focus-visible {
                 </div>
             </div>
 
-            <!-- NOVA AÇÃO (+) — 5º na linha 2 mobile · 2º à direita no desktop -->
-            <div class="order-6 sm:order-3 relative z-[500] shrink-0">
+            <!-- NOVA AÇÃO (+) — 4º da linha 2 mobile · 2º à direita no desktop -->
+            <div class="order-5 sm:order-3 relative z-[500] shrink-0">
                 <button type="button" id="btnAcaoPrincipal" title="Nova Ação"
                         class="w-8 h-8 sm:w-11 sm:h-11 bg-[#4D6BFE] hover:bg-[#4338CA] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#4D6BFE]/20 hover:shadow-xl hover:shadow-[#4D6BFE]/30 hover:scale-105 transition-all duration-200 active:scale-90 font-normal text-xl sm:text-3xl pb-0.5 sm:pb-1.5">+</button>
                 <div id="menuAcaoPrincipal" class="hidden absolute top-full right-0 mt-3 w-48 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-xl dropdown-anim overflow-hidden py-2">
@@ -1330,16 +1355,25 @@ select:focus, select:focus-visible {
                 </div>
             </div>
 
-            <!-- OLHO — 6º na linha 2 mobile · 3º à direita no desktop -->
-            <button type="button" id="btnOcultarSaldos"
-                    class="w-8 h-8 sm:w-11 sm:h-11 shrink-0 order-7 sm:order-4 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
-                <svg id="iconOlhoAberto" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                <svg id="iconOlhoFechado" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
+            <!-- DESFAZER — apenas desktop (mobile vive no modal de Perfil) -->
+            <button type="button" id="btnUndo" onclick="desfazer()" title="Desfazer" disabled
+                    class="hidden sm:flex js-undo-btn w-11 h-11 shrink-0 sm:order-5 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                </svg>
             </button>
 
-            <!-- SAIR — apenas mobile, 7º e último na linha 2 -->
+            <!-- REFAZER — apenas desktop -->
+            <button type="button" id="btnRedo" onclick="refazer()" title="Refazer" disabled
+                    class="hidden sm:flex js-redo-btn w-11 h-11 shrink-0 sm:order-6 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+                </svg>
+            </button>
+
+            <!-- SAIR — apenas mobile, 5º e último da linha 2 -->
             <button type="button" onclick="fazerLogout()" title="Sair do Sistema"
-                    class="w-8 h-8 shrink-0 order-8 sm:hidden bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    class="w-8 h-8 shrink-0 order-6 sm:hidden bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
@@ -7760,22 +7794,24 @@ const inputDesc = document.getElementById('descricao');
         let _aplicandoSnapshot = false; // Trava contra reentrância
 
         function atualizarBotoesUndoRedo() {
-            const btnU = document.getElementById('btnUndo');
-            const btnR = document.getElementById('btnRedo');
-            const aplicar = (btn, stack, rotulo) => {
-                if (!btn) return;
-                if (stack.length > 0) {
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
-                    btn.title = `${rotulo}: ${stack[stack.length - 1].nome}`;
-                } else {
-                    btn.disabled = true;
-                    btn.classList.add('opacity-40', 'cursor-not-allowed');
-                    btn.title = `Nada para ${rotulo.toLowerCase()}`;
-                }
+            // 🎯 Existem DOIS pares de botões: um no header (desktop) e um dentro
+            // do modal de perfil (mobile). Buscamos por classe para atualizar ambos.
+            const aplicar = (btns, stack, rotulo) => {
+                if (!btns || !btns.length) return;
+                btns.forEach(btn => {
+                    if (stack.length > 0) {
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                        btn.title = `${rotulo}: ${stack[stack.length - 1].nome}`;
+                    } else {
+                        btn.disabled = true;
+                        btn.classList.add('opacity-40', 'cursor-not-allowed');
+                        btn.title = `Nada para ${rotulo.toLowerCase()}`;
+                    }
+                });
             };
-            aplicar(btnU, undoStack, 'Desfazer');
-            aplicar(btnR, redoStack, 'Refazer');
+            aplicar(document.querySelectorAll('.js-undo-btn'), undoStack, 'Desfazer');
+            aplicar(document.querySelectorAll('.js-redo-btn'), redoStack, 'Refazer');
         }
 
         // Captura o estado atual e empilha para permitir desfazer.

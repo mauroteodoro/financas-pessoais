@@ -1345,10 +1345,10 @@ select:focus, select:focus-visible {
                 <main id="abaCaixa" class="pb-24 relative block w-full">
                     
                     <!-- TELA: RESUMO -->
-                    <div id="viewResumo" class="block space-y-4 md:space-y-5">
+                    <div id="viewResumo" class="block bg-white dark:bg-transparent space-y-6 md:space-y-8">
 
                         <!-- PAINEL 1: Saldo Total + 3 indicadores (superfície única) -->
-                        <div class="overflow-hidden anim-fade-up">
+                        <div class="anim-fade-up">
 
                             <!-- Hero — Saldo Total (superfície limpa) -->
                             <div class="px-5 md:px-6 pt-6 pb-5 border-b border-slate-100">
@@ -7008,7 +7008,7 @@ window.checkRateio = function() {
                 let b = BANCOS[c.banco || 'carteira'] || BANCOS['outros'];
 
                 let div = document.createElement('div');
-                div.className = "min-w-[150px] sm:min-w-[170px] bg-gradient-to-br from-white to-[#F8FAFC] dark:from-[#0b1120] dark:to-[#0b1120] p-4 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none border border-blue-50/80 dark:border-[#1e2a40] shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative";
+                div.className = "min-w-[150px] sm:min-w-[170px] bg-white dark:bg-[#0b1120] p-4 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none border border-slate-100/80 dark:border-[#1e2a40] shadow-[0_2px_8px_rgb(0,0,0,0.04),0_8px_20px_-8px_rgb(0,0,0,0.06)] relative";
                 div.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease';
                 div.dataset.contaId = c.id;
 

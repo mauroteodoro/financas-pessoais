@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -4378,10 +4378,11 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     }
                     transacoesAgrupadas[idGrupo].valorTotalNoMes += valorFloat(despesa.valor);
                     let isR = despesa.tipo === 'Receita' || despesa.natureza === 'Receita';
-                    // 🎯 Os totais do topo só contam lançamentos JÁ EFETIVADOS.
-                    // Pendentes aparecem no Extrato, mas NÃO compõem os cards de saldo.
-                    if(!isR && !despesa.isAjuste && despesa.pago) totalDespesasDoMes += valorFloat(despesa.valor);
-                    if(isR && !despesa.isAjuste && !despesa.ocultoExtrato && despesa.pago) totalReceitasDoMes += valorFloat(despesa.valor);
+                    // 🎯 Card "Despesas do Mês" conta TODAS as despesas (pendentes + efetivadas).
+                    // A efetivação é critério apenas das CONTAS.
+                    // Receitas no card só somam se o usuário ativou 'Compor Resumo do Mês'.
+                    if(!isR && !despesa.isAjuste) totalDespesasDoMes += valorFloat(despesa.valor);
+                    if(isR && !despesa.isAjuste && !despesa.ocultoExtrato && despesa.compoeResumo) totalReceitasDoMes += valorFloat(despesa.valor);
                 }); 
 
                 let arrayTransacoes = Object.values(transacoesAgrupadas);
@@ -4703,16 +4704,14 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             }
 
             // 3. Aplica as MESMAS regras do card atual (origem define o balde).
-            // 🎯 Só conta o que foi efetivado — coerente com o comportamento dos cards de Resumo.
-            const visiveisEfetivados = visiveis.filter(d => d.pago === true);
+            // 🎯 Coerente com os cards de Resumo: despesas pendentes também compõem.
+            const receitaSalario = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoSalario = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
 
-            const receitaSalario = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoSalario = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
-
-            const gastoVale = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Vale' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaVale = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Vale' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const rendaExtra = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Extra' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoExtra = visiveisEfetivados.filter(d => alvoComposicao(d) === 'Extra' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaVale = visiveis.filter(d => alvoComposicao(d) === 'Vale' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const rendaExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoExtra = visiveis.filter(d => alvoComposicao(d) === 'Extra' && !isRec(d)).reduce((s, d) => s + valorFloat(d.valor), 0);
 
             // 4. Verifica se há override no Salário desse mês
             const overrideSal = saldoBaseMensalGlobal[strMesAno]?.overrideSalario;
@@ -4765,12 +4764,12 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             const visiveis = despesasFiltradas.filter(d => !d.ocultoExtrato && !d.isAjuste);
             const isRec = d => (d.tipo === 'Receita' || d.natureza === 'Receita');
 
-            // 🎯 REGRA CENTRAL: os cards de Resumo refletem apenas a REALIDADE já efetivada.
-            // Lançamentos pendentes NÃO compõem os saldos — eles aparecem somente nas projeções.
-            const visiveisEfetivados = visiveis.filter(d => d.pago === true);
+            // 🎯 REGRA: os cards do Resumo representam a FOTOGRAFIA do mês.
+            // Despesas pendentes SÃO incluídas (elas vão sair). Receitas pendentes só entram
+            // se o usuário ativou 'Compor Resumo do Mês'. A efetivação é critério apenas das CONTAS.
 
             // AJUSTES: respeitam SEMPRE o alvo escolhido (Salário, Vale, ou Extra para Geral/Conta).
-            // DESPESAS: compõem pela origem (Vale/Salário/Extra).
+            // DESPESAS: compõem pela origem (Vale/Salário/Extra), pendentes ou efetivadas.
             // RECEITAS: só compõem se o usuário ativou o toggle 'Compor Resumo do Mês'.
             const alvoComposicao = d => {
                 if (d.isAjuste) {
@@ -4790,18 +4789,18 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 }
             };
 
-            // === SALÁRIO === (só o que tem origem='Salário' E já foi efetivado compõe este card)
-            const receitaSalarioItens = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Salário');
+            // === SALÁRIO === (despesas do salário entram sempre; receitas só se compuserem)
+            const receitaSalarioItens = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Salário');
             const receitaSalario = receitaSalarioItens.reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoSalario = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoSalario = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Salário').reduce((s, d) => s + valorFloat(d.valor), 0);
 
-            // === VALE === (só o que tem origem='Vale' E já foi efetivado compõe este card)
-            const gastoVale = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const receitaVale = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
+            // === VALE === (despesas do vale entram sempre; receitas só se compuserem)
+            const gastoVale = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const receitaVale = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Vale').reduce((s, d) => s + valorFloat(d.valor), 0);
             
-            // === EXTRA === (receitas/despesas efetivadas que não são do Salário nem do Vale)
-            const rendaExtra = visiveisEfetivados.filter(d => isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
-            const gastoExtra = visiveisEfetivados.filter(d => !isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
+            // === EXTRA === (receitas/despesas que não são do Salário nem do Vale)
+            const rendaExtra = visiveis.filter(d => isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
+            const gastoExtra = visiveis.filter(d => !isRec(d) && alvoComposicao(d) === 'Extra').reduce((s, d) => s + valorFloat(d.valor), 0);
             
             // Verifica se o usuário fez override manual no card do Salário
             const chaveOverride = window.chaveMes(dataFiltro);

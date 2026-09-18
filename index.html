@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -6267,11 +6267,32 @@ window.checkRateio = function() {
             configurarEventosMascaraMoeda(inp);
 
             if (!inp.parentNode.classList.contains('has-calc-wrapper')) {
-                const wrapper = document.createElement('div'); wrapper.className = 'relative w-full has-calc-wrapper';
-                inp.parentNode.insertBefore(wrapper, inp); wrapper.appendChild(inp); inp.style.paddingRight = '2.5rem';
-                const btnCalc = document.createElement('button'); btnCalc.type = 'button';
-                btnCalc.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 dark:hover:text-cyan-500 transition-colors p-1 active:scale-90 z-10';
-                btnCalc.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`;
+                // 🎯 Detecta o contexto visual do input para posicionar o botão corretamente.
+                // Inputs com border-b (layout minimalista do modal de lançamento) precisam
+                // do botão colado na borda inferior direita, sem padding-right extra.
+                // Inputs com border completa (caixas) usam o posicionamento tradicional.
+                const ehMinimalista = inp.classList.contains('border-b') && !inp.classList.contains('border');
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'relative w-full has-calc-wrapper';
+                inp.parentNode.insertBefore(wrapper, inp);
+                wrapper.appendChild(inp);
+
+                const btnCalc = document.createElement('button');
+                btnCalc.type = 'button';
+
+                if (ehMinimalista) {
+                    // Alinhado à direita, verticalmente centrado na linha do border-b
+                    inp.style.paddingRight = '1.75rem';
+                    btnCalc.className = 'absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 dark:hover:text-cyan-500 transition-colors p-0.5 active:scale-90 z-10';
+                    btnCalc.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`;
+                } else {
+                    // Posicionamento tradicional para inputs em "caixa"
+                    inp.style.paddingRight = '2.5rem';
+                    btnCalc.className = 'absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 dark:hover:text-cyan-500 transition-colors p-1 active:scale-90 z-10';
+                    btnCalc.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`;
+                }
+
                 btnCalc.addEventListener('click', function(e) { e.stopPropagation(); abrirCalculadora(inp); });
                 wrapper.appendChild(btnCalc);
             }

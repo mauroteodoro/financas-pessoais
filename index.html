@@ -1253,7 +1253,7 @@ select:focus, select:focus-visible {
         </div> <!-- Fim modalNovoLancamento -->
         
         <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 min-h-[4rem] sm:min-h-[5rem] flex items-center z-[300] shadow-sm border-b border-slate-200">
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 h-16 sm:h-20 flex items-center z-[300] shadow-sm border-b border-slate-200">
             <div class="max-w-[1700px] mx-auto w-full flex justify-between items-center gap-1.5 sm:gap-2 px-2.5 sm:px-6 lg:px-8">
                 
                 <div class="flex items-center gap-1.5 sm:gap-3 select-none min-w-0 flex-1">
@@ -1262,7 +1262,7 @@ select:focus, select:focus-visible {
                     </div>
                     <div class="flex flex-col leading-tight min-w-0 flex-1">
                         <span class="hidden sm:inline text-[9px] sm:text-xs font-medium text-slate-500">Olá,</span>
-                        <h1 id="headerNome" class="text-sm sm:text-lg font-bold tracking-tight text-slate-900 break-words line-clamp-2">Mauro</h1>
+                        <h1 id="headerNome" class="font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-200" style="font-size: 1.125rem;">Mauro</h1>
                     </div>
                 </div>
 
@@ -4090,8 +4090,33 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
         });
 
         // ===================== PERFIL =====================
+        function ajustarFonteNomeHeader(nome) {
+            // 🎯 Ajusta o tamanho da fonte do nome conforme o comprimento,
+            // mantendo-o SEMPRE em uma única linha. Escala profissional:
+            // nomes curtos ficam grandes e imponentes, nomes longos encolhem
+            // suavemente sem quebrar nem estourar o header.
+            const el = document.getElementById('headerNome');
+            if (!el) return;
+
+            const comprimento = (nome || '').length;
+            const ehMobile = window.innerWidth < 640;
+
+            // Tamanhos em rem (escala base para desktop; ajustado para mobile)
+            let tamanho;
+            if (comprimento <= 6)       tamanho = ehMobile ? 1.125 : 1.25;   // ex: "Mauro"
+            else if (comprimento <= 10) tamanho = ehMobile ? 1.0625 : 1.1875; // ex: "Mauro Silva"
+            else if (comprimento <= 14) tamanho = ehMobile ? 1.0    : 1.125;  // ex: "Mauro Santos"
+            else if (comprimento <= 18) tamanho = ehMobile ? 0.9375 : 1.0625; // ex: "Isabella Ribeiro"
+            else if (comprimento <= 22) tamanho = ehMobile ? 0.875  : 1.0;    // ex: "Isabella Ribeiro Silva"
+            else                        tamanho = ehMobile ? 0.8125 : 0.9375; // ex: nomes muito longos
+
+            el.style.fontSize = tamanho + 'rem';
+        }
+
         function aplicarPerfilVisual() {
-            if(document.getElementById('headerNome')) document.getElementById('headerNome').textContent = meuPerfil.nome || 'MAURO SANTOS';
+            const nomeCompleto = meuPerfil.nome || 'Mauro Santos';
+            if(document.getElementById('headerNome')) document.getElementById('headerNome').textContent = nomeCompleto;
+            ajustarFonteNomeHeader(nomeCompleto);
             
             // Cartões Reais (Aba Resumo) — nova estrutura Fase 2
             const cardVale = document.getElementById('cardSaldoVale')?.closest('.bg-white');
@@ -7508,6 +7533,18 @@ const inputDesc = document.getElementById('descricao');
             if (!dentroMenu && !noBotaoKebab) {
                 document.querySelectorAll('.menu-acoes-extrato').forEach(m => m.classList.add('hidden'));
             }
+        });
+
+        // 🎯 Reajusta o tamanho da fonte do nome no header ao redimensionar/rotacionar.
+        // Como mobile e desktop têm escalas diferentes, precisamos reavaliar.
+        let _timerResizeNome = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(_timerResizeNome);
+            _timerResizeNome = setTimeout(() => {
+                if (typeof ajustarFonteNomeHeader === 'function') {
+                    ajustarFonteNomeHeader(meuPerfil.nome || 'Mauro Santos');
+                }
+            }, 150);
         });
 
         setTimeout(() => { renderizarCarrosselContas(); }, 1500);        

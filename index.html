@@ -2698,6 +2698,16 @@ select:focus, select:focus-visible {
             if(e) e.stopPropagation();
             const input = document.getElementById(inputId);
             if (input && input.disabled) return;
+
+            // 🎯 TOGGLE: se o calendário já está aberto para ESTE input, fecha e para.
+            // Isso permite abrir/fechar com o mesmo botão sem precisar clicar fora.
+            const menuJaAberto = document.getElementById(menuId);
+            if (menuJaAberto && !menuJaAberto.classList.contains('hidden') && window.calSimplesMenuAlvo === menuId) {
+                menuJaAberto.classList.add('hidden');
+                window.calSimplesMenuAlvo = '';
+                window.calSimplesInputAlvo = '';
+                return;
+            }
             
             window.calSimplesInputAlvo = inputId;
             window.calSimplesMenuAlvo = menuId;
@@ -2758,6 +2768,18 @@ select:focus, select:focus-visible {
                 menu.style.bottom = (window.innerHeight - rect.top + 6) + 'px';
             }
         }
+
+        // 🎯 Fecha qualquer calendário simples aberto ao rolar a página.
+        // Sem isso, o calendário fica "flutuando" no lugar antigo enquanto o resto rola.
+        window.addEventListener('scroll', function() {
+            if (!window.calSimplesMenuAlvo) return;
+            const menu = document.getElementById(window.calSimplesMenuAlvo);
+            if (menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                window.calSimplesMenuAlvo = '';
+                window.calSimplesInputAlvo = '';
+            }
+        }, { passive: true, capture: true });
 
         window.renderizarCalendarioSimples = function() {
             const menu = document.getElementById(window.calSimplesMenuAlvo);
@@ -4227,7 +4249,24 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             });
         }
         renderListaTiposCompra();
-        btnTipoCompra.addEventListener('click', (e) => { window.abrirMenuExclusivo('menuTipoCompra', e); });
+        btnTipoCompra.addEventListener('click', (e) => {
+            const box = document.getElementById('boxRateio');
+            // 🎯 TOGGLE: se o painel de parcelamento está aberto, fechar e voltar
+            // ao dropdown normal. Caso contrário, abre a lista de tipos de compra.
+            if (box && !box.classList.contains('hidden')) {
+                e.stopPropagation();
+                box.classList.add('hidden');
+                // Reseta o valor para "Não recorrente" para não deixar um parcelado órfão
+                const inpTipo = document.getElementById('tipoCompra');
+                if (inpTipo) {
+                    inpTipo.value = 'À Vista';
+                    document.getElementById('lblTipoCompra').innerHTML = '<span>Não recorrente</span>';
+                    if (typeof window.dispararMudancaTipo === 'function') window.dispararMudancaTipo();
+                }
+                return;
+            }
+            window.abrirMenuExclusivo('menuTipoCompra', e);
+        });
         document.getElementById('btnPeriodicidade')?.addEventListener('click', (e) => {
             // Sincroniza os checkmarks com o valor atual antes de abrir
             const val = document.getElementById('periodicidadeParcelamento').value;

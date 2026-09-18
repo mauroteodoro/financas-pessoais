@@ -171,6 +171,11 @@ select:focus, select:focus-visible {
         @media (min-width: 640px) {
             :root { --header-h: 5rem; }
         }
+        /* O #mainHeader também define altura via min-h. Aqui garantimos que o
+           --header-h do :root nunca fique menor que a altura real do header. */
+        @media (max-width: 639px) {
+            header#mainHeader { --header-h: max(4rem, auto); }
+        }
 
         /* 2. Anti-zoom automático + anti-tap-highlight */
         html { 
@@ -222,19 +227,21 @@ select:focus, select:focus-visible {
 
         /* 7. Header respeitando o notch / Dynamic Island */
         #mainHeader {
-            height: calc(var(--header-h) + var(--safe-top)) !important;
+            min-height: calc(var(--header-h) + var(--safe-top)) !important;
             padding-top: var(--safe-top) !important;
             padding-left: var(--safe-left) !important;
             padding-right: var(--safe-right) !important;
         }
-        /* 8. Conteúdo abaixo do header — offset dinâmico */
+        /* 8. Conteúdo abaixo do header — offset dinâmico.
+           Usamos padding-top generoso o suficiente para acomodar o header mesmo
+           quando ele cresce para 2 linhas em nomes maiores. */
         header#mainHeader + div {
-            padding-top: calc(var(--header-h) + var(--safe-top) + 2rem) !important;
+            padding-top: calc(var(--header-h) + var(--safe-top) + 3rem) !important;
             padding-bottom: calc(2rem + var(--safe-bottom)) !important;
         }
         @media (min-width: 640px) {
             header#mainHeader + div {
-                padding-top: calc(var(--header-h) + var(--safe-top) + 2.25rem) !important;
+                padding-top: calc(var(--header-h) + var(--safe-top) + 3rem) !important;
             }
         }
 
@@ -1246,16 +1253,16 @@ select:focus, select:focus-visible {
         </div> <!-- Fim modalNovoLancamento -->
         
         <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 h-16 sm:h-20 flex items-center z-[300] shadow-sm border-b border-slate-200">
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 min-h-[4rem] sm:min-h-[5rem] flex items-center z-[300] shadow-sm border-b border-slate-200">
             <div class="max-w-[1700px] mx-auto w-full flex justify-between items-center gap-1.5 sm:gap-2 px-2.5 sm:px-6 lg:px-8">
                 
-                <div class="flex items-center gap-1.5 sm:gap-3 select-none min-w-0 flex-1 overflow-hidden">
+                <div class="flex items-center gap-1.5 sm:gap-3 select-none min-w-0 flex-1">
                     <div class="w-9 h-9 sm:w-12 sm:h-12 shrink-0 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 transition-all" onclick="abrirModalPerfil()" title="Configurações do Perfil">
                         <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     </div>
                     <div class="flex flex-col leading-tight min-w-0 flex-1">
                         <span class="hidden sm:inline text-[9px] sm:text-xs font-medium text-slate-500">Olá,</span>
-                        <h1 id="headerNome" class="text-sm sm:text-xl font-bold tracking-tight text-slate-900 truncate">Mauro</h1>
+                        <h1 id="headerNome" class="text-sm sm:text-lg font-bold tracking-tight text-slate-900 break-words line-clamp-2">Mauro</h1>
                     </div>
                 </div>
 
@@ -2752,9 +2759,18 @@ select:focus, select:focus-visible {
             const largura = menuRect.width || 240;
             const altura = menuRect.height || 320;
             
-            // Horizontal — alinha com o input, sem sair da tela
-            let left = rect.left;
-            if (left + largura > window.innerWidth - 10) left = window.innerWidth - largura - 10;
+            // 🎯 Horizontal — mobile: centraliza na viewport. Desktop: alinha ao input.
+            // A regra abaixo detecta o tamanho da tela e aplica o comportamento correto.
+            const ehMobileCal = window.innerWidth < 640;
+            let left;
+            if (ehMobileCal) {
+                // Centraliza na viewport (o `left` do fixed é relativo à viewport)
+                left = (window.innerWidth - largura) / 2;
+            } else {
+                // Alinha ao input, empurrando pra dentro se estourar
+                left = rect.left;
+                if (left + largura > window.innerWidth - 10) left = window.innerWidth - largura - 10;
+            }
             if (left < 10) left = 10;
             menu.style.left = left + 'px';
             
@@ -2955,6 +2971,31 @@ select:focus, select:focus-visible {
                 window.calDataFiltro = new Date(dataFiltro);
             }
             window.renderizarCustomCal();
+
+            // 🎯 No mobile, centraliza o painel do calendário na viewport.
+            // O painel usa position:absolute por padrão (relativo ao wrapper do botão),
+            // então no mobile ele precisa ser promovido para fixed e reposicionado.
+            const menu = document.getElementById('menuFiltroPeriodo');
+            if (!menu || menu.classList.contains('hidden')) return;
+
+            if (window.innerWidth < 640) {
+                menu.style.position = 'fixed';
+                menu.style.left = '50%';
+                menu.style.transform = 'translateX(-50%)';
+                menu.style.top = 'calc(var(--header-h) + var(--safe-top) + 1rem)';
+                menu.style.bottom = 'auto';
+                menu.style.margin = '0';
+                menu.style.maxWidth = 'calc(100vw - 2rem)';
+            } else {
+                // Restaura o comportamento original no desktop
+                menu.style.position = '';
+                menu.style.left = '';
+                menu.style.transform = '';
+                menu.style.top = '';
+                menu.style.bottom = '';
+                menu.style.margin = '';
+                menu.style.maxWidth = '';
+            }
         }
 
         window.renderizarCustomCal = function() {
@@ -6464,7 +6505,7 @@ window.checkRateio = function() {
                         </div>
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
-                        <button type="button" onclick="abrirEdicaoConta('${c.id}')" title="Editar conta" class="text-slate-400 hover:text-slate-900 dark:hover:text-cyan-400 transition-colors p-2 active:scale-90 rounded-lg">
+                        <button type="button" onclick="abrirEdicaoConta('${c.id}')" title="Editar conta" class="text-slate-400 hover:text-[#4D6BFE] transition-colors p-2 active:scale-90 rounded-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                         </button>
                         <button type="button" onclick="apagarContaDireto('${c.id}')" title="Apagar conta" class="text-slate-400 hover:text-red-500 transition-colors p-2 active:scale-90 rounded-lg">

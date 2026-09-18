@@ -166,9 +166,11 @@ select:focus, select:focus-visible {
             --safe-right: env(safe-area-inset-right, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
             --safe-left: env(safe-area-inset-left, 0px);
-            --header-h: 4.5rem;
+            /* Header mobile tem 2 linhas (identidade + seletor de mês). */
+            --header-h: 6.5rem;
         }
         @media (min-width: 640px) {
+            /* No desktop volta a 1 linha compacta. */
             :root { --header-h: 5rem; }
         }
         /* O #mainHeader também define altura via min-h. Aqui garantimos que o
@@ -235,13 +237,14 @@ select:focus, select:focus-visible {
         /* 8. Conteúdo abaixo do header — offset dinâmico.
            Usamos padding-top generoso o suficiente para acomodar o header mesmo
            quando ele cresce para 2 linhas em nomes maiores. */
-        header#mainHeader + div {
-            padding-top: calc(var(--header-h) + var(--safe-top) + 3rem) !important;
+           header#mainHeader + div {
+            padding-top: calc(var(--header-h) + var(--safe-top) + 1rem) !important;
             padding-bottom: calc(2rem + var(--safe-bottom)) !important;
         }
         @media (min-width: 640px) {
             header#mainHeader + div {
-                padding-top: calc(var(--header-h) + var(--safe-top) + 3rem) !important;
+                /* No desktop o header volta a 1 linha, então o padding extra é pequeno. */
+                padding-top: calc(var(--header-h) + var(--safe-top) + 2rem) !important;
             }
         }
 
@@ -1252,70 +1255,73 @@ select:focus, select:focus-visible {
           </div> <!-- Fim Wrapper Invisível -->
         </div> <!-- Fim modalNovoLancamento -->
         
-        <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 h-16 sm:h-20 flex items-center z-[300] shadow-sm border-b border-slate-200">
-            <div class="max-w-[1700px] mx-auto w-full flex justify-between items-center gap-1.5 sm:gap-2 px-2.5 sm:px-6 lg:px-8">
-                
-                <div class="flex items-center gap-1.5 sm:gap-3 select-none min-w-0 flex-1">
+        <!-- CABEÇALHO PRINCIPAL — 2 linhas em mobile, 1 linha em desktop -->
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 flex flex-col sm:flex-row sm:items-center z-[300] shadow-sm border-b border-slate-200">
+            <!-- LINHA 1 (mobile) / LADO ESQUERDO (desktop): Identidade -->
+            <div class="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-2 px-3 sm:px-6 lg:px-8 pt-2.5 pb-2 sm:py-0 sm:flex-shrink-0">
+                <div class="flex items-center gap-2 sm:gap-3 select-none min-w-0 flex-1 sm:flex-initial">
                     <div class="w-9 h-9 sm:w-12 sm:h-12 shrink-0 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 transition-all" onclick="abrirModalPerfil()" title="Configurações do Perfil">
                         <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
-                    <div class="hidden sm:flex flex-col leading-tight min-w-0 flex-1">
-                        <span class="text-xs font-medium text-slate-500">Olá,</span>
-                        <h1 id="headerNome" class="font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis" style="font-size: 1.125rem;">Mauro</h1>
+                    <div class="flex flex-col leading-tight min-w-0 flex-1">
+                        <span class="text-[10px] sm:text-xs font-medium text-slate-500">Olá,</span>
+                        <h1 id="headerNome" class="text-sm sm:text-base font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis">Mauro</h1>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-                    <div class="flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-sm relative">
-                        <button type="button" id="btnMesAnt" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&lsaquo;</button>
-                        <button type="button" id="btnAbrirSeletorMes" class="flex items-center gap-1 px-1 sm:px-2 h-7 sm:h-8 rounded hover:bg-slate-200 transition-colors group">
-                            <span id="mesAtualDisplay" class="text-[11px] sm:text-sm font-bold text-slate-800 select-none whitespace-nowrap">Agosto 2026</span>
-                        </button>
-                        <div id="painelSeletorMes" class="hidden popover-anim fixed sm:absolute top-[calc(var(--header-h)+var(--safe-top)+0.75rem)] sm:top-full left-1/2 -translate-x-1/2 sm:mt-3 bg-white rounded-2xl shadow-[0_12px_40px_-8px_rgba(0,97,242,0.12)] border border-blue-50 p-5 w-[calc(100vw-2rem)] max-w-[300px] sm:w-[280px] sm:max-w-none z-[400]">
-                            <div class="flex items-center justify-between mb-4">
-                                <button type="button" id="btnAnoAnt" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&lsaquo;</button>
-                                <span id="anoSeletorDisplay" class="font-semibold font-montserrat text-[#4D6BFE] tracking-tight">2026</span>
-                                <button type="button" id="btnAnoProx" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&rsaquo;</button>
-                            </div>
-                            <div id="gridMeses" class="grid grid-cols-3 gap-2"></div>
-                            <button type="button" id="btnHoje" class="w-full text-center text-sm font-semibold text-[#4D6BFE] hover:bg-[#4D6BFE]/10 mt-4 py-2.5 rounded-full active:scale-95 transition-colors">Ir para o mês atual</button>
-                        </div>
-                        <button type="button" id="btnMesProx" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&rsaquo;</button>
-                    </div>
-                    
-                    <!-- BOTÃO DE BUSCA GLOBAL (oculto no mobile — busca disponível na barra do Extrato) -->
+                <div class="flex items-center gap-1.5 sm:gap-3 shrink-0 sm:ml-auto sm:mr-6 lg:mr-8">
+                    <!-- BOTÃO DE BUSCA GLOBAL (oculto no mobile) -->
                     <button type="button" id="btnBuscaGlobal" title="Buscar em todos os meses" class="hidden sm:flex w-10 h-10 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"></path></svg>
                     </button>
 
                     <!-- BOTÃO DE AÇÃO PRINCIPAL (+) -->
-                        <div class="relative z-[500]">
-                            <button type="button" id="btnAcaoPrincipal" class="w-8 h-8 sm:w-10 sm:h-10 bg-[#4D6BFE] hover:bg-[#4338CA] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#4D6BFE]/20 hover:shadow-xl hover:shadow-[#4D6BFE]/30 hover:scale-105 transition-all duration-200 active:scale-90 font-normal text-xl sm:text-3xl pb-1 sm:pb-1.5" title="Nova Ação">+</button>
-                            <div id="menuAcaoPrincipal" class="hidden absolute top-full right-0 mt-3 w-48 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-xl dropdown-anim overflow-hidden py-2">
-                                <button type="button" onclick="abrirModalLancamento('Despesa')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
-                                    <span class="text-red-500 font-bold text-lg leading-none">-</span> Despesa
-                                </button>
-                                <button type="button" onclick="window.mostrarAviso('Despesa Cartão em breve!', 'info'); document.getElementById('menuAcaoPrincipal').classList.add('hidden')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
-                                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> Despesa cartão
-                                </button>
-                                <button type="button" onclick="abrirModalLancamento('Receita')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
-                                    <span class="text-green-500 font-bold text-lg leading-none">+</span> Receita
-                                </button>
-                                <button type="button" onclick="window.mostrarAviso('Transferência em breve!', 'info'); document.getElementById('menuAcaoPrincipal').classList.add('hidden')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
-                                    <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Transferência
-                                </button>
-                            </div>
+                    <div class="relative z-[500]">
+                        <button type="button" id="btnAcaoPrincipal" class="w-9 h-9 sm:w-10 sm:h-10 bg-[#4D6BFE] hover:bg-[#4338CA] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#4D6BFE]/20 hover:shadow-xl hover:shadow-[#4D6BFE]/30 hover:scale-105 transition-all duration-200 active:scale-90 font-normal text-2xl sm:text-3xl pb-1 sm:pb-1.5" title="Nova Ação">+</button>
+                        <div id="menuAcaoPrincipal" class="hidden absolute top-full right-0 mt-3 w-48 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-xl dropdown-anim overflow-hidden py-2">
+                            <button type="button" onclick="abrirModalLancamento('Despesa')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
+                                <span class="text-red-500 font-bold text-lg leading-none">-</span> Despesa
+                            </button>
+                            <button type="button" onclick="window.mostrarAviso('Despesa Cartão em breve!', 'info'); document.getElementById('menuAcaoPrincipal').classList.add('hidden')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg> Despesa cartão
+                            </button>
+                            <button type="button" onclick="abrirModalLancamento('Receita')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
+                                <span class="text-green-500 font-bold text-lg leading-none">+</span> Receita
+                            </button>
+                            <button type="button" onclick="window.mostrarAviso('Transferência em breve!', 'info'); document.getElementById('menuAcaoPrincipal').classList.add('hidden')" class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-50 dark:hover:bg-[#1a2639] flex items-center gap-3 transition-colors">
+                                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Transferência
+                            </button>
                         </div>
+                    </div>
 
-                        <button type="button" id="btnOcultarSaldos" class="w-8 h-8 sm:w-10 sm:h-10 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    <button type="button" id="btnOcultarSaldos" class="w-9 h-9 sm:w-10 sm:h-10 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
                         <svg id="iconOlhoAberto" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         <svg id="iconOlhoFechado" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
                     </button>
 
-                    <button type="button" onclick="fazerLogout()" title="Sair do Sistema" class="flex w-8 h-8 sm:w-10 sm:h-10 bg-slate-100 border border-slate-200 hover:bg-red-500 hover:text-white rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 shrink-0">
+                    <button type="button" onclick="fazerLogout()" title="Sair do Sistema" class="flex w-9 h-9 sm:w-10 sm:h-10 bg-slate-100 border border-slate-200 hover:bg-red-500 hover:text-white rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                     </button>
+                </div>
+            </div>
+
+            <!-- LINHA 2 (mobile) / CENTRALIZADO (desktop): Seletor de mês -->
+            <div class="w-full sm:w-auto sm:absolute sm:left-1/2 sm:-translate-x-1/2 flex justify-center px-3 sm:px-0 pb-2.5 sm:pb-0">
+                <div class="flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-sm relative">
+                    <button type="button" id="btnMesAnt" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&lsaquo;</button>
+                    <button type="button" id="btnAbrirSeletorMes" class="flex items-center gap-1 px-2.5 sm:px-3 h-7 sm:h-8 rounded hover:bg-slate-200 transition-colors group">
+                        <span id="mesAtualDisplay" class="text-xs sm:text-sm font-bold text-slate-800 select-none whitespace-nowrap">Agosto 2026</span>
+                    </button>
+                    <div id="painelSeletorMes" class="hidden popover-anim fixed top-[calc(var(--header-h)+var(--safe-top)+0.75rem)] left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-[0_12px_40px_-8px_rgba(0,97,242,0.12)] border border-blue-50 p-5 w-[calc(100vw-2rem)] max-w-[300px] z-[400]">
+                        <div class="flex items-center justify-between mb-4">
+                            <button type="button" id="btnAnoAnt" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&lsaquo;</button>
+                            <span id="anoSeletorDisplay" class="font-semibold font-montserrat text-[#4D6BFE] tracking-tight">2026</span>
+                            <button type="button" id="btnAnoProx" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&rsaquo;</button>
+                        </div>
+                        <div id="gridMeses" class="grid grid-cols-3 gap-2"></div>
+                        <button type="button" id="btnHoje" class="w-full text-center text-sm font-semibold text-[#4D6BFE] hover:bg-[#4D6BFE]/10 mt-4 py-2.5 rounded-full active:scale-95 transition-colors">Ir para o mês atual</button>
+                    </div>
+                    <button type="button" id="btnMesProx" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-700 font-bold active:scale-90">&rsaquo;</button>
                 </div>
             </div>
         </header>

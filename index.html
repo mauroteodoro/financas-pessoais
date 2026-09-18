@@ -986,7 +986,7 @@ select:focus, select:focus-visible {
                                             <div class="relative w-full z-[120]">
                                                 <label id="lblDescForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Descrição</label>
                                                 <div class="relative w-full">
-                                                    <input type="text" id="descricao" autocomplete="off" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0" placeholder="Ex: Supermercado, Conta de Luz...">
+                                                    <input type="text" id="descricao" autocomplete="off" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0" placeholder="Ex: Supermercado, Conta de Luz...">
                                                     <div id="menuAutocomplete" class="hidden absolute w-full mt-1 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-lg shadow-2xl overflow-hidden z-[9999]" style="top: 100%;">
                                                         <ul class="max-h-[240px] overflow-y-auto hover-scrollbar text-base md:text-sm" id="listaAutocomplete"></ul>
                                                     </div>
@@ -996,7 +996,7 @@ select:focus, select:focus-visible {
                                             <!-- 2. Valor -->
 <div class="relative w-full z-[115]">
   <label id="lblValorForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Valor (R$)</label>
-  <input type="text" inputmode="decimal" id="valor" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0 font-bold" placeholder="0,00">
+  <input type="text" inputmode="decimal" id="valor" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0 font-bold" placeholder="0,00">
   <p id="hintValorParcelado" class="hidden text-[10px] text-slate-900 dark:text-cyan-400 font-bold mt-0.5 leading-tight"></p>
 </div>
                   
@@ -1006,7 +1006,7 @@ select:focus, select:focus-visible {
                                                 <input type="hidden" id="tipoCompra" value="À Vista">
                                                 <button type="button" id="btnTipoCompra" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
                                                     <span id="lblTipoCompra" class="flex items-center gap-2 text-slate-700 dark:text-gray-200">
-                                                        <div class="w-2.5 h-2.5 rounded-full bg-slate-900"></div> Não recorrente
+                                                        Não recorrente
                                                     </span>
                                                     <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                                 </button>
@@ -1102,7 +1102,7 @@ select:focus, select:focus-visible {
                                             <div id="boxVencimento" class="relative w-full z-[130]">
                                                 <label id="lblVencimentoForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Vencimento</label>
                                                 <div class="relative w-full">
-                                                    <input type="text" id="vencimento" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0">
+                                                    <input type="text" id="vencimento" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0">
                                                     <button type="button" id="btnCalVencimento" onclick="abrirCalendarioSimples('vencimento', 'menuCalVencimento', event)" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors p-1 focus:outline-none">
                                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                                     </button>
@@ -1112,19 +1112,6 @@ select:focus, select:focus-visible {
                   
 
                   
-                                            <!-- 7. Efetivada (Interruptor) -->
-                                            <div class="flex justify-between items-center mt-1 md:mt-auto">
-                                                <div class="flex items-center gap-2">
-                                                    <span id="iconEfetivada" class="flex items-center justify-center shrink-0">
-                                                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                    </span>
-                                                    <label class="text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none" id="lblEfetivadaText">Efetivada</label>
-                                                </div>
-                                                <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                                                    <input type="checkbox" id="chkEfetivada" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300" checked/>
-                                                    <label for="chkEfetivada" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
-                                                </div>
-                                            </div>
                                         </div>
 
                                             <!-- LADO DIREITO -->
@@ -1175,6 +1162,20 @@ select:focus, select:focus-visible {
                                                     </div>
                                                 </div>
                                                 
+                                                <!-- Status Efetivada/Pendente (movido para cá) -->
+                                                <div class="flex justify-between items-center bg-slate-50 dark:bg-[#0b1120] px-3 py-2.5 rounded-xl border border-slate-200 dark:border-[#1e2a40]">
+                                                    <div class="flex items-center gap-2">
+                                                        <span id="iconEfetivada" class="flex items-center justify-center shrink-0">
+                                                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                        </span>
+                                                        <label class="text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none" id="lblEfetivadaText">Efetivada</label>
+                                                    </div>
+                                                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                                                        <input type="checkbox" id="chkEfetivada" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300" checked/>
+                                                        <label for="chkEfetivada" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
+                                                    </div>
+                                                </div>
+
                                                 <!-- Compor Resumo do Mês? (Só aparece para Receita) -->
                                                 <div id="boxCompoeSaldo" class="relative w-full hidden bg-slate-50 dark:bg-[#0b1120] p-3 rounded-xl border border-slate-200 dark:border-[#1e2a40]">
                                                     <div class="flex justify-between items-center gap-3">
@@ -1189,17 +1190,7 @@ select:focus, select:focus-visible {
                                                     </div>
                                                 </div>
 
-                                                <!-- 4. Data de Lançamento (Compra) -->
-                                                <div class="relative w-full z-[100]">
-                                                    <label id="lblDataForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Lançamento</label>
-                                                    <div class="relative w-full">
-                                                        <input type="text" id="dataCompra" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0">
-                                                        <button type="button" id="btnCalDataCompra" onclick="abrirCalendarioSimples('dataCompra', 'menuCalDataCompra', event)" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors p-1 focus:outline-none">
-                                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                                        </button>
-                                                    </div>
-                                                    <div id="menuCalDataCompra" class="hidden absolute w-[210px] mt-1 right-0 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-2xl shadow-2xl dropdown-anim overflow-hidden z-[9999]"></div>
-                                                </div>
+<!-- Bloco de Data de Lançamento movido para dentro do painel "Mais opções" -->
                       
                                                 <!-- 5. Mais opções -->
 <div class="relative w-full mt-auto">
@@ -1208,14 +1199,24 @@ select:focus, select:focus-visible {
         <svg class="w-4 h-4 transition-transform duration-200 seta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
     </button>
                                             
-                                                    <div id="panelMaisInfosForm" class="hidden mt-2 p-4 bg-slate-50 dark:bg-[#0b1120] border border-slate-200 dark:border-[#1e2a40] rounded-xl space-y-3 shadow-inner">
-                                                        <div>
-                                                            <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Efetivação (Opcional)</label>
-                                                            <input type="text" id="dataEfetivacaoNovo" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0">
-                                                        </div>
+    <div id="panelMaisInfosForm" class="hidden mt-2 p-4 bg-slate-50 dark:bg-[#0b1120] border border-slate-200 dark:border-[#1e2a40] rounded-xl space-y-3 shadow-inner">
+        <div class="relative w-full z-[100]">
+            <label id="lblDataForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Lançamento</label>
+            <div class="relative w-full">
+                <input type="text" id="dataCompra" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0">
+                <button type="button" id="btnCalDataCompra" onclick="abrirCalendarioSimples('dataCompra', 'menuCalDataCompra', event)" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors p-1 focus:outline-none">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </button>
+            </div>
+            <div id="menuCalDataCompra" class="hidden absolute w-[210px] mt-1 right-0 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-2xl shadow-2xl dropdown-anim overflow-hidden z-[9999]"></div>
+        </div>
+        <div>
+            <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Efetivação (Opcional)</label>
+            <input type="text" id="dataEfetivacaoNovo" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0">
+        </div>
                                                         <div class="relative">
                                                             <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Observações</label>
-                                                            <input type="text" id="observacao" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white transition-all text-sm h-[36px] px-0" placeholder="Detalhes adicionais...">
+                                                            <input type="text" id="observacao" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0" placeholder="Detalhes adicionais...">
                                                         </div>
                                                         <div>
                                                             <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-1">Comprovante</label>
@@ -3218,8 +3219,9 @@ select:focus, select:focus-visible {
                 window.dispararMudancaTipo();
             }
             
+            // Data de Lançamento sempre inicia com a data de hoje (dia do lançamento)
             document.getElementById('dataCompra').value = getHojeFormatado();
-document.getElementById('vencimento').value = getHojeFormatado();
+            document.getElementById('vencimento').value = getHojeFormatado();
 
 if (typeof window.selecionarTipoValorParcelado === 'function') {
     window.selecionarTipoValorParcelado('total');
@@ -4202,17 +4204,17 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             
             listaTipoCompra.innerHTML = '';
             const mapTipos = [
-                {val: 'À Vista', label: 'Não recorrente', cor: 'bg-slate-900 shadow-[0_0_8px_rgba(0,97,242,0.6)]'},
-                {val: 'A Prazo', label: 'Parcelar', cor: 'bg-amber-500'},
-                {val: 'Recorrente', label: 'Fixa mensal', cor: 'bg-purple-500'}
+                { val: 'À Vista', label: 'Não recorrente' },
+                { val: 'A Prazo', label: 'Parcelar' },
+                { val: 'Recorrente', label: 'Fixa mensal' }
             ];
             mapTipos.forEach(tipo => {
                 const li = document.createElement('li'); 
                 li.className = "cursor-pointer px-4 py-3 sm:py-2 hover:bg-slate-100 dark:hover:bg-[#1a2639] flex items-center transition-colors font-medium text-slate-700 dark:text-gray-200 border-b border-slate-100 dark:border-[#1e2a40] last:border-0";
-                li.innerHTML = `<div class="flex items-center"><div class="w-2.5 h-2.5 rounded-full ${tipo.cor} mr-2.5"></div><span>${tipo.label}</span></div>`;
+                li.innerHTML = `<span>${tipo.label}</span>`;
                 li.addEventListener('click', () => { 
                     inputTipoCompra.value = tipo.val; 
-                    lblTipoCompra.innerHTML = `<span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full ${tipo.cor}"></div> ${tipo.label}</span>`; 
+                    lblTipoCompra.innerHTML = `<span>${tipo.label}</span>`; 
                     menuTipoCompra.classList.add('hidden'); 
                     window.dispararMudancaTipo();
                 });

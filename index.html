@@ -13,9 +13,35 @@
     <meta name="format-detection" content="telephone=no,email=no,address=no">
     <meta name="mobile-web-app-capable" content="yes">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        // 🎨 1) ANTI-FLASH — aplica o tema ANTES de qualquer pintura.
+        (function() {
+            try {
+                if ((localStorage.getItem('temaApp') || 'light') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch(e) {}
+        })();
+        // 🎨 2) CONFIGURA O TAILWIND ANTES DO CDN.
+        // 🚨 ESSENCIAL: o CDN lê `window.tailwind.config` na inicialização.
+        // Se a config for setada DEPOIS, ele gera as variantes `dark:` como
+        // `@media (prefers-color-scheme: dark)` e o toggle por classe
+        // (`document.documentElement.classList.add('dark')`) não funciona.
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class' }
+        // 🎯 3) REFORÇO PÓS-CDN — redundância defensiva.
+        // Se por algum motivo o passo (2) não surtiu efeito (ordem de
+        // carregamento, cache, extensão), reaplica a config agora.
+        try {
+            if (typeof tailwind !== 'undefined' && tailwind.config) {
+                tailwind.config.darkMode = 'class';
+            }
+        } catch(e) { console.error('Erro ao reforçar tema:', e); }
     </script>
     <style>
         body, input, button, select, textarea { font-family: 'Inter', sans-serif; }
@@ -338,9 +364,124 @@ select:focus, select:focus-visible {
         }
         
         /* ========================================================== */
+        /* 🎨 DARK MODE — REDE DE SEGURANÇA (não depende do Tailwind)  */
+        /* ========================================================== */
+        /* Mesmo que o CDN do Tailwind não gere as variantes `.dark`   */
+        /* corretamente, estas regras garantem que o tema escuro se    */
+        /* aplique visualmente em toda a interface.                    */
+        html.dark { color-scheme: dark; }
+        html.dark body { background-color: #0b1120 !important; color: #e5e7eb !important; }
+        html.dark header#mainHeader { background-color: #121b2b !important; border-bottom-color: #1e2a40 !important; }
+        html.dark aside { background-color: #121b2b !important; border-color: #1e2a40 !important; }
+        html.dark .bg-white { background-color: #121b2b !important; }
+        html.dark .bg-slate-50 { background-color: #0b1120 !important; }
+        html.dark .bg-slate-100 { background-color: #1a2639 !important; }
+        html.dark .bg-slate-200 { background-color: #2a3850 !important; }
+        html.dark .bg-slate-50\/80 { background-color: rgba(11,17,32,0.8) !important; }
+        html.dark .text-slate-900 { color: #f3f4f6 !important; }
+        html.dark .text-slate-800 { color: #e5e7eb !important; }
+        html.dark .text-slate-700 { color: #d1d5db !important; }
+        html.dark .text-slate-600 { color: #9ca3af !important; }
+        html.dark .text-slate-500 { color: #9ca3af !important; }
+        html.dark .text-slate-400 { color: #6b7280 !important; }
+        html.dark .border-slate-100 { border-color: #1e2a40 !important; }
+        html.dark .border-slate-200 { border-color: #1e2a40 !important; }
+        html.dark .border-slate-300 { border-color: #2a3850 !important; }
+        html.dark .divide-slate-100 > * + * { border-color: #1e2a40 !important; }
+        html.dark .hover\:bg-slate-50:hover,
+        html.dark .hover\:bg-slate-100:hover { background-color: #1a2639 !important; }
+        html.dark .hover\:bg-slate-200:hover { background-color: #2a3850 !important; }
+        html.dark input,
+        html.dark select,
+        html.dark textarea {
+            background-color: #0b1120 !important;
+            border-color: #1e2a40 !important;
+            color: #f3f4f6 !important;
+        }
+        html.dark input::placeholder,
+        html.dark textarea::placeholder { color: #6b7280 !important; }
+        html.dark input:focus,
+        html.dark select:focus,
+        html.dark textarea:focus { border-color: #4D6BFE !important; }
+
+        /* 🎯 Labels dos campos do modal de lançamento ganham respiro */
+        /*    para não encostarem no topo do campo arredondado.       */
+        label.block.text-\[11px\] { margin-bottom: 6px !important; }
+
+        /* ========================================================== */
+        /* 🎨 Dark mode — Sistema unificado de bordas                  */
+        /* ========================================================== */
+        /* Toda a interface escura usa UMA família de borda sólida e   */
+        /* neutra. Campos e cards ficam com a mesma "gramática"        */
+        /* visual — nem "inacabado" nem "cheio de caixas". A cor       */
+        /* `#2a3850` é o tom de definição: mais claro que o fundo      */
+        /* profundo, mais escuro que o cinza dos botões.               */
+
+        /* 🎯 Botões do header e do tipo "chip" continuam SEM contorno */
+        /*    (mantém o aspecto do olho/lupa).                          */
+        html.dark button[class*="dark:bg-[#1a2639]"],
+        html.dark button[class*="dark:bg-[#2a3850]"],
+        html.dark a[class*="dark:bg-[#1a2639]"],
+        html.dark [role="button"][class*="dark:bg-[#1a2639]"] {
+            border-color: transparent !important;
+        }
+
+        /* 🎯 Campos (inputs, selects, textareas) e filtros que os     */
+        /*    imitam: fundo mais profundo + borda sólida neutra.        */
+        /*    Resultado: são visivelmente campos, sem parecerem caixas. */
+        html.dark input.border,
+        html.dark select.border,
+        html.dark textarea.border,
+        html.dark #abaRelatorios button[id^="btnFiltro"] {
+            background-color: #0b1120 !important;
+            border-color: #2a3850 !important;
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25) !important;
+        }
+        html.dark input.border:hover,
+        html.dark select.border:hover,
+        html.dark textarea.border:hover,
+        html.dark #abaRelatorios button[id^="btnFiltro"]:hover {
+            border-color: #3a4860 !important;
+        }
+        html.dark input.border:focus,
+        html.dark select.border:focus,
+        html.dark textarea.border:focus,
+        html.dark #abaRelatorios button[id^="btnFiltro"]:focus {
+            border-color: #4D6BFE !important;
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25),
+                        0 0 0 3px rgba(77, 107, 254, 0.18) !important;
+        }
+
+        /* 🎯 Cards e painéis informativos — mesma família, tom um     */
+        /*    pouco mais escuro porque a superfície já é menor.         */
+        /*    Cobre: Recibo de Pagamento, cards do Filtro do Simulador, */
+        /*    painéis "Férias no Período", datas de crédito, cards dos  */
+        /*    totais em Relatórios, etc.                                */
+        html.dark div[class*="dark:bg-[#0b1120]"],
+        html.dark div[class*="dark:from-[#0b1120]"],
+        html.dark div[class*="bg-blue-50/50"],
+        html.dark div.bg-slate-50.border {
+            border-color: #1e2a40 !important;
+        }
+
+        /* ========================================================== */
+        /* 🎨 TEMA — Fade global suave ao alternar Claro/Escuro        */
+        /* ========================================================== */
+        /* Durante 400ms após a troca, TODOS os elementos ganham
+           transição de cor. Isso cria um "fade" bonito entre temas,
+           como se a tela inteira se dissolvesse suavemente. */
+        html.theme-transitioning,
+        html.theme-transitioning *,
+        html.theme-transitioning *::before,
+        html.theme-transitioning *::after {
+            transition: background-color 0.35s ease,
+                        border-color 0.35s ease,
+                        color 0.35s ease,
+                        box-shadow 0.35s ease !important;
+        }
     </style>
 </head>
-<body class="bg-white text-slate-900 transition-colors duration-300 relative overflow-y-scroll min-h-[100dvh]">
+<body class="bg-white dark:bg-[#0b1120] text-slate-900 dark:text-gray-100 transition-colors duration-300 relative overflow-y-scroll min-h-[100dvh]">
 
     <!-- Fundo Fixo Removido para o Light Mode -->
 
@@ -349,8 +490,8 @@ select:focus, select:focus-visible {
     <div id="toast-obs-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4"></div>
 
     <!-- TELA DE LOGIN -->
-    <div id="telaLogin" class="fixed inset-0 bg-slate-100 z-[9999] flex flex-col items-center justify-center px-4 transition-opacity duration-500">
-        <div class="w-full max-w-sm bg-white p-8 rounded-2xl border border-slate-200 shadow-xl text-center relative overflow-hidden">
+    <div id="telaLogin" class="fixed inset-0 bg-slate-100 dark:bg-[#0b1120] z-[9999] flex flex-col items-center justify-center px-4 transition-opacity duration-500">
+        <div class="w-full max-w-sm bg-white dark:bg-[#121b2b] p-8 rounded-2xl border border-slate-200 dark:border-[#1e2a40] shadow-xl text-center relative overflow-hidden">
             <div class="w-16 h-16 mx-auto bg-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-[#4D6BFE]/20 transform rotate-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white -rotate-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z" /></svg>
             </div>
@@ -380,7 +521,7 @@ select:focus, select:focus-visible {
                 </button>
             </form>
         </div>
-        <div id="loaderInicial" class="absolute inset-0 bg-[#F7F8FB] z-10 flex flex-col items-center justify-center transition-opacity duration-300">
+        <div id="loaderInicial" class="absolute inset-0 bg-[#F7F8FB] dark:bg-[#0b1120] z-10 flex flex-col items-center justify-center transition-opacity duration-300">
             <div class="spinner border-slate-200 border-t-[#4D6BFE] w-10 h-10 mb-5 shadow-sm rounded-full"></div>
             <p class="text-[#4D6BFE] font-bold text-[11px] animate-pulse tracking-[0.2em] uppercase font-montserrat">CONECTANDO...</p>  
         </div>
@@ -538,13 +679,29 @@ select:focus, select:focus-visible {
         <div id="modalPerfil" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[1000] backdrop-blur-sm transition-opacity px-4">
             <div class="bg-white dark:bg-[#121b2b] p-4 sm:p-5 rounded-3xl w-full max-w-lg shadow-xl border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[90vh]">
                 <div class="flex justify-between items-center mb-4 border-b border-slate-100 dark:border-[#1e2a40] pb-2.5 shrink-0">
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-cyan-400 font-montserrat">Configurações do Perfil</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-cyan-400 font-montserrat">Configurações</h3>
                     <button type="button" onclick="fecharModalPerfil()" class="text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors active:scale-90 p-2 rounded-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
                 
                 <div class="space-y-3 px-1 -mx-1 pb-3 pt-0.5 flex-1 overflow-y-auto no-scrollbar">
+                    <!-- 🎨 Seletor de Tema (Claro / Escuro) -->
+                    <div class="pb-1">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-2">Aparência</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="btnTemaClaro" onclick="aplicarTema('light')"
+                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                                Claro
+                            </button>
+                            <button type="button" id="btnTemaEscuro" onclick="aplicarTema('dark')"
+                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                                Escuro
+                            </button>
+                        </div>
+                    </div>
                     <!-- 🎯 NOVO: Ações Rápidas (apenas mobile) -->
                     <div class="sm:hidden pb-2">
                         <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-2">Ações Rápidas</label>
@@ -1034,7 +1191,7 @@ select:focus, select:focus-visible {
                                             <div class="relative w-full z-[120]">
                                                 <label id="lblDescForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Descrição</label>
                                                 <div class="relative w-full">
-                                                    <input type="text" id="descricao" autocomplete="off" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0" placeholder="Ex: Supermercado, Conta de Luz...">
+                                                    <input type="text" id="descricao" autocomplete="off" class="w-full border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all text-sm h-[44px] px-3" placeholder="Ex: Supermercado, Conta de Luz...">
                                                     <div id="menuAutocomplete" class="hidden absolute w-full mt-1 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-lg shadow-2xl overflow-hidden z-[9999]" style="top: 100%;">
                                                         <ul class="max-h-[240px] overflow-y-auto hover-scrollbar text-base md:text-sm" id="listaAutocomplete"></ul>
                                                     </div>
@@ -1044,7 +1201,7 @@ select:focus, select:focus-visible {
                                             <!-- 2. Valor -->
 <div class="relative w-full z-[115]">
   <label id="lblValorForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Valor (R$)</label>
-  <input type="text" inputmode="decimal" id="valor" class="w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0 font-bold" placeholder="0,00">
+  <input type="text" inputmode="decimal" id="valor" class="w-full border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all text-sm h-[44px] px-3 font-bold" placeholder="0,00">
   <p id="hintValorParcelado" class="hidden text-[10px] text-slate-900 dark:text-cyan-400 font-bold mt-0.5 leading-tight"></p>
 </div>
                   
@@ -1052,7 +1209,7 @@ select:focus, select:focus-visible {
                                             <div class="relative w-full z-[140]">
                                                 <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Repetição</label>
                                                 <input type="hidden" id="tipoCompra" value="À Vista">
-                                                <button type="button" id="btnTipoCompra" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
+                                                <button type="button" id="btnTipoCompra" class="w-full flex justify-between items-center border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[44px] px-3">
                                                     <span id="lblTipoCompra" class="flex items-center gap-2 text-slate-700 dark:text-gray-200">
                                                         Não recorrente
                                                     </span>
@@ -1150,8 +1307,8 @@ select:focus, select:focus-visible {
                                             <div id="boxVencimento" class="relative w-full z-[130]">
                                                 <label id="lblVencimentoForm" class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Data de Vencimento</label>
                                                 <div class="relative w-full">
-                                                    <input type="text" id="vencimento" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 transition-all text-sm h-[36px] px-0">
-                                                    <button type="button" id="btnCalVencimento" onclick="abrirCalendarioSimples('vencimento', 'menuCalVencimento', event)" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors p-1 focus:outline-none">
+                                                    <input type="text" id="vencimento" maxlength="10" placeholder="DD/MM/AAAA" class="date-input-smart w-full border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all text-sm h-[44px] px-3 pr-10">
+                                                    <button type="button" id="btnCalVencimento" onclick="abrirCalendarioSimples('vencimento', 'menuCalVencimento', event)" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors p-1 focus:outline-none">
                                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                                     </button>
                                                 </div>
@@ -1175,7 +1332,7 @@ select:focus, select:focus-visible {
                                                         </button>
                                                     </div>
                                                     <input type="hidden" id="categoria" value="">
-                                                    <button type="button" id="btnCategoria" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
+                                                    <button type="button" id="btnCategoria" class="w-full flex justify-between items-center border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[44px] px-3">
                                                         <span id="lblCategoria" class="flex items-center gap-2 text-slate-700 dark:text-gray-200 truncate">Selecione...</span>
                                                         <svg class="h-4 w-4 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                                     </button>
@@ -1188,7 +1345,7 @@ select:focus, select:focus-visible {
 <div class="relative w-full z-[110]">
     <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Subcategoria</label>
     <input type="hidden" id="subcategoria" value="">
-    <button type="button" id="btnSubcategoria" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
+    <button type="button" id="btnSubcategoria" class="w-full flex justify-between items-center border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[44px] px-3">
         <span id="lblSubcategoria" class="flex items-center gap-2 text-slate-700 dark:text-gray-200 truncate">Selecione uma categoria antes</span>
         <svg class="h-4 w-4 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
     </button>
@@ -1201,7 +1358,7 @@ select:focus, select:focus-visible {
                                                 <div class="relative w-full z-[105]">
                                                     <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Conta</label>
                                                     <input type="hidden" id="contaSelecionada" value="">
-                                                    <button type="button" id="btnConta" class="w-full flex justify-between items-center border-b border-slate-300 dark:border-[#1e2a40] bg-transparent focus:bg-transparent focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[36px] px-0">
+                                                    <button type="button" id="btnConta" class="w-full flex justify-between items-center border border-slate-200 dark:border-[#1e2a40] bg-slate-50 dark:bg-[#0b1120] rounded-xl focus:bg-white dark:focus:bg-[#0b1120] focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all text-left text-sm h-[44px] px-3">
                                                         <span id="lblConta" class="truncate">Carteira Física</span>
                                                         <svg class="h-4 w-4 text-slate-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                                     </button>
@@ -1211,16 +1368,19 @@ select:focus, select:focus-visible {
                                                 </div>
                                                 
                                                 <!-- Status Efetivada/Pendente (movido para cá) -->
-                                                <div class="flex justify-between items-center bg-slate-50 dark:bg-[#0b1120] px-3 py-2.5 rounded-xl border border-slate-200 dark:border-[#1e2a40]">
-                                                    <div class="flex items-center gap-2">
-                                                        <span id="iconEfetivada" class="flex items-center justify-center shrink-0">
-                                                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                        </span>
-                                                        <label class="text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none" id="lblEfetivadaText">Efetivada</label>
-                                                    </div>
-                                                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                                                        <input type="checkbox" id="chkEfetivada" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300" checked/>
-                                                        <label for="chkEfetivada" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
+                                                <div class="relative w-full">
+                                                    <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-0">Status</label>
+                                                    <div class="flex justify-between items-center bg-slate-50 dark:bg-[#0b1120] px-3 h-[44px] rounded-xl border border-slate-200 dark:border-[#1e2a40]">
+                                                        <div class="flex items-center gap-2">
+                                                            <span id="iconEfetivada" class="flex items-center justify-center shrink-0">
+                                                                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                            </span>
+                                                            <label class="text-sm font-bold text-slate-800 dark:text-gray-200 cursor-pointer select-none" id="lblEfetivadaText">Efetivada</label>
+                                                        </div>
+                                                        <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                                                            <input type="checkbox" id="chkEfetivada" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-slate-300 dark:border-gray-500 z-10 transition-all duration-300" checked/>
+                                                            <label for="chkEfetivada" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 dark:bg-[#1a2639] cursor-pointer transition-colors duration-300"></label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -1293,45 +1453,45 @@ select:focus, select:focus-visible {
           </div> <!-- Fim Wrapper Invisível -->
         </div> <!-- Fim modalNovoLancamento -->
         
-                                                        <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white text-slate-900 flex flex-wrap sm:flex-nowrap items-center gap-x-1.5 sm:gap-x-2 gap-y-2 px-4 sm:px-8 lg:px-10 py-2 z-[300] shadow-sm border-b border-slate-200">
+                                                                <!-- CABEÇALHO PRINCIPAL -->
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white dark:bg-[#121b2b] text-slate-900 dark:text-gray-100 flex flex-wrap sm:flex-nowrap items-center gap-x-1.5 sm:gap-x-2 gap-y-2 px-4 sm:px-8 lg:px-10 py-2 z-[300] shadow-sm border-b border-slate-200 dark:border-[#1e2a40] transition-colors duration-300">
 
             <!-- IDENTIDADE — linha própria no mobile, inline no desktop -->
             <div class="w-full sm:w-auto flex items-center gap-2.5 min-w-0 shrink-0">
-                <button type="button" onclick="abrirModalPerfil()" title="Configurações do Perfil"
-                        class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 transition-all active:scale-95">
+                <button type="button" onclick="abrirModalPerfil()" title="Configurações"
+                        class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] rounded-full flex items-center justify-center text-slate-600 dark:text-gray-300 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 dark:hover:bg-[#2a3850] transition-all active:scale-95">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 </button>
                 <div class="flex flex-col leading-tight min-w-0">
-                    <span class="text-[10px] sm:text-xs font-medium text-slate-500">Olá,</span>
-                    <h1 id="headerNome" class="text-base font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis">Mauro</h1>
+                    <span class="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-gray-400">Olá,</span>
+                    <h1 id="headerNome" class="text-base font-bold tracking-tight text-slate-900 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">Mauro</h1>
                 </div>
             </div>
 
-            <!-- OLHO — 1º da linha 2 mobile (após o swap) · 3º à direita no desktop -->
+            <!-- OLHO — 1º da linha 2 mobile · 3º à direita no desktop -->
             <button type="button" id="btnOcultarSaldos"
-                    class="order-2 sm:order-4 w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    class="order-2 sm:order-4 w-9 h-9 sm:w-11 sm:h-11 shrink-0 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full flex items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90">
                 <svg id="iconOlhoAberto" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                 <svg id="iconOlhoFechado" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
             </button>
 
-            <!-- LUPA — 2º da linha 2 mobile (após o swap) · ponta direita no desktop (ml-auto) -->
+            <!-- LUPA — 2º da linha 2 mobile · ponta direita no desktop (ml-auto) -->
             <button type="button" id="btnBuscaGlobal" title="Buscar em todos os meses"
-                    class="order-3 sm:order-2 sm:ml-auto w-10 h-10 sm:w-11 sm:h-11 shrink-0 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    class="order-3 sm:order-2 sm:ml-auto w-10 h-10 sm:w-11 sm:h-11 shrink-0 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full flex items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"></path></svg>
             </button>
 
             <!-- SELETOR DE MÊS — protagonista da linha 2 mobile · centro absoluto no desktop -->
             <div class="order-4 flex-1 sm:flex-initial sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 flex justify-center min-w-0">
-                <div class="w-full sm:w-auto flex items-center bg-white border border-slate-200 rounded-full p-0.5 h-10 sm:h-11 shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)]">
+                <div class="w-full sm:w-auto flex items-center bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-transparent rounded-full p-0.5 h-10 sm:h-11 shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)]">
                     <button type="button" id="btnMesAnt"
-                            class="w-9 h-9 sm:w-9 sm:h-9 flex items-center justify-center rounded-full sm:hover:bg-slate-100 transition-colors text-slate-600 font-bold active:scale-90">&lsaquo;</button>
+                            class="w-9 h-9 sm:w-9 sm:h-9 flex items-center justify-center rounded-full sm:hover:bg-slate-100 dark:sm:hover:bg-[#1a2639] transition-colors text-slate-600 dark:text-gray-300 font-bold active:scale-90">&lsaquo;</button>
                     <button type="button" id="btnAbrirSeletorMes"
-                            class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-4 h-9 rounded-full sm:hover:bg-slate-100 transition-colors group">
-                        <span id="mesAtualDisplay" class="text-sm font-bold text-slate-800 select-none whitespace-nowrap">Set 2026</span>
+                            class="flex-1 sm:flex-none flex items-center justify-center px-2 sm:px-4 h-9 rounded-full sm:hover:bg-slate-100 dark:sm:hover:bg-[#1a2639] transition-colors group">
+                        <span id="mesAtualDisplay" class="text-sm font-bold text-slate-800 dark:text-gray-100 select-none whitespace-nowrap">Set 2026</span>
                     </button>
                     <button type="button" id="btnMesProx"
-                            class="w-9 h-9 sm:w-9 sm:h-9 flex items-center justify-center rounded-full sm:hover:bg-slate-100 transition-colors text-slate-600 font-bold active:scale-90">&rsaquo;</button>
+                            class="w-9 h-9 sm:w-9 sm:h-9 flex items-center justify-center rounded-full sm:hover:bg-slate-100 dark:sm:hover:bg-[#1a2639] transition-colors text-slate-600 dark:text-gray-300 font-bold active:scale-90">&rsaquo;</button>
                 </div>
             </div>
 
@@ -1355,9 +1515,9 @@ select:focus, select:focus-visible {
                 </div>
             </div>
 
-            <!-- DESFAZER — apenas desktop (mobile vive no modal de Perfil) -->
+            <!-- DESFAZER — apenas desktop -->
             <button type="button" id="btnUndo" onclick="desfazer()" title="Desfazer" disabled
-                    class="hidden sm:flex js-undo-btn w-11 h-11 shrink-0 sm:order-5 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
+                    class="hidden sm:flex js-undo-btn w-11 h-11 shrink-0 sm:order-5 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                 </svg>
@@ -1365,23 +1525,23 @@ select:focus, select:focus-visible {
 
             <!-- REFAZER — apenas desktop -->
             <button type="button" id="btnRedo" onclick="refazer()" title="Refazer" disabled
-                    class="hidden sm:flex js-redo-btn w-11 h-11 shrink-0 sm:order-6 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-full items-center justify-center text-slate-700 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
+                    class="hidden sm:flex js-redo-btn w-11 h-11 shrink-0 sm:order-6 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                 </svg>
             </button>
 
-            <!-- SAIR — apenas mobile, último da linha 2 (ponta) -->
+            <!-- SAIR — mobile -->
             <button type="button" onclick="fazerLogout()" title="Sair do Sistema"
-                    class="w-9 h-9 shrink-0 order-6 sm:hidden bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500 rounded-full flex items-center justify-center text-slate-700 shadow-sm transition active:scale-90">
+                    class="w-9 h-9 shrink-0 order-6 sm:hidden bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-900/40 hover:text-red-500 dark:hover:text-red-400 rounded-full flex items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
             </button>
 
-            <!-- PAINEL DE MESES (inalterado) -->
+            <!-- PAINEL DE MESES -->
             <div id="painelSeletorMes"
-                 class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_12px_40px_-8px_rgba(0,97,242,0.25)] border border-slate-200 dark:border-[#1e2a40] p-5 w-[calc(100vw-2rem)] max-w-[300px] z-[500]">
+                 class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_12px_40px_-8px_rgba(0,97,242,0.25)] dark:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.6)] border border-slate-200 dark:border-[#1e2a40] p-5 w-[calc(100vw-2rem)] max-w-[300px] z-[500]">
                 <div class="flex items-center justify-between mb-4">
                     <button type="button" id="btnAnoAnt"
                             class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4D6BFE]/10 font-medium text-xl text-[#4D6BFE] active:scale-90 transition-colors">&lsaquo;</button>
@@ -1399,18 +1559,18 @@ select:focus, select:focus-visible {
         <div class="pt-24 sm:pt-28 pb-8 relative z-[90]">
 
             <!-- MENU LATERAL (colado à esquerda, fixo no desktop) -->
-            <aside class="w-full md:w-60 lg:w-64 bg-white border-b md:border-b-0 border-slate-100 flex-shrink-0 p-3 md:pt-6 md:fixed md:left-0 md:top-[calc(var(--header-h)+var(--safe-top))] md:bottom-0 md:overflow-y-auto z-40">
+            <aside class="w-full md:w-60 lg:w-64 bg-white dark:bg-[#121b2b] border-b md:border-b-0 border-slate-100 dark:border-[#1e2a40] flex-shrink-0 p-3 md:pt-6 md:fixed md:left-0 md:top-[calc(var(--header-h)+var(--safe-top))] md:bottom-0 md:overflow-y-auto z-40 transition-colors duration-300">
                 <nav class="flex flex-col gap-0.5">
                     <button type="button" id="btnMenuResumo" onclick="abrirTela('resumo')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-[#4D6BFE] text-white shadow-md shadow-[#4D6BFE]/30">Resumo</button>
-                    <button type="button" id="btnMenuExtrato" onclick="abrirTela('extrato')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 hover:bg-slate-50">Extrato</button>
-                    <button type="button" id="btnMenuContas" onclick="abrirTela('contas')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 hover:bg-slate-50">Contas</button>
+                    <button type="button" id="btnMenuExtrato" onclick="abrirTela('extrato')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Extrato</button>
+                    <button type="button" id="btnMenuContas" onclick="abrirTela('contas')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Contas</button>
                     
                     <div class="pt-5 pb-1.5">
-                        <p class="px-3.5 text-[8px] font-bold text-slate-300 uppercase tracking-[0.15em] select-none pointer-events-none">Planejar</p>
+                        <p class="px-3.5 text-[8px] font-bold text-slate-300 dark:text-gray-600 uppercase tracking-[0.15em] select-none pointer-events-none">Planejar</p>
                     </div>
                     
-                    <button type="button" id="btnMenuRelatorios" onclick="abrirTela('relatorios')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 hover:bg-slate-50">Relatórios</button>
-                    <button type="button" id="btnTabProjecao" onclick="mudarParaAbaProjecao()" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 hover:bg-slate-50">Simulador</button>
+                    <button type="button" id="btnMenuRelatorios" onclick="abrirTela('relatorios')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Relatórios</button>
+                    <button type="button" id="btnTabProjecao" onclick="mudarParaAbaProjecao()" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Simulador</button>
                 </nav>
             </aside>
 
@@ -1426,11 +1586,11 @@ select:focus, select:focus-visible {
                         <div class="anim-fade-up">
 
                             <!-- Hero — Saldo Total (superfície limpa) -->
-                            <div class="px-5 md:px-6 pt-6 pb-5">
+                            <div class="px-5 md:px-6 pt-6 pb-5 border-b border-slate-100 dark:border-[#1e2a40]">
                                 <div class="flex items-start justify-between gap-4">
                                     <div class="min-w-0">
-                                        <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 mb-2">Saldo Total do Mês</p>
-                                        <p id="cardSaldoGeral" class="text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none" style="color: #0F172A;">R$ 0,00</p>
+                                        <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 dark:text-gray-500 mb-2">Saldo Total do Mês</p>
+                                        <p id="cardSaldoGeral" class="text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none text-slate-900 dark:text-gray-100">R$ 0,00</p>
                                     </div>
                                     <div class="flex items-center gap-0.5 shrink-0">
                                         <button type="button" onclick="mostrarExplicacao('geral', false)" title="Entender o cálculo" class="p-1 text-slate-400 hover:text-[#4D6BFE] hover:bg-[#4D6BFE]/10 transition-colors active:scale-90 rounded-md">
@@ -1443,8 +1603,8 @@ select:focus, select:focus-visible {
                                 </div>
                             </div>
 
-                            <!-- 3 indicadores internos (sem divisórias) -->
-                            <div class="grid grid-cols-1 sm:grid-cols-3 stagger-cards">
+                            <!-- 3 indicadores internos (sem divisórias verticais) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 stagger-cards border-b border-slate-100 dark:border-[#1e2a40]">
 
                                 <!-- Salário -->
                                 <div class="px-5 md:px-6 py-5 flex flex-col">
@@ -1977,15 +2137,15 @@ select:focus, select:focus-visible {
 
             <!-- Resumo Financeiro do Filtro -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                <div class="card-tilt bg-gradient-to-br from-white to-[#F8FAFC] dark:from-[#0b1120] dark:to-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-50/80 dark:border-[#1e2a40] relative group flex flex-col justify-center min-h-[120px]">
+                <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total Receitas</p>
                     <p id="relTotRec" class="text-2xl font-bold text-green-600 dark:text-green-500 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
-                 <div class="card-tilt bg-gradient-to-br from-white to-[#F8FAFC] dark:from-[#0b1120] dark:to-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-50/80 dark:border-[#1e2a40] relative group flex flex-col justify-center min-h-[120px]">
+                 <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total Despesas</p>
                     <p id="relTotDesp" class="text-2xl font-bold text-red-600 dark:text-red-400 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
-                 <div class="card-tilt bg-gradient-to-br from-white to-[#F8FAFC] dark:from-[#0b1120] dark:to-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-50/80 dark:border-[#1e2a40] relative group flex flex-col justify-center min-h-[120px]">
+                 <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Resultado Líquido</p>
                     <p id="relTotSaldo" class="text-2xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
@@ -2202,19 +2362,15 @@ select:focus, select:focus-visible {
         };
 
         function renderBankLogo(b) {
-            // 🎯 Contornos super sutis (quase invisíveis) para não poluir visualmente.
-            // A opacidade baixíssima ainda ajuda a separar logos claros de fundos claros,
-            // mas o contorno deixa de "gritar" na interface.
-            const contorno = 'border border-[#4D6BFE]/[0.08] dark:border-[#4D6BFE]/[0.15]';
-
+            // 🎯 Logos sem contorno — apenas a sombra suave separa do fundo.
             // 1. Ícones genéricos (Carteira, Outros)
             if (b.isIcon) {
-                return `<div class="w-full h-full bg-slate-50 dark:bg-[#1a2639] rounded-full flex items-center justify-center p-[20%] shadow-sm ${contorno} text-slate-500">${b.svg}</div>`;
+                return `<div class="w-full h-full bg-slate-50 dark:bg-[#1a2639] rounded-full flex items-center justify-center p-[20%] shadow-sm text-slate-500">${b.svg}</div>`;
             }
             
             // 2. SVG Nativo injetado direto no código (Faz a Caixa ficar perfeita e sem fundo quadrado)
             if (b.isRawSvg) {
-                return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[18%] shadow-sm ${contorno}">
+                return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[18%] shadow-sm">
                             ${b.svg}
                         </div>`;
             }
@@ -2222,7 +2378,7 @@ select:focus, select:focus-visible {
             // 3. Imagens externas (Clearbit ou link customizado) com fallback pro Google
             const imgSource = b.customImg ? b.customImg : `https://logo.clearbit.com/${b.domain}`;
             
-            return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[15%] shadow-sm ${contorno}">
+            return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[15%] shadow-sm">
                         <img src="${imgSource}" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?domain=${b.domain}&sz=128';" alt="${b.nome}" class="w-full h-full object-contain">
                     </div>`;
         }
@@ -2624,6 +2780,53 @@ select:focus, select:focus-visible {
 
         window.fazerLogout = function() { signOut(auth); }
 
+        // ===================== TEMA (CLARO / ESCURO) =====================
+        // 🎨 O tema vive em <html class="dark"> — aproveitando o Tailwind
+        // configurado com darkMode: 'class'. A preferência é lida do
+        // localStorage (aplicação instantânea) e sincronizada com o
+        // Firestore (persistência entre dispositivos).
+        window.temaAtual = localStorage.getItem('temaApp') || 'light';
+
+        window.aplicarTema = function(tema) {
+            window.temaAtual = tema;
+            localStorage.setItem('temaApp', tema);
+
+            // 🎬 Fade global suave — ativa por 400ms
+            document.documentElement.classList.add('theme-transitioning');
+            setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 400);
+
+            if (tema === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            atualizarBotoesTema();
+
+            // 🔄 Sincroniza com a nuvem
+            if (currentUserUID) {
+                setDoc(doc(db, "userData", currentUserUID), { tema: tema }, { merge: true })
+                    .catch(e => console.error("Erro ao salvar tema:", e));
+            }
+        };
+
+        function atualizarBotoesTema() {
+            const btnClaro = document.getElementById('btnTemaClaro');
+            const btnEscuro = document.getElementById('btnTemaEscuro');
+            if (!btnClaro || !btnEscuro) return;
+
+            const ativoClasses = ['bg-[#4D6BFE]', 'text-white', 'border-[#4D6BFE]', 'shadow-md', 'shadow-[#4D6BFE]/30'];
+            const inativoClasses = ['bg-slate-100', 'dark:bg-[#1a2639]', 'text-slate-700', 'dark:text-gray-300', 'border-slate-200', 'dark:border-[#1e2a40]'];
+
+            const marcar = (btn, isAtivo) => {
+                btn.classList.remove(...ativoClasses, ...inativoClasses);
+                btn.classList.add(...(isAtivo ? ativoClasses : inativoClasses));
+            };
+
+            marcar(btnClaro, window.temaAtual === 'light');
+            marcar(btnEscuro, window.temaAtual === 'dark');
+        }
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUserUID = user.uid;
@@ -2645,6 +2848,13 @@ select:focus, select:focus-visible {
                         meuPerfil = data.perfil || meuPerfil;
                         configHoleriteGlobal = data.configHolerite || {};
                         saldoBaseMensalGlobal = data.saldoBaseMensal || {};
+
+                        // 🎨 Sincroniza tema salvo na nuvem (sobrepõe o localStorage)
+                        if (data.tema && data.tema !== window.temaAtual) {
+                            window.aplicarTema(data.tema);
+                        } else {
+                            atualizarBotoesTema();
+                        }
                         
                         // Lendo Categorias
                         const catsSnap = await getDocs(collection(db, "userData", currentUserUID, "categorias"));
@@ -2723,7 +2933,7 @@ select:focus, select:focus-visible {
                 const el = document.getElementById(b);
                 if(el) {
                     el.classList.remove('bg-[#4D6BFE]', 'text-white', 'shadow-md', 'shadow-[#4D6BFE]/20', 'shadow-[#4D6BFE]/30');
-                    el.classList.add('bg-transparent', 'text-slate-600', 'hover:bg-slate-50');
+                    el.classList.add('bg-transparent', 'text-slate-600', 'dark:text-gray-400', 'hover:bg-slate-50', 'dark:hover:bg-[#1a2639]');
                 }
             });
 
@@ -4362,6 +4572,9 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 
                 alternarRegimePerfil();
                 
+                // 🎨 Marca o botão de tema correto antes de mostrar o modal
+                atualizarBotoesTema();
+                
                 window.abrirModalGenerico('modalPerfil');
             }
 
@@ -4894,7 +5107,8 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 });
             }
             cardDespesasMes.textContent = formatMoeda(totalDespesasDoMes);
-            cardDespesasMes.style.color = totalDespesasDoMes > 0.005 ? '#E11D48' : '#0F172A';
+            if (totalDespesasDoMes > 0.005) cardDespesasMes.style.color = '#E11D48';
+            else cardDespesasMes.style.color = '';
             
             // Totalizador do rodapé do Extrato — reflete o filtro ativo
             const elRodRec = document.getElementById('rodapeExtratoRec');
@@ -5129,21 +5343,27 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             if(elVale) {
                 elVale.textContent = formatMoeda(saldoVale);
                 elVale.className = 'text-2xl font-bold font-montserrat tracking-tight valor-sensivel mb-3';
-                elVale.style.color = saldoVale < -0.005 ? '#E11D48' : (saldoVale > 0.005 ? '#059669' : '#0F172A');
+                if (saldoVale < -0.005) elVale.style.color = '#E11D48';
+                else if (saldoVale > 0.005) elVale.style.color = '#059669';
+                else elVale.style.color = ''; // deixa o CSS decidir (dark:text-gray-100)
             }
 
             const elSalario = document.getElementById('cardSaldoSalario');
             if(elSalario) {
                 elSalario.textContent = formatMoeda(saldoSalario);
                 elSalario.className = 'text-2xl font-bold font-montserrat tracking-tight valor-sensivel mb-3';
-                elSalario.style.color = saldoSalario < -0.005 ? '#E11D48' : (saldoSalario > 0.005 ? '#059669' : '#0F172A');
+                if (saldoSalario < -0.005) elSalario.style.color = '#E11D48';
+                else if (saldoSalario > 0.005) elSalario.style.color = '#059669';
+                else elSalario.style.color = '';
             }
 
             const elGeral = document.getElementById('cardSaldoGeral');
             if(elGeral) {
                 elGeral.textContent = formatMoeda(saldoGeral);
                 elGeral.className = 'text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none';
-                elGeral.style.color = saldoGeral < -0.005 ? '#E11D48' : (saldoGeral > 0.005 ? '#059669' : '#0F172A');
+                if (saldoGeral < -0.005) elGeral.style.color = '#E11D48';
+                else if (saldoGeral > 0.005) elGeral.style.color = '#059669';
+                else elGeral.style.color = '';
             }
 
                         // ===== BARRA DE CONSUMO: Salário e Vale =====
@@ -7023,9 +7243,9 @@ window.checkRateio = function() {
             div.style.pointerEvents = 'none';
             div.style.cursor = 'grabbing';
             div.style.transform = 'scale(1.04) rotate(1.5deg)';
-            // 🎯 Durante o arrasto, o glow neon acende forte — reforçando
-            // visualmente que este card está "ativo".
-            div.style.boxShadow = '0 18px 32px -10px rgba(0, 97, 242, 0.42), 0 24px 40px -12px rgba(77, 107, 254, 0.55)';
+            // 🎯 Durante o arrasto, a sombra fica mais profunda para dar
+            // a sensação real de "o card foi levantado da superfície".
+            div.style.boxShadow = '0 12px 24px -8px rgba(0, 0, 0, 0.15), 0 20px 40px -12px rgba(0, 0, 0, 0.18)';
             div.style.background = '#F8FAFC';
         }
 
@@ -7206,7 +7426,7 @@ window.checkRateio = function() {
                 let b = BANCOS[c.banco || 'carteira'] || BANCOS['outros'];
 
                 let div = document.createElement('div');
-                div.className = "min-w-[150px] sm:min-w-[170px] bg-white dark:bg-[#0b1120] p-4 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none border border-slate-100 dark:border-[#1e2a40] shadow-[0_1px_3px_rgb(0,0,0,0.03),0_6px_16px_-8px_rgb(0,0,0,0.04)] relative";
+                div.className = "min-w-[150px] sm:min-w-[170px] bg-white dark:bg-[#0b1120] p-5 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative";
                 div.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease';
                 div.dataset.contaId = c.id;
 
@@ -7230,7 +7450,7 @@ window.checkRateio = function() {
                 // Fora dessas situações, o card repousa limpo (só sombra neutra).
                 // 🎯 Mesma "receita" do arrasto — o glow intenso e difuso que
                 // se dissolve naturalmente nas bordas, sem marcar "parede".
-                const glowAtivo   = '0 8px 30px rgb(0,0,0,0.04), 0 24px 40px -12px rgba(77,107,254,0.55)';
+                const glowAtivo   = '0 4px 12px rgba(0,0,0,0.06), 0 12px 24px -8px rgba(0,0,0,0.10)';
                 const glowRepouso = '';
 
                 div.addEventListener('mouseenter', () => {

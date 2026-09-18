@@ -1258,11 +1258,11 @@ select:focus, select:focus-visible {
                 
                 <div class="flex items-center gap-1.5 sm:gap-3 select-none min-w-0 flex-1">
                     <div class="w-9 h-9 sm:w-12 sm:h-12 shrink-0 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 shadow-sm cursor-pointer hover:scale-105 hover:bg-slate-200 transition-all" onclick="abrirModalPerfil()" title="Configurações do Perfil">
-                        <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
-                    <div class="flex flex-col leading-tight min-w-0 flex-1">
-                        <span class="hidden sm:inline text-[9px] sm:text-xs font-medium text-slate-500">Olá,</span>
-                        <h1 id="headerNome" class="font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-200" style="font-size: 1.125rem;">Mauro</h1>
+                    <div class="hidden sm:flex flex-col leading-tight min-w-0 flex-1">
+                        <span class="text-xs font-medium text-slate-500">Olá,</span>
+                        <h1 id="headerNome" class="font-bold tracking-tight text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis" style="font-size: 1.125rem;">Mauro</h1>
                     </div>
                 </div>
 
@@ -4091,24 +4091,20 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
 
         // ===================== PERFIL =====================
         function ajustarFonteNomeHeader(nome) {
-            // 🎯 Ajusta o tamanho da fonte do nome conforme o comprimento,
-            // mantendo-o SEMPRE em uma única linha. Escala profissional:
-            // nomes curtos ficam grandes e imponentes, nomes longos encolhem
-            // suavemente sem quebrar nem estourar o header.
+            // 🎯 Ajusta o tamanho do nome no desktop conforme o comprimento,
+            // mantendo-o em uma linha. No mobile o nome nem é exibido.
             const el = document.getElementById('headerNome');
             if (!el) return;
 
             const comprimento = (nome || '').length;
-            const ehMobile = window.innerWidth < 640;
 
-            // Tamanhos em rem (escala base para desktop; ajustado para mobile)
             let tamanho;
-            if (comprimento <= 6)       tamanho = ehMobile ? 1.125 : 1.25;   // ex: "Mauro"
-            else if (comprimento <= 10) tamanho = ehMobile ? 1.0625 : 1.1875; // ex: "Mauro Silva"
-            else if (comprimento <= 14) tamanho = ehMobile ? 1.0    : 1.125;  // ex: "Mauro Santos"
-            else if (comprimento <= 18) tamanho = ehMobile ? 0.9375 : 1.0625; // ex: "Isabella Ribeiro"
-            else if (comprimento <= 22) tamanho = ehMobile ? 0.875  : 1.0;    // ex: "Isabella Ribeiro Silva"
-            else                        tamanho = ehMobile ? 0.8125 : 0.9375; // ex: nomes muito longos
+            if (comprimento <= 6)       tamanho = 1.25;   // ex: "Mauro"
+            else if (comprimento <= 10) tamanho = 1.1875; // ex: "Mauro Silva"
+            else if (comprimento <= 14) tamanho = 1.125;  // ex: "Mauro Santos"
+            else if (comprimento <= 18) tamanho = 1.0625; // ex: "Isabella Ribeiro"
+            else if (comprimento <= 22) tamanho = 1.0;    // ex: "Isabella Ribeiro Silva"
+            else                        tamanho = 0.9375; // ex: nomes muito longos
 
             el.style.fontSize = tamanho + 'rem';
         }

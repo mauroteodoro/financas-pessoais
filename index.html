@@ -1355,7 +1355,7 @@ select:focus, select:focus-visible {
                                 <div class="flex items-start justify-between gap-4">
                                     <div class="min-w-0">
                                         <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 mb-2">Saldo Total do Mês</p>
-                                        <p id="cardSaldoGeral" class="text-3xl md:text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none" style="color: #0F172A;">R$ 0,00</p>
+                                        <p id="cardSaldoGeral" class="text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none" style="color: #0F172A;">R$ 0,00</p>
                                     </div>
                                     <div class="flex items-center gap-0.5 shrink-0">
                                         <button type="button" onclick="mostrarExplicacao('geral', false)" title="Entender o cálculo" class="p-1 text-slate-400 hover:text-[#4D6BFE] hover:bg-[#4D6BFE]/10 transition-colors active:scale-90 rounded-md">
@@ -4959,7 +4959,7 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             const elGeral = document.getElementById('cardSaldoGeral');
             if(elGeral) {
                 elGeral.textContent = formatMoeda(saldoGeral);
-                elGeral.className = 'text-4xl md:text-5xl font-bold font-montserrat tracking-tight valor-sensivel leading-none';
+                elGeral.className = 'text-4xl font-bold font-montserrat tracking-tight valor-sensivel leading-none';
                 elGeral.style.color = saldoGeral < -0.005 ? '#E11D48' : (saldoGeral > 0.005 ? '#059669' : '#0F172A');
             }
 
@@ -6467,7 +6467,12 @@ window.checkRateio = function() {
 
         document.querySelectorAll('.valor-sensivel').forEach(el => {
             const container = el.parentElement; if (container) { container.classList.remove('pr-6', 'pr-2'); container.classList.add('pr-1'); }
-            observadorDeSaldos.observe(el, { childList: true, characterData: true, subtree: true }); el.textContent = el.textContent; 
+            // 🎯 O hero "Saldo Total do Mês" tem tamanho FIXO por design (é o número principal da tela).
+            // Excluí-lo do observer garante que o ajuste automático de fonte não sobrescreva seu tamanho.
+            if (el.id !== 'cardSaldoGeral') {
+                observadorDeSaldos.observe(el, { childList: true, characterData: true, subtree: true });
+                el.textContent = el.textContent;
+            }
         });
         // ===================== MOTOR DE CONTAS E CARTEIRAS =====================
         window.abrirNovaContaDireto = function() {

@@ -7515,8 +7515,12 @@ window.checkRateio = function() {
                         dragState.longPressTimer = setTimeout(() => {
                             if (!dragState || dragState.card !== div) return;
                             dragState.longPressReady = true;
-                            // Vibração curta (quando suportada) para sinalizar "pronto pra arrastar"
-                            if (navigator.vibrate) { try { navigator.vibrate(15); } catch(_) {} }
+                            // 📳 Vibração "duplo toque" — mais perceptível que um pulso único.
+                            // Padrão: [vibra 18ms, pausa 40ms, vibra 22ms].
+                            // Só funciona no Android/Chrome; iOS Safari ignora silenciosamente.
+                            if (navigator.vibrate) {
+                                try { navigator.vibrate([18, 40, 22]); } catch(_) {}
+                            }
                             // Feedback visual: encolhe de leve + sombra mais forte
                             div.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
                             div.style.transform = 'scale(0.96)';

@@ -7296,9 +7296,37 @@ window.checkRateio = function() {
                 const dy = e.clientY - dragState.startY;
 
                 if (!dragState.active) {
-                    if (Math.hypot(dx, dy) < 6) return;
+                    // 📱 Touch: ainda aguardando o long-press. Se o dedo deslizou
+                    // mais que 10px, o usuário quer scroll — cancela e sai do fluxo.
+                    if (dragState.isTouch && !dragState.longPressReady) {
+                        if (Math.hypot(dx, dy) > 10) {
+                            if (dragState.longPressTimer) {
+                                clearTimeout(dragState.longPressTimer);
+                                dragState.longPressTimer = null;
+                            }
+                            if (div) {
+                                div.style.transform = '';
+                                div.style.transition = '';
+                                div.style.boxShadow = '';
+                            }
+                            dragState = null;
+                        }
+                        return;
+                    }
+                    // 🖱️ Mouse: ativa ao passar de 6px (comportamento original).
+                    if (!dragState.isTouch && Math.hypot(dx, dy) < 6) return;
+
+                    // 📱 Touch com long-press já disparado: ativa ao primeiro movimento.
                     dragState.active = true;
+                    // Limpa o feedback visual do long-press antes do drag assumir.
+                    div.style.transform = '';
+                    div.style.transition = '';
+                    div.style.boxShadow = '';
                     ativarDrag(div, e);
+                    // Recalcula o offset após o reparent (o card virou position:fixed).
+                    const rect = div.getBoundingClientRect();
+                    dragState.offsetX = e.clientX - rect.left;
+                    dragState.offsetY = e.clientY - rect.top;
                 }
 
                 if (dragState.active && dragState.placeholder) {
@@ -7351,11 +7379,25 @@ window.checkRateio = function() {
                 }
             }, { passive: true });
 
+            // 📱 Enquanto o arrasto está ativo (ou o long-press já disparou),
+            // bloqueia o scroll do carrossel/página no touchmove. Isso só
+            // acontece DEPOIS que o usuário segurou o card — então o swipe
+            // normal pra rolar continua funcionando perfeitamente.
+            document.addEventListener('touchmove', (e) => {
+                if (dragState && (dragState.active || dragState.longPressReady)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
             document.addEventListener('pointerup', finalizarDrag);
             document.addEventListener('pointercancel', finalizarDrag);
 
             window.addEventListener('blur', () => {
                 if (!dragState) return;
+                if (dragState.longPressTimer) {
+                    clearTimeout(dragState.longPressTimer);
+                    dragState.longPressTimer = null;
+                }
                 const div = dragState.card;
                 restaurarCard(div, dragState.active);
                 dragState = null;
@@ -7364,9 +7406,25 @@ window.checkRateio = function() {
 
         function finalizarDrag() {
             if (!dragState) return;
+
+            // Cancela o timer de long-press, se ainda estiver pendente.
+            if (dragState.longPressTimer) {
+                clearTimeout(dragState.longPressTimer);
+                dragState.longPressTimer = null;
+            }
+
             const div = dragState.card;
             const wasActive = dragState.active;
             const container = document.getElementById('containerContas');
+
+            // 🎯 Se o long-press disparou mas o arrasto nem chegou a começar
+            // (usuário soltou o dedo logo após o "pronto"), limpa o feedback
+            // visual para o card voltar ao estado normal.
+            if (!wasActive && div) {
+                div.style.transform = '';
+                div.style.transition = '';
+                div.style.boxShadow = '';
+            }
 
             // Reordena contas antes de restaurar o card
             if (wasActive && container && dragState.placeholder) {
@@ -7433,6 +7491,9 @@ window.checkRateio = function() {
                 div.addEventListener('pointerdown', (e) => {
                     if (e.button !== 0) return;
                     if (e.target.closest('button')) return;
+
+                    const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen';
+
                     dragState = {
                         card: div,
                         startX: e.clientX,
@@ -7441,8 +7502,27 @@ window.checkRateio = function() {
                         offsetY: 0,
                         active: false,
                         placeholder: null,
-                        savedStyles: null
+                        savedStyles: null,
+                        isTouch: isTouch,
+                        longPressReady: false,
+                        longPressTimer: null
                     };
+
+                    if (isTouch) {
+                        // 📱 LONG-PRESS: só habilita o arrasto depois de 400ms parado.
+                        // Isso preserva o scroll horizontal nativo do carrossel — um swipe
+                        // rápido cancela o timer e rola a lista normalmente.
+                        dragState.longPressTimer = setTimeout(() => {
+                            if (!dragState || dragState.card !== div) return;
+                            dragState.longPressReady = true;
+                            // Vibração curta (quando suportada) para sinalizar "pronto pra arrastar"
+                            if (navigator.vibrate) { try { navigator.vibrate(15); } catch(_) {} }
+                            // Feedback visual: encolhe de leve + sombra mais forte
+                            div.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
+                            div.style.transform = 'scale(0.96)';
+                            div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12), 0 12px 24px -8px rgba(0,0,0,0.18)';
+                        }, 400);
+                    }
                 });
 
                 // 🎯 Glow neon roxo — só aparece quando o card está "ativo":

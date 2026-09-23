@@ -702,49 +702,28 @@ select:focus, select:focus-visible {
         </div>
         <!-- MODAL DE PERFIL -->
         <div id="modalPerfil" class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 hidden items-center justify-center z-[1000] backdrop-blur-sm transition-opacity px-4">
-            <div class="bg-white dark:bg-[#121b2b] p-4 sm:p-5 rounded-3xl w-full max-w-lg shadow-xl border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[90vh]">
-                <div class="flex justify-between items-center mb-4 border-b border-slate-100 dark:border-[#1e2a40] pb-2.5 shrink-0">
+            <div class="bg-white dark:bg-[#121b2b] p-3.5 sm:p-4 rounded-3xl w-full max-w-lg shadow-xl border border-slate-200 dark:border-[#1e2a40] transform scale-95 transition-transform flex flex-col max-h-[92vh]">
+                <div class="flex justify-between items-center mb-3 border-b border-slate-100 dark:border-[#1e2a40] pb-2 shrink-0">
                     <h3 class="text-lg font-bold text-slate-900 dark:text-cyan-400 font-montserrat">Configurações</h3>
                     <button type="button" onclick="fecharModalPerfil()" class="text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors active:scale-90 p-2 rounded-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
                 
-                <div class="space-y-3 px-1 -mx-1 pb-3 pt-0.5 flex-1 overflow-y-auto no-scrollbar">
+                <div class="space-y-2.5 px-1 -mx-1 pb-2 pt-0.5 flex-1 overflow-y-auto hover-scrollbar pr-2">
                     <!-- 🎨 Seletor de Tema (Claro / Escuro) -->
                     <div class="pb-1">
                         <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-2">Aparência</label>
                         <div class="grid grid-cols-2 gap-2">
                             <button type="button" id="btnTemaClaro" onclick="aplicarTema('light')"
-                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
+                                    class="flex items-center justify-center gap-2 py-2 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                                 Claro
                             </button>
                             <button type="button" id="btnTemaEscuro" onclick="aplicarTema('dark')"
-                                    class="flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
+                                    class="flex items-center justify-center gap-2 py-2 rounded-xl border transition-all active:scale-95 font-semibold text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                                 Escuro
-                            </button>
-                        </div>
-                    </div>
-                    <!-- 🎯 NOVO: Ações Rápidas (apenas mobile) -->
-                    <div class="sm:hidden pb-2">
-                        <label class="block text-xs font-medium text-slate-500 dark:text-gray-300 mb-2">Ações Rápidas</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button type="button" onclick="fecharModalPerfil(); setTimeout(() => abrirBuscaGlobal(), 200)" title="Buscar em todos os meses"
-                                    class="flex flex-col items-center justify-center gap-1 bg-slate-100 dark:bg-[#1a2639] hover:bg-slate-200 dark:hover:bg-[#2a3850] text-slate-700 dark:text-gray-200 font-semibold py-2.5 rounded-xl transition-colors active:scale-95">
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"></path></svg>
-                                <span class="text-[10px]">Buscar</span>
-                            </button>
-                            <button type="button" onclick="desfazer()" disabled title="Desfazer"
-                                    class="js-undo-btn flex flex-col items-center justify-center gap-1 bg-slate-100 dark:bg-[#1a2639] hover:bg-slate-200 dark:hover:bg-[#2a3850] text-slate-700 dark:text-gray-200 font-semibold py-2.5 rounded-xl transition-colors active:scale-95 opacity-40 cursor-not-allowed">
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" /></svg>
-                                <span class="text-[10px]">Desfazer</span>
-                            </button>
-                            <button type="button" onclick="refazer()" disabled title="Refazer"
-                                    class="js-redo-btn flex flex-col items-center justify-center gap-1 bg-slate-100 dark:bg-[#1a2639] hover:bg-slate-200 dark:hover:bg-[#2a3850] text-slate-700 dark:text-gray-200 font-semibold py-2.5 rounded-xl transition-colors active:scale-95 opacity-40 cursor-not-allowed">
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" /></svg>
-                                <span class="text-[10px]">Refazer</span>
                             </button>
                         </div>
                     </div>
@@ -817,18 +796,18 @@ select:focus, select:focus-visible {
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 pt-3 border-t border-slate-100 dark:border-[#1e2a40] shrink-0 flex flex-col gap-2">
-                    <button type="button" id="btnSalvarPerfil" class="w-full bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-extrabold py-3 px-4 rounded-full transition-all duration-300 active:scale-95 shadow-lg shadow-[#4D6BFE]/20 font-montserrat tracking-wide text-xs uppercase h-[44px]">SALVAR CONFIGURAÇÕES</button>
-                    <button type="button" onclick="abrirModalBackups()" class="w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-600 dark:text-gray-300 font-bold py-2.5 px-4 rounded-full transition duration-200 active:scale-95 border border-slate-200 dark:border-[#1e2a40] font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[40px]">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="mt-1 pt-2 border-t border-slate-100 dark:border-[#1e2a40] shrink-0 flex flex-col gap-1">
+                    <button type="button" id="btnSalvarPerfil" class="w-full bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-extrabold py-2 px-4 rounded-full transition-all duration-300 active:scale-95 shadow-lg shadow-[#4D6BFE]/20 font-montserrat tracking-wide text-xs uppercase h-[36px]">SALVAR CONFIGURAÇÕES</button>
+                    <button type="button" onclick="abrirModalBackups()" class="w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-600 dark:text-gray-300 font-bold py-1.5 px-4 rounded-full transition duration-200 active:scale-95 border border-slate-200 dark:border-[#1e2a40] font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[32px]">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         Backups e Restauração
                     </button>
-                    <button type="button" onclick="abrirModalReset()" class="w-full bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 dark:text-red-400 font-bold py-2.5 px-4 rounded-full transition duration-200 active:scale-95 border border-red-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-500/50 font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[40px]">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    <button type="button" onclick="abrirModalReset()" class="w-full bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 dark:text-red-400 font-bold py-1.5 px-4 rounded-full transition duration-200 active:scale-95 border border-red-200 dark:border-red-900/30 hover:border-red-400 dark:hover:border-red-500/50 font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[32px]">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         Zerar Sistema (Hard Reset)
                     </button>
-                    <button type="button" onclick="fazerLogout()" class="w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-500 dark:text-gray-400 font-bold py-2.5 px-4 rounded-full transition duration-200 active:scale-95 border border-slate-200 dark:border-[#1e2a40] font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[40px]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    <button type="button" onclick="fazerLogout()" class="w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-500 dark:text-gray-400 font-bold py-1.5 px-4 rounded-full transition duration-200 active:scale-95 border border-slate-200 dark:border-[#1e2a40] font-montserrat tracking-wide text-xs flex items-center justify-center gap-2 h-[32px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                         Sair do Sistema
                     </button>
                 </div>
@@ -1655,22 +1634,6 @@ select:focus, select:focus-visible {
                 </div>
             </div>
 
-            <!-- DESFAZER — apenas desktop -->
-            <button type="button" id="btnUndo" onclick="desfazer()" title="Desfazer" disabled
-                    class="hidden sm:flex js-undo-btn w-11 h-11 shrink-0 sm:order-5 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </svg>
-            </button>
-
-            <!-- REFAZER — apenas desktop -->
-            <button type="button" id="btnRedo" onclick="refazer()" title="Refazer" disabled
-                    class="hidden sm:flex js-redo-btn w-11 h-11 shrink-0 sm:order-6 bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-slate-200 dark:hover:bg-[#2a3850] rounded-full items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90 opacity-40 cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 0 0 0 12h3" />
-                </svg>
-            </button>
-
             <!-- SAIR — mobile -->
             <button type="button" onclick="fazerLogout()" title="Sair do Sistema"
                     class="w-9 h-9 shrink-0 order-6 sm:hidden bg-slate-100 dark:bg-[#1a2639] border border-slate-200 dark:border-[#1e2a40] hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-900/40 hover:text-red-500 dark:hover:text-red-400 rounded-full flex items-center justify-center text-slate-700 dark:text-gray-300 shadow-sm transition active:scale-90">
@@ -2110,6 +2073,14 @@ select:focus, select:focus-visible {
                                             <input type="number" id="holDiasFerias" value="30" min="5" max="30" class="w-16 border border-slate-300 dark:border-[#1e2a40] rounded-md p-1.5 text-center text-sm font-bold bg-white dark:bg-[#1a2639] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500">
                                         </div>
                                     </div>
+                                    <div id="boxDiaInicioFerias" class="hidden mt-3 pt-3 border-t border-blue-100 dark:border-[#1e2a40]">
+                                        <label class="block text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Dia de Início das Férias</label>
+                                        <div class="flex items-center gap-1.5">
+                                            <input type="number" id="holDiaInicioFerias" value="1" min="1" max="31" class="w-16 border border-slate-300 dark:border-[#1e2a40] rounded-md p-2 text-center text-sm font-bold bg-white dark:bg-[#1a2639] text-slate-800 dark:text-white focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500">
+                                            <span id="lblMesAnoFerias" class="text-sm font-semibold text-slate-600 dark:text-gray-300">/MM/AAAA</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 dark:text-gray-400 mt-1.5 leading-tight">O mês e o ano ficam travados pelo mês visualizado no topo.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2117,7 +2088,7 @@ select:focus, select:focus-visible {
 
                     <!-- COLUNA DIREITA -->
                     <div class="lg:col-span-7 flex flex-col gap-6">
-                        <div class="bg-white dark:bg-[#0b1120] rounded-xl border border-slate-200 dark:border-[#1e2a40] shadow-sm flex flex-col flex-1">
+                        <div class="bg-white dark:bg-[#0b1120] rounded-xl border border-slate-200 dark:border-[#1e2a40] shadow-sm flex flex-col">
                             <div class="px-5 py-4 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center">
                                 <p class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">Recibo de Pagamento</p>
                                 <div class="flex items-center gap-2">
@@ -2616,10 +2587,16 @@ select:focus, select:focus-visible {
         window.mostrarAviso = function(mensagem, tipo = 'sucesso') {
             const container = document.getElementById('toast-container'); const toast = document.createElement('div');
             let corFundo = tipo === 'sucesso' ? 'bg-[#4D6BFE] dark:bg-[#4338CA]' : (tipo === 'info' ? 'bg-slate-600 dark:bg-[#1e3a8a]' : 'bg-red-500 dark:bg-red-900');
-            let icone = tipo === 'sucesso' ? '✓' : (tipo === 'info' ? 'ℹ' : '⚠');
+            // 🎯 Ícones em SVG inline — 100% de compatibilidade em qualquer fonte
+            // (o caractere `ℹ` virava "tofu" em alguns sistemas por falta de glifo)
+            const svgIcone = tipo === 'sucesso'
+                ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+                : (tipo === 'info'
+                    ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+                    : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>');
             toast.className = `flex items-center gap-3 ${corFundo} text-white px-6 py-3.5 rounded-full shadow-xl transform transition-all duration-300 translate-x-full opacity-0 pointer-events-auto z-[9999] relative pr-12`;
             toast.innerHTML = `
-                <div class="text-xl font-bold">${icone}</div><div class="text-sm font-medium flex-1">${mensagem}</div>
+                <div class="shrink-0 flex items-center justify-center">${svgIcone}</div><div class="text-sm font-medium flex-1">${mensagem}</div>
                 <button type="button" onclick="this.parentElement.remove()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors active:scale-90 p-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>`;
@@ -3899,9 +3876,6 @@ select:focus, select:focus-visible {
 
             const eraEdicao = !!transferenciaSendoEditada;
 
-            // 🎯 Snapshot antes de criar/editar (permite desfazer)
-            window.pushUndoState(eraEdicao ? 'Edição de transferência' : 'Transferência entre contas');
-
             // Em modo edição, apaga os 2 lançamentos antigos antes de criar os novos.
             // Assim mantemos a integridade do par (nunca fica um órfão).
             if (eraEdicao) {
@@ -4722,8 +4696,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 // Campo vazio → remove o override e volta ao cálculo automático
                 const inputEl = document.getElementById('inputAjusteBase');
                 if (!inputEl.value || inputEl.value.trim() === '') {
-                    // 🎯 Snapshot antes de remover o override
-                    window.pushUndoState('Remoção de ajuste');
                     delete saldoBaseMensalGlobal[chave].overrideSalario;
                     cacheSaldoAcumulado = {};
                     syncToFirebase();
@@ -4739,9 +4711,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     fecharModalAjuste();
                     return;
                 }
-
-                // 🎯 Snapshot antes de fixar o valor
-                window.pushUndoState('Ajuste de salário');
 
                 // Registra o ajuste com data e valor anterior. A partir desta data,
                 // novas movimentações voltam a compor o saldo automaticamente.
@@ -4791,9 +4760,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             let diferenca = val - saldoAlvo;
             
             if (Math.abs(diferenca) > 0.001) { 
-                // 🎯 Snapshot antes de criar o lançamento silencioso
-                window.pushUndoState('Ajuste de saldo');
-                
                 let isReceita = diferenca > 0;
                 let valorAbsoluto = Math.abs(diferenca);
                 // 🎯 O ajuste precisa morar no MÊS VISUALIZADO — não em "hoje".
@@ -4985,17 +4951,61 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 window.fecharModalGenerico('modalPerfil');
             }
 
-        document.getElementById('btnSalvarPerfil').addEventListener('click', () => {
+            document.getElementById('btnSalvarPerfil').addEventListener('click', () => {
+            // 🎯 Detecta se o salário bruto mudou ANTES de sobrescrever meuPerfil.
+            // Se mudou, propaga o novo valor para todas as simulações salvas
+            // a partir do MÊS SEGUINTE ao mês visualizado no header.
+            // O mês atual e os anteriores ficam intactos (regra histórica).
+            const salarioAntigo = valorFloat(meuPerfil.salario);
+            const salarioNovo = valorFloat(document.getElementById('perfilSalario').value);
+            const salarioMudou = Math.abs(salarioNovo - salarioAntigo) > 0.005;
+
             meuPerfil = {
                 nome: document.getElementById('perfilNome').value,
                 regime: document.getElementById('perfilRegime') ? document.getElementById('perfilRegime').value : 'CLT',
                 temVale: document.getElementById('perfilTemVale') ? document.getElementById('perfilTemVale').value : 'Sim',
                 cidade: document.getElementById('perfilCidade') ? document.getElementById('perfilCidade').value : 'Iperó - SP',
-                salario: valorFloat(document.getElementById('perfilSalario').value).toString(),
+                salario: salarioNovo.toString(),
                 horas: document.getElementById('perfilHoras').value, 
                 dependentes: document.getElementById('perfilDependentes').value,
                 email: '', foto: '' 
             };
+
+            if (salarioMudou) {
+                // 🎯 Alvo: mês SEGUINTE ao mês REAL de hoje (não ao mês visualizado).
+                // Ex: se hoje é Set/2026, o alvo é Out/2026 — todos os meses a partir
+                // de Out/2026 recebem o novo bruto, não importa qual mês está na tela.
+                const hojeReal = new Date();
+                const mesAlvo = new Date(hojeReal.getFullYear(), hojeReal.getMonth() + 1, 1);
+                const mesAlvoNum = mesAlvo.getFullYear() * 100 + (mesAlvo.getMonth() + 1);
+
+                let mesesAtualizados = 0;
+                for (const chave in configHoleriteGlobal) {
+                    const p = chave.split('/');
+                    if (p.length !== 2) continue;
+                    const chaveNum = parseInt(p[1]) * 100 + parseInt(p[0]);
+                    if (chaveNum >= mesAlvoNum) {
+                        configHoleriteGlobal[chave].bruto = salarioNovo;
+                        mesesAtualizados++;
+                    }
+                }
+
+                // Meses SEM simulação salva puxam direto de `meuPerfil.salario`
+                // quando o usuário abre o simulador — então já refletem o novo valor.
+                // Se o usuário já estiver com o simulador aberto, força a releitura.
+                const abaProjecao = document.getElementById('abaProjecao');
+                if (abaProjecao && abaProjecao.classList.contains('block')) {
+                    carregarOuCalcularFolha();
+                }
+
+                if (mesesAtualizados > 0) {
+                    window.mostrarAviso(
+                        `Salário atualizado. ${mesesAtualizados} simulaç${mesesAtualizados === 1 ? 'ão' : 'ões'} futura${mesesAtualizados === 1 ? '' : 's'} receberam o novo valor.`,
+                        "info"
+                    );
+                }
+            }
+
             syncToFirebase(); 
             aplicarPerfilVisual(); 
             atualizarTabela();
@@ -5120,9 +5130,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 // 🎯 Só Ajustes Manuais são imutáveis (nascem pagos e representam correções de saldo).
                 // Qualquer outro lançamento — mesmo À Vista — pode ser pendente e depois efetivado.
                 if (item.subcategoria === 'Ajuste Manual' || item.isAjuste) return;
-                
-                // 🎯 Snapshot antes de alterar status (permite desfazer)
-                window.pushUndoState(item.pago ? 'Marcar como pendente' : 'Marcar como efetuado');
                 
                 let timestamp = getTimestampAtual();
                 let efData = item.dataEfetivacao || item.vencimento;
@@ -5784,10 +5791,11 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             }
 
             const saldoVale = baseVale + receitaVale - gastoVale + ajusteVale;
-            // 🎯 O Saldo Total soma TAMBÉM o bucket Extra (rendas/gastos/ajustes
-            // que não pertencem ao Salário nem ao Vale). Assim, ajustar o "Saldo
-            // Total" mexe só no card do Total — Salário e Vale ficam intactos.
-            const saldoGeralDesteMes = saldoVale + saldoSalario + rendaExtra - gastoExtra + ajusteExtra;
+            // 🎯 O Saldo Total é SEMPRE a soma exata dos dois cards visíveis:
+            // Saldo do Salário + Saldo do Vale. Isso garante que a matemática
+            // sempre "feche" na tela — o usuário vê A + B = Total, sem
+            // surpresas invisíveis vindas de um terceiro balde (Extra).
+            const saldoGeralDesteMes = saldoVale + saldoSalario;
 
             // Acúmulo entre meses removido por decisão de produto — cada mês é independente
             const acumuladoAnterior = 0;
@@ -6207,9 +6215,6 @@ window.checkRateio = function() {
             const nat = document.getElementById('naturezaLancamento') ? document.getElementById('naturezaLancamento').value : 'Despesa';
             const compoeResumoVal = (nat === 'Receita') ? !!document.getElementById('chkCompoeSaldo')?.checked : false;
 
-            // 🎯 Snapshot antes de criar (permite desfazer)
-            window.pushUndoState('Novo lançamento');
-
             if (tipoCompra === 'A Prazo') {
     const qtd = parseInt(inputParcelas.value) || 1; const pAtual = parseInt(inputParcAtual.value) || 1;
     const periodicidade = document.getElementById('periodicidadeParcelamento').value || 'Mensal';
@@ -6340,9 +6345,6 @@ window.checkRateio = function() {
         document.getElementById('btnConfirmarApagar').addEventListener('click', function() {
             if (!itemSendoApagado) return;
             const escopo = document.querySelector('input[name="apagarEscopo"]:checked')?.value || 'todas';
-            
-            // 🎯 Snapshot antes de apagar (permite desfazer)
-            window.pushUndoState('Exclusão de lançamento');
             
             if (itemSendoApagado.isTransferencia) {
                 // Remove ambos os lançamentos vinculados (saída + entrada)
@@ -6490,9 +6492,6 @@ window.checkRateio = function() {
             const origemManualEdit = document.getElementById('editOrigemManual')?.value || 'Auto';
             const compoeResumoEdit = !!document.getElementById('chkEditCompoeSaldo')?.checked;
             
-            // 🎯 Snapshot antes de editar (permite desfazer)
-            window.pushUndoState('Edição de lançamento');
-
             if (escopo === 'unica' || !itemSendoEditado.totalParcelas) {
                 itemSendoEditado.descricaoOriginal = nd; itemSendoEditado.descricao = nd; itemSendoEditado.valor = nv.toFixed(2); itemSendoEditado.dataLancamento = ndc; itemSendoEditado.vencimento = formatarDataComparacao(ndt); itemSendoEditado.categoria = nc; itemSendoEditado.subcategoria = ns; itemSendoEditado.origem = determinarOrigem(ndt, itemSendoEditado.natureza, origemManualEdit); itemSendoEditado.observacao = nobs; itemSendoEditado.dataEfetivacao = ndEfet; itemSendoEditado.anexo = anexoEditBase64; itemSendoEditado.contaId = document.getElementById('editContaSelecionada').value;
                 if (itemSendoEditado.tipo === 'Receita' || itemSendoEditado.natureza === 'Receita') itemSendoEditado.compoeResumo = compoeResumoEdit;
@@ -6597,32 +6596,111 @@ window.checkRateio = function() {
 
         let simulacaoAtualGlobal = {};
         function calcularINSS(base) {
-            if(base <= 1621.00) return base * 0.075; if(base <= 2902.84) return (base * 0.09) - 24.32;
-            if(base <= 4354.27) return (base * 0.12) - 111.40; if(base <= 8475.55) return (base * 0.14) - 198.49;
-            return (8475.55 * 0.14) - 198.49; 
+            // 🎯 INSS progressivo por faixas — cada alíquota incide SÓ sobre a
+            // parcela da base que cai dentro da faixa. Correto em qualquer valor,
+            // inclusive acima do teto (onde a fórmula antiga errava).
+            //
+            // Faixas 2026:
+            //   1ª faixa: até R$ 1.621,00         → 7,5%
+            //   2ª faixa: de 1.621,01 a 2.902,84  → 9,0%
+            //   3ª faixa: de 2.902,85 a 4.354,27  → 12,0%
+            //   4ª faixa: de 4.354,28 a 8.475,55  → 14,0%
+            //   Teto: R$ 8.475,55 — nada acima disso é contribuído.
+            const FAIXA1 = 1621.00;
+            const FAIXA2 = 2902.84;
+            const FAIXA3 = 4354.27;
+            const FAIXA4 = 8475.55;
+
+            if (base <= 0) return 0;
+
+            if (base <= FAIXA1) {
+                return base * 0.075;
+            } else if (base <= FAIXA2) {
+                return (FAIXA1 * 0.075) + ((base - FAIXA1) * 0.09);
+            } else if (base <= FAIXA3) {
+                return (FAIXA1 * 0.075) + ((FAIXA2 - FAIXA1) * 0.09) + ((base - FAIXA2) * 0.12);
+            } else if (base <= FAIXA4) {
+                return (FAIXA1 * 0.075) + ((FAIXA2 - FAIXA1) * 0.09) + ((FAIXA3 - FAIXA2) * 0.12) + ((base - FAIXA3) * 0.14);
+            } else {
+                // Base acima do teto → contribuição máxima (teto da 4ª faixa)
+                return (FAIXA1 * 0.075) + ((FAIXA2 - FAIXA1) * 0.09) + ((FAIXA3 - FAIXA2) * 0.12) + ((FAIXA4 - FAIXA3) * 0.14);
+            }
         }
         function calcularIRRF(baseTributavel, qtdDependentes) {
-            const inss = calcularINSS(baseTributavel); const deducaoDep = (parseInt(qtdDependentes) || 0) * 189.59;
+            // 🎯 IRRF 2026 — com redutor da Lei 15.079/2024.
+            //
+            // A regra correta é:
+            //   1. Calcula o IRRF pela TABELA PROGRESSIVA CLÁSSICA (que sempre existiu)
+            //   2. Aplica o REDUTOR por cima, subtraindo do valor apurado
+            //   3. O resultado nunca fica negativo
+            //
+            // O redutor zera a cobrança até R$ 5.000 e vai diminuindo
+            // linearmente até R$ 7.350. Acima disso, o redutor é zero.
+
+            const inss = calcularINSS(baseTributavel);
+            const deducaoDep = (parseInt(qtdDependentes) || 0) * 189.59;
             const baseIRRF = baseTributavel - inss - deducaoDep;
-            if(baseIRRF <= 5000.00) return 0; if(baseIRRF > 5000.00 && baseIRRF <= 7350.00) { return Math.max(0, 978.62 - (0.133145 * baseIRRF)); }
-            let irrf = 0;
-            if(baseIRRF <= 2428.80) irrf = 0; else if(baseIRRF <= 2826.65) irrf = (baseIRRF * 0.075) - 182.16; else if(baseIRRF <= 3751.05) irrf = (baseIRRF * 0.15) - 394.16; else if(baseIRRF <= 4664.68) irrf = (baseIRRF * 0.225) - 675.49; else irrf = (baseIRRF * 0.275) - 908.73;
-            return Math.max(0, irrf);
+
+            if (baseIRRF <= 0) return 0;
+
+            // 1) IRRF pela tabela progressiva clássica
+            let irrfTabela = 0;
+            if (baseIRRF <= 2428.80)      irrfTabela = 0;
+            else if (baseIRRF <= 2826.65) irrfTabela = (baseIRRF * 0.075) - 182.16;
+            else if (baseIRRF <= 3751.05) irrfTabela = (baseIRRF * 0.15)  - 394.16;
+            else if (baseIRRF <= 4664.68) irrfTabela = (baseIRRF * 0.225) - 675.49;
+            else                          irrfTabela = (baseIRRF * 0.275) - 908.73;
+            irrfTabela = Math.max(0, irrfTabela);
+
+            // 2) Redutor 2026 — só incide até R$ 7.350
+            let redutor = 0;
+            if (baseIRRF <= 7350.00) {
+                redutor = Math.max(0, 978.62 - (0.133145 * baseIRRF));
+            }
+
+            // 3) Resultado final
+            return Math.max(0, irrfTabela - redutor);
         }
 
-        const chkFerias = document.getElementById('checkFerias'); const boxFerias = document.getElementById('boxDiasFerias');
+        const chkFerias = document.getElementById('checkFerias');
+        const boxFerias = document.getElementById('boxDiasFerias');
+        const boxDiaInicioFerias = document.getElementById('boxDiaInicioFerias');
+        const lblMesAnoFerias = document.getElementById('lblMesAnoFerias');
+
+        // 🎯 Atualiza o sufixo "/MM/AAAA" com base no mês visualizado no header.
+        // Chamado sempre que o usuário troca de mês (via carregarOuCalcularFolha).
+        function atualizarLabelMesAnoFerias() {
+            if (!lblMesAnoFerias) return;
+            const m = String(dataFiltro.getMonth() + 1).padStart(2, '0');
+            const a = dataFiltro.getFullYear();
+            lblMesAnoFerias.textContent = `/${m}/${a}`;
+        }
+
         chkFerias.addEventListener('change', function() {
             if(this.checked) { 
                 boxFerias.classList.remove('invisible');
                 setTimeout(() => boxFerias.classList.remove('opacity-0'), 10);
+                boxDiaInicioFerias.classList.remove('hidden');
+                atualizarLabelMesAnoFerias();
             } 
             else { 
                 boxFerias.classList.add('opacity-0'); 
                 setTimeout(() => { boxFerias.classList.add('invisible'); }, 300); 
+                boxDiaInicioFerias.classList.add('hidden');
             }
             calcularMotorFolha();
         });
         document.getElementById('holDiasFerias')?.addEventListener('input', calcularMotorFolha);
+
+        // Listener do campo "Dia de Início" — aceita apenas 1..31
+        document.getElementById('holDiaInicioFerias')?.addEventListener('input', function() {
+            let v = parseInt(this.value);
+            if (isNaN(v)) return;
+            if (v < 1) v = 1;
+            if (v > 31) v = 31;
+            this.value = v;
+            calcularMotorFolha();
+        });
 
         function carregarOuCalcularFolha() {
             const elsCLT = document.querySelectorAll('.clt-only');
@@ -6669,9 +6747,11 @@ window.checkRateio = function() {
             const dNome5 = document.getElementById('holDescNome5'); if(dNome5) dNome5.value = ''; 
             const dVal5 = document.getElementById('holDescVal5'); if(dVal5) dVal5.value = ''; 
             
-            chkFerias.checked = false; boxFerias.classList.add('opacity-0', 'invisible'); document.getElementById('holDiasFerias').value = '30';
             const inputHolDespesasPJ = document.getElementById('holDespesasPJ');
             if (inputHolDespesasPJ) inputHolDespesasPJ.value = '';
+
+            // Atualiza o sufixo "/MM/AAAA" do campo de férias conforme o mês visualizado
+            if (typeof atualizarLabelMesAnoFerias === 'function') atualizarLabelMesAnoFerias();
 
             let hol = configHoleriteGlobal[window.chaveMes(dataFiltro)];
             if(hol) {
@@ -6685,219 +6765,83 @@ window.checkRateio = function() {
                 if(dVal5) dVal5.value = formatarParaMascara(hol.descVal5);
                 
                 if (inputHolDespesasPJ) inputHolDespesasPJ.value = formatarParaMascara(hol.despesasPJ);
-                if(hol.temFerias) { 
-                    chkFerias.checked = true; 
-                    document.getElementById('holDiasFerias').value = hol.diasFerias || 30; 
-                    boxFerias.classList.remove('invisible', 'opacity-0');
-                }
             } else {
                 document.getElementById('holBruto').value = formatarParaMascara(meuPerfil.salario); document.getElementById('holHoras').value = meuPerfil.horas || '220';
                 document.getElementById('holConvMed').value = ''; document.getElementById('holConvOdo').value = ''; document.getElementById('holFretadoPct').value = '';
                 if (inputHolDespesasPJ) inputHolDespesasPJ.value = '';
             }
+
+            // 🎯 SINCRONIZA O TOGGLE DE FÉRIAS com o que foi SALVO para este mês.
+            // Sem isso, o toggle fica ligado de um mês para o outro e o cálculo
+            // de férias "vaza" para todos os meses seguintes.
+            // Regra: se o mês tem `temFerias: true` salvo → liga + preenche dias/início.
+            // Senão → desliga + esconde os campos.
+            const feriasSalvasDoMes = hol && hol.temFerias;
+            if (feriasSalvasDoMes) {
+                chkFerias.checked = true;
+                boxFerias.classList.remove('invisible');
+                boxDiaInicioFerias.classList.remove('hidden');
+                setTimeout(() => boxFerias.classList.remove('opacity-0'), 10);
+                document.getElementById('holDiasFerias').value = hol.diasFerias || 30;
+                document.getElementById('holDiaInicioFerias').value = hol.diaInicioFerias || 1;
+                atualizarLabelMesAnoFerias();
+            } else {
+                chkFerias.checked = false;
+                boxFerias.classList.add('opacity-0');
+                boxDiaInicioFerias.classList.add('hidden');
+                setTimeout(() => boxFerias.classList.add('invisible'), 300);
+                document.getElementById('holDiasFerias').value = 30;
+                document.getElementById('holDiaInicioFerias').value = 1;
+            }
+
             calcularMotorFolha();
         }
 
         // ===================== MOTOR DE SIMULAÇÃO DE FÉRIAS =====================
-        function calcularImpactoFerias(sB, dataInicioStr, diasFerias, dependentes, temVale) {
-            const p = dataInicioStr.split('/');
-            if (p.length !== 3) return null;
-            const diaInicio = parseInt(p[0]);
-            const mesInicio = parseInt(p[1]) - 1;
-            const anoInicio = parseInt(p[2]);
-            if (isNaN(diaInicio) || isNaN(mesInicio) || isNaN(anoInicio)) return null;
+        // 🗑️ TODO O CÁLCULO DE FÉRIAS FOI REMOVIDO.
+        // O botão "Férias no Período?" no HTML continua visível,
+        // mas apenas como elemento gráfico — não dispara nenhum cálculo,
+        // não altera o recibo, não altera o líquido.
+        // O novo mecanismo será reconstruído do zero em uma etapa futura.
 
-            const dtInicio = new Date(anoInicio, mesInicio, diaInicio);
-            const dtFim = new Date(anoInicio, mesInicio, diaInicio + diasFerias - 1);
-            const mesFim = dtFim.getMonth();
-            const anoFim = dtFim.getFullYear();
-            const ultimoDiaGozo = dtFim.getDate();
-
-            const diasTrabalhadosGozo = diaInicio - 1;
-
-            let mesRetorno, anoRetorno, diasTrabalhadosRetorno;
-            if (mesFim !== mesInicio || anoFim !== anoInicio) {
-                mesRetorno = mesFim;
-                anoRetorno = anoFim;
-                diasTrabalhadosRetorno = new Date(anoRetorno, mesRetorno + 1, 0).getDate() - ultimoDiaGozo;
-            } else {
-                mesRetorno = mesInicio + 1;
-                anoRetorno = anoInicio;
-                if (mesRetorno > 11) { mesRetorno = 0; anoRetorno++; }
-                diasTrabalhadosRetorno = new Date(anoRetorno, mesRetorno + 1, 0).getDate();
+        // 🎯 Helper: quantos dias o funcionário trabalhou em um dado mês.
+        // Regra de prioridade:
+        //   1) Config salvo com `diasTrabalhadosNoMes` → usa.
+        //   2) Senão, deriva do spillover do MÊS ANTERIOR: se o mês anterior
+        //      teve férias que "vazaram" (spillover), este mês trabalha
+        //      apenas (30 - spillover) dias.
+        //   3) Senão, 30 dias (mês normal).
+        // É auto-suficiente: funciona mesmo quando o usuário só VISUALIZA
+        // um mês (sem clicar em Salvar Projeção). Ex: Fevereiro precisa saber
+        // que Janeiro trabalhou 25 dias porque Dezembro teve férias com
+        // spillover de 5 — sem precisar que Janeiro tenha sido salvo.
+        function getDiasTrabalhadosDoMes(mesRef) {
+            // 🎯 PRIORIDADE 1: spillover de férias do MÊS ANTERIOR.
+            //    Se o mês anterior teve férias que "vazaram" para este mês,
+            //    o funcionário só trabalhou (30 - spillover) dias — ponto.
+            //    Esta regra tem prioridade ABSOLUTA porque é uma consequência
+            //    direta das férias: um config salvo ANTES de aplicar as férias
+            //    (com diasTrabalhadosNoMes=30) não pode sobrescrever a verdade
+            //    matemática. Ex: Janeiro tem spillover 5 de Dezembro → 25 dias,
+            //    mesmo que o config antigo dele diga 30.
+            const mesAnt = new Date(mesRef.getFullYear(), mesRef.getMonth() - 1, 1);
+            const cfgAnt = configHoleriteGlobal[window.chaveMes(mesAnt)];
+            if (cfgAnt && cfgAnt.temFerias) {
+                const diasFerias = parseInt(cfgAnt.diasFerias) || 30;
+                const diaInicio = parseInt(cfgAnt.diaInicioFerias) || 1;
+                const diasNoMesAnt = new Date(mesAnt.getFullYear(), mesAnt.getMonth() + 1, 0).getDate();
+                const spillover = Math.max(0, (diaInicio + diasFerias - 1) - diasNoMesAnt);
+                if (spillover > 0) return 30 - spillover;
+                return 30;
             }
-
-            // Mês seguinte ao gozo (onde cai o 5º dia útil)
-            let mesSeguinteGozo, anoSeguinteGozo;
-            if (mesInicio === 11) { mesSeguinteGozo = 0; anoSeguinteGozo = anoInicio + 1; }
-            else { mesSeguinteGozo = mesInicio + 1; anoSeguinteGozo = anoInicio; }
-
-            // Mês de volta ao normal (mês seguinte ao retorno)
-            let mesNormal, anoNormal;
-            if (mesRetorno === 11) { mesNormal = 0; anoNormal = anoRetorno + 1; }
-            else { mesNormal = mesRetorno + 1; anoNormal = anoRetorno; }
-
-            const salarioDia = sB / 30;
-
-            // Mês do gozo
-            const salPropGozo = salarioDia * diasTrabalhadosGozo;
-            const feriasBrutas = salarioDia * diasFerias;
-            const tercoFerias = feriasBrutas / 3;
-            const inssSalGozo = calcularINSS(salPropGozo);
-            const irrfSalGozo = calcularIRRF(salPropGozo, dependentes);
-            const inssFerias = calcularINSS(feriasBrutas);
-            const irrfFerias = calcularIRRF(feriasBrutas, dependentes);
-            const vtGozo = temVale === 'Sim' ? salarioDia * diasTrabalhadosGozo * 0.06 : 0;
-            const liqFerias = feriasBrutas + tercoFerias - inssFerias - irrfFerias;
-            const liqSalGozo = salPropGozo - inssSalGozo - irrfSalGozo - vtGozo;
-
-            // Mês de retorno
-            const salPropRetorno = salarioDia * diasTrabalhadosRetorno;
-            const inssSalRetorno = calcularINSS(salPropRetorno);
-            const irrfSalRetorno = calcularIRRF(salPropRetorno, dependentes);
-            const vtRetorno = temVale === 'Sim' ? salarioDia * diasTrabalhadosRetorno * 0.06 : 0;
-            const liqSalRetorno = salPropRetorno - inssSalRetorno - irrfSalRetorno - vtRetorno;
-
-            // Vale (40% do bruto)
-            const valorVale = temVale === 'Sim' ? sB * 0.40 : 0;
-
-            // Datas de crédito
-            const qDUSalGozo = getQuintoDiaUtil(anoSeguinteGozo, mesSeguinteGozo);
-            const dtSalGozo = `${String(qDUSalGozo.getDate()).padStart(2,'0')}/${String(mesSeguinteGozo+1).padStart(2,'0')}/${anoSeguinteGozo}`;
-            const dtValeGozo = `20/${String(mesSeguinteGozo+1).padStart(2,'0')}/${anoSeguinteGozo}`;
-
-            const qDUSalRetorno = getQuintoDiaUtil(anoNormal, mesNormal);
-            const dtSalRetorno = `${String(qDUSalRetorno.getDate()).padStart(2,'0')}/${String(mesNormal+1).padStart(2,'0')}/${anoNormal}`;
-            const dtValeRetorno = `20/${String(mesNormal+1).padStart(2,'0')}/${anoNormal}`;
-
-            return {
-                diaInicio, mesInicio, anoInicio, mesFim, anoFim, diasTrabalhadosGozo, ultimoDiaGozo,
-                salPropGozo, feriasBrutas, tercoFerias,
-                inssSalGozo, irrfSalGozo, inssFerias, irrfFerias, vtGozo,
-                liqFerias, liqSalGozo,
-                mesRetorno, anoRetorno, diasTrabalhadosRetorno,
-                salPropRetorno, inssSalRetorno, irrfSalRetorno, vtRetorno, liqSalRetorno,
-                valorVale,
-                salarioDia,
-                bruto: sB,
-                valorValeGozo: temVale === 'Sim' ? (salarioDia * diasTrabalhadosGozo * 0.40) : 0,
-                // Vale do mês pós-férias = 40% × base × (24/30) — política da empresa
-                valorValeRetorno: temVale === 'Sim'
-                    ? (diasTrabalhadosRetorno >= 30
-                        ? sB * 0.40
-                        : sB * (24/30) * 0.40)
-                    : 0,
-                mesSeguinteGozo, anoSeguinteGozo,
-                dtSalGozo, dtValeGozo,
-                mesNormal, anoNormal,
-                dtSalRetorno, dtValeRetorno,
-                diasFerias
-            };
-        }
-
-        const _nomeMesArr = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-        function _nomeMes(m) { return _nomeMesArr[m]; }
-
-        // Bloco do MÊS DAS FÉRIAS (mês do gozo) — só mostra Férias + 1/3
-        function renderBlocoMesDoGozo(sim) {
-            const diaRetorno = sim.ultimoDiaGozo + 1;
-            const strDataRetorno = `${String(diaRetorno).padStart(2,'0')}/${String(sim.mesFim+1).padStart(2,'0')}/${sim.anoFim}`;
-
-            let html = `<div class="mt-4 pt-3 border-t-2 border-amber-200 dark:border-amber-800">`;
-            html += `<div class="flex items-center gap-2 mb-3 px-2">
-                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Férias — ${_nomeMes(sim.mesInicio)}/${sim.anoInicio}</span>
-            </div>`;
-            html += `<p class="text-[11px] text-slate-500 dark:text-gray-400 mb-3 px-2 leading-relaxed">Você sai de férias em <strong>${String(sim.diaInicio).padStart(2,'0')}/${String(sim.mesInicio+1).padStart(2,'0')}/${sim.anoInicio}</strong> por <strong>${sim.diasFerias} dias</strong> e retorna em <strong>${strDataRetorno}</strong>.</p>`;
-
-            html += `<div class="bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3">
-                <p class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">💰 Férias + 1/3 (pago 2 dias antes do gozo)</p>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Férias (${sim.diasFerias} dias)</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(sim.feriasBrutas)}</span></div>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">1/3 Constitucional</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(sim.tercoFerias)}</span></div>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">INSS (sobre Férias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(sim.inssFerias)}</span></div>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">IRRF (sobre Férias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(sim.irrfFerias)}</span></div>
-                <div class="flex justify-between items-center py-2 mt-1 border-t border-amber-200 dark:border-amber-800 text-sm"><span class="font-bold text-slate-700 dark:text-gray-200">Líquido de Férias</span><span class="font-extrabold text-green-600 dark:text-green-500">${formatMoeda(sim.liqFerias)}</span></div>
-            </div>`;
-
-            html += `<div class="mt-2 bg-slate-50 dark:bg-[#0b1120] rounded-lg p-3 text-[11px] text-slate-500 dark:text-gray-400 flex items-start gap-2">
-                <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span>O salário referente aos ${sim.diasTrabalhadosGozo} dias trabalhados antes do gozo será pago no 5º dia útil de <strong>${_nomeMes(sim.mesSeguinteGozo)}/${sim.anoSeguinteGozo}</strong>.</span>
-            </div>`;
-
-            html += `</div>`;
-            return html;
-        }
-
-        // Bloco de SALÁRIO PARCIAL (mês de recebimento) — quando o trabalhador só trabalhou parte do mês referência
-        // tipo='gozo' → salário dos dias trabalhados no mês do gozo (pago no mês seguinte)
-        // tipo='retorno' → salário dos dias trabalhados no mês de retorno (pago no mês seguinte)
-                function renderBlocoSalarioParcial(sim, tipo) {
-            const isGozo = tipo === 'gozo';
-            const diasTrab = isGozo ? sim.diasTrabalhadosGozo : sim.diasTrabalhadosRetorno;
-            const mesTrabalhado = isGozo ? sim.mesInicio : sim.mesRetorno;
-            const anoTrabalhado = isGozo ? sim.anoInicio : sim.anoRetorno;
-            const salProp = isGozo ? sim.salPropGozo : sim.salPropRetorno;
-            const inss = isGozo ? sim.inssSalGozo : sim.inssSalRetorno;
-            const irrf = isGozo ? sim.irrfSalGozo : sim.irrfSalRetorno;
-            const vt = isGozo ? sim.vtGozo : sim.vtRetorno;
-            const liq = isGozo ? sim.liqSalGozo : sim.liqSalRetorno;
-            const dtVale = isGozo ? sim.dtValeGozo : sim.dtValeRetorno;
-            const mesReceb = isGozo ? sim.mesSeguinteGozo : sim.mesNormal;
-            const anoReceb = isGozo ? sim.anoSeguinteGozo : sim.anoNormal;
-            
-            // Vale proporcional aos dias efetivamente trabalhados no mês de referência
-            const valorVale = isGozo ? sim.valorValeGozo : sim.valorValeRetorno;
-
-            const aviso = isGozo
-                ? `Este é o salário referente aos <strong>${diasTrab} dias</strong> em que você trabalhou em ${_nomeMes(mesTrabalhado)}/${anoTrabalhado}, antes do início das férias. Os descontos e o vale foram recalculados proporcionalmente.`
-                : `Este é o salário referente aos <strong>${diasTrab} dias</strong> em que você trabalhou em ${_nomeMes(mesTrabalhado)}/${anoTrabalhado}, já que você retornou das férias no meio do mês. Os descontos e o vale também foram reduzidos proporcionalmente.`;
-
-            let html = `<div class="mt-4 pt-3 border-t-2 border-amber-200 dark:border-amber-800">`;
-            html += `<div class="flex items-center gap-2 mb-3 px-2">
-                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 10v2"/><circle cx="12" cy="12" r="9"/></svg>
-                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Recibo de ${_nomeMes(mesReceb)}/${anoReceb}</span>
-            </div>`;
-            html += `<p class="text-[11px] text-slate-500 dark:text-gray-400 mb-3 px-2 leading-relaxed">${aviso}</p>`;
-
-            html += `<div class="bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3">
-                <p class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">💼 Salário dos ${diasTrab} dias trabalhados em ${_nomeMes(mesTrabalhado)}</p>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Salário Bruto (${diasTrab} dias)</span><span class="font-bold text-green-600 dark:text-green-500">+ ${formatMoeda(salProp)}</span></div>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">INSS</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(inss)}</span></div>
-                <div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">IRRF</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(irrf)}</span></div>
-                ${vt > 0 ? `<div class="flex justify-between items-center py-1 text-xs"><span class="text-slate-600 dark:text-gray-300">Vale Transporte (${diasTrab} dias)</span><span class="font-bold text-red-600 dark:text-red-400">- ${formatMoeda(vt)}</span></div>` : ''}
-                <div class="flex justify-between items-center py-2 mt-1 border-t border-amber-200 dark:border-amber-800 text-sm"><span class="font-bold text-slate-700 dark:text-gray-200">Líquido do Salário</span><span class="font-extrabold text-green-600 dark:text-green-500">${formatMoeda(liq)}</span></div>
-            </div>`;
-
-            if (valorVale > 0) {
-                html += `<div class="mt-2 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg p-3">
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-slate-600 dark:text-gray-300">💳 Vale (adiantamento, dia ${dtVale})</span>
-                        <span class="font-bold text-blue-600 dark:text-blue-400">+ ${formatMoeda(valorVale)}</span>
-                    </div>
-                    <p class="text-[10px] text-slate-500 dark:text-gray-400 mt-1 leading-relaxed">O vale também foi proporcional ao salário parcial do mês (${diasTrab} dias), e não ao salário integral.</p>
-                </div>`;
+            // 🎯 PRIORIDADE 2: config deste mês (férias próprias).
+            const chave = window.chaveMes(mesRef);
+            const cfg = configHoleriteGlobal[chave];
+            if (cfg && cfg.diasTrabalhadosNoMes !== undefined) {
+                return cfg.diasTrabalhadosNoMes;
             }
-
-            html += `</div>`;
-            return html;
-        }
-
-        // Bloco do MÊS DE VOLTA AO NORMAL (mensagem informativa)
-        function renderBlocoVoltaNormal(sim) {
-            let mesIntegral = sim.mesNormal + 1;
-            let anoIntegral = sim.anoNormal;
-            if (mesIntegral > 11) { mesIntegral = 0; anoIntegral++; }
-
-            let html = `<div class="mt-4 pt-3 border-t-2 border-emerald-200 dark:border-emerald-800">`;
-            html += `<div class="flex items-center gap-2 mb-2 px-2">
-                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Recibo de ${_nomeMes(mesIntegral)}/${anoIntegral} — Volta ao Normal</span>
-            </div>`;
-            html += `<div class="bg-emerald-50/50 dark:bg-emerald-900/10 rounded-lg p-3">
-                <p class="text-[11px] text-slate-600 dark:text-gray-300 leading-relaxed">Este é o primeiro salário integral após as férias de ${_nomeMes(sim.mesInicio)}/${sim.anoInicio}. Nenhuma redução a partir daqui — os valores voltam ao normal.</p>
-            </div>`;
-            html += `</div>`;
-            return html;
+            // 🎯 PRIORIDADE 3: mês normal.
+            return 30;
         }
 
         function calcularMotorFolha() {
@@ -6911,48 +6855,55 @@ window.checkRateio = function() {
             const dPJEl = document.getElementById('holDespesasPJ');
             const dPJ = dPJEl ? valorFloat(dPJEl.value) : 0;
             
-    // ===== DETECÇÃO DE CENÁRIO DE FÉRIAS (afeta salário e vale do mês visualizado) =====
-    const mesAtualCalc = dataFiltro.getMonth();
-    const anoAtualCalc = dataFiltro.getFullYear();
-    let cenarioFeriasCalc = null;
-    if (meuPerfil.regime === 'CLT') {
-        for (const chave in configHoleriteGlobal) {
-            const cfg = configHoleriteGlobal[chave];
-            if (!cfg.temFerias || !cfg.dataInicioFerias || cfg.dataInicioFerias.length !== 10) continue;
-            const simC = calcularImpactoFerias(cfg.bruto || sB, cfg.dataInicioFerias, parseInt(cfg.diasFerias) || 30, meuPerfil.dependentes, meuPerfil.temVale);
-            if (!simC) continue;
-            let mInt = simC.mesNormal + 1; let aInt = simC.anoNormal;
-            if (mInt > 11) { mInt = 0; aInt++; }
-            if (mesAtualCalc === simC.mesSeguinteGozo && anoAtualCalc === simC.anoSeguinteGozo) { cenarioFeriasCalc = { tipo: 'posGozo', sim: simC }; break; }
-            if (mesAtualCalc === simC.mesNormal && anoAtualCalc === simC.anoNormal && simC.diasTrabalhadosRetorno < 30) { cenarioFeriasCalc = { tipo: 'retorno', sim: simC }; break; }
-            if (mesAtualCalc === simC.mesInicio && anoAtualCalc === simC.anoInicio) { cenarioFeriasCalc = { tipo: 'gozo', sim: simC }; break; }
-            if (mesAtualCalc === mInt && anoAtualCalc === aInt) { cenarioFeriasCalc = { tipo: 'normal', sim: simC }; break; }
-        }
-    }
+            // ===== CÁLCULO DE FÉRIAS (CLT) =====
+            // Modelo: "o que cai na conta neste mês".
+            //  - Mês do início da viagem: mostra salário CHEIO + férias + 1/3.
+            //  - Mês seguinte: mostra salário PROPORCIONAL aos dias trabalhados no mês
+            //    anterior (a.d.t. afastamento por férias), lido do configHoleriteGlobal.
+            //  - Mês após o retorno: idem, baseado no spillover.
+            // Mês comercial = 30 dias (padrão trabalhista brasileiro).
+            let sB_mes = sB;
+            let diasFeriasCalc = 0;
+            let labelSalarioBase = 'Salário Base';
+            let vF = 0;
+            let vTF = 0;
+            let inssFerias = 0;
+            let irrfFerias = 0;
 
-    let isPosGozo = cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'posGozo';
-    let valeOverride = null;
-    let rotuloSalarioBase = 'Salário Base';
+            const feriasAtivas = document.getElementById('checkFerias')?.checked;
 
-        if (isPosGozo) {
-        const s = cenarioFeriasCalc.sim;
-        // Salário parcial = salário dos dias trabalhados no mês do gozo (pago no mês pós-gozo)
-        rotuloSalarioBase = `Salário Parcial (${s.diasTrabalhadosGozo} dias trab. em ${_nomeMes(s.mesInicio)}/${s.anoInicio})`;
-        sB = s.salPropGozo;
-        // Vale pós-férias = 40% × base × (24/30)
-        valeOverride = meuPerfil.temVale === 'Sim' ? s.valorValeRetorno : 0;
-    } else if (cenarioFeriasCalc && cenarioFeriasCalc.tipo === 'retorno') {
-        const s = cenarioFeriasCalc.sim;
-        // Salário reduzido (dias trabalhados após o retorno das férias)
-        rotuloSalarioBase = `Salário de ${_nomeMes(s.mesRetorno)}/${s.anoRetorno} (${s.diasTrabalhadosRetorno} dias trab.)`;
-        sB = s.salPropRetorno;
-        // Vale pós-férias — mesmo valor do crédito de janeiro, agora como desconto
-        valeOverride = meuPerfil.temVale === 'Sim' ? s.valorValeRetorno : 0;
-    }
-    // ===== FIM DA DETECÇÃO =====
+            // 1) Verifica o MÊS ANTERIOR: se teve férias, este mês mostra o proporcional
+            const chaveAtual = window.chaveMes(dataFiltro);
+            const mesAnt = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() - 1, 1);
+            const chaveAnt = window.chaveMes(mesAnt);
+            const configAnt = configHoleriteGlobal[chaveAnt];
+            const nomeMesAnterior = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'][mesAnt.getMonth()];
 
+            // 🎯 Dias trabalhados no MÊS APURADO (o mês anterior ao visualizado).
+            // Usa o helper para DERIVAR o valor quando o mês apurado não tem
+            // config salvo — ex: Fevereiro precisa saber que Janeiro trabalhou
+            // 25 dias porque Dezembro teve férias com spillover de 5, mesmo
+            // sem o usuário ter salvo Janeiro.
+            const diasTrabApurado = getDiasTrabalhadosDoMes(mesAnt);
+            if (diasTrabApurado < 30) {
+                const chaveApurado = window.chaveMes(mesAnt);
+                const cfgApurado = configHoleriteGlobal[chaveApurado];
+                const brutoApurado = parseFloat(cfgApurado?.bruto) || sB;
+                sB_mes = (brutoApurado / 30) * diasTrabApurado;
+                labelSalarioBase = `Salário Base (${diasTrabApurado} de 30 dias trab. em ${nomeMesAnterior})`;
+            }
 
-            let vF = 0; let vTF = 0; if(chkFerias.checked && meuPerfil.regime === 'CLT') { let d = parseInt(document.getElementById('holDiasFerias').value) || 30; vF = (sB / 30) * d; vTF = vF / 3; }
+            // 2) Verifica o MÊS ATUAL: se tem férias ativas, adiciona férias + 1/3
+            if (feriasAtivas && meuPerfil.regime === 'CLT') {
+                diasFeriasCalc = parseInt(document.getElementById('holDiasFerias')?.value) || 30;
+                const salarioDiario = sB / 30;
+                vF = salarioDiario * diasFeriasCalc;
+                vTF = vF / 3;
+                const baseFeriasTrib = vF + vTF;
+                inssFerias = calcularINSS(baseFeriasTrib);
+                irrfFerias = calcularIRRF(baseFeriasTrib, meuPerfil.dependentes);
+            }
+
             let v13P1 = 0; let v13P2 = 0; let inss13 = 0; let irrf13 = 0; let mF = dataFiltro.getMonth(); let isNov = mF === 10; let isDez = mF === 11;
             
             const badge13 = document.getElementById('badge13');
@@ -6963,8 +6914,13 @@ window.checkRateio = function() {
             } else { badge13.classList.add('hidden'); }
 
             let vH = 0; let vH50 = 0; let vH100 = 0; let tE = 0; let dsr = 0; let vale = 0; let inss = 0; let irrf = 0; let fret = 0;
+            let valeRecebido = 0;    // provento EXIBIDO (só no mês pós-férias)
+            let valeDescontado = 0;  // desconto EXIBIDO (valor creditado no mês anterior)
+            let valeCreditado = 0;   // interno: o que ESTE mês credita no dia 20 (fica salvo p/ o próximo ler)
             let descC = 0;
-            let tP_Trib = sB;
+            // 🎯 Base do INSS/IRRF do mês é o salário EFETIVO do mês (proporcional
+            // quando o mês anterior teve férias). HE/Fretado/13º continuam sobre `sB`.
+            let tP_Trib = sB_mes;
             
             let tempCm = cM; let tempCo = cO;
 
@@ -6973,27 +6929,90 @@ window.checkRateio = function() {
                 tP_Trib += bV;
                 vH = sB / hM; vH50 = vH * 1.5 * he50; vH100 = vH * 2.0 * he100; tE = vH50 + vH100; 
                 dsr = (dU > 0 && tE > 0) ? (tE / dU) * dNU : 0;
-                tP_Trib += tE + dsr + vF + vTF; 
-                if (meuPerfil.temVale === 'Sim') vale = (valeOverride !== null) ? valeOverride : sB * 0.40;
+                tP_Trib += tE + dsr;
+                // ===== VALE (adiantamento) =====
+                // Regra: o vale aparece como PROVENTO apenas no MÊS SEGUINTE
+                // às férias. Motivo: em dezembro o funcionário estava de férias
+                // e não recebeu o adiantamento do dia 20. Então em janeiro esse
+                // adiantamento "atrasado" é creditado (40% do salário de janeiro).
+                // Em TODOS os outros meses, o vale é APENAS desconto:
+                //   - O funcionário recebe o vale no dia 20 do próprio mês;
+                //   - E desconta o vale que recebeu no dia 20 do mês anterior.
+                //   - Como entradas e saídas se anulam, o holerite só mostra
+                //     o DESCONTO (que é o que "pesa" no salário do mês).
+                if (meuPerfil.temVale === 'Sim') {
+                    // 1) Quanto ESTE mês credita no dia 20.
+                    //    0 se este mês é de férias (o funcionário está fora).
+                    //    Senão: 40% do salário real do mês (proporcional aos
+                    //    dias trabalhados, se houver spillover em curso).
+                    if (feriasAtivas) {
+                        valeCreditado = 0;
+                    } else {
+                        const diasTrabEsteMes = getDiasTrabalhadosDoMes(dataFiltro);
+                        valeCreditado = (sB / 30) * diasTrabEsteMes * 0.40;
+                    }
+
+                    // 2) Desconto = o que foi creditado no MÊS ANTERIOR.
+                    //    SEMPRE DERIVADO dos dados reais, sem ler `valeCreditado`
+                    //    salvo no config. Motivo: o config pode ter sido gravado
+                    //    por uma versão antiga do app (com valor errado) e
+                    //    ficaria corrompido para sempre. Derivando, o resultado
+                    //    é sempre coerente com a matemática atual:
+                    //      a) Mês anterior foi de FÉRIAS → ninguém creditou → 0.
+                    //      b) Senão → 40% do salário REAL do mês anterior,
+                    //         proporcional aos dias trabalhados (spillover).
+                    if (configAnt && configAnt.temFerias) {
+                        valeDescontado = 0;
+                    } else {
+                        const diasTrabAntCalc = getDiasTrabalhadosDoMes(mesAnt);
+                        const brutoAntCalc = parseFloat(configAnt?.bruto) || sB;
+                        valeDescontado = (brutoAntCalc / 30) * diasTrabAntCalc * 0.40;
+                    }
+                    vale = valeDescontado;
+
+                    // 3) Provento EXIBIDO: só no mês SEGUINTE ao de férias.
+                    if (configAnt && configAnt.temFerias) {
+                        valeRecebido = valeCreditado;
+                    } else {
+                        valeRecebido = 0;
+                    }
+                }
                 inss = calcularINSS(tP_Trib); 
                 irrf = calcularIRRF(tP_Trib, meuPerfil.dependentes); 
-                fret = sB * (fP / 100); 
+                // 🎯 Fretado incide sobre o salário REAL do mês (proporcional
+                // aos dias trabalhados quando há férias/spillover). Ex: em
+                // janeiro, trabalhou 6 dias em Dezembro → 4,4% × (6/30 × bruto).
+                fret = sB_mes * (fP / 100); 
             } else {
                 descC = dPJ; 
                 tempCm = 0; tempCo = 0;
             }
 
-            const valeEhProvento = isPosGozo;
-            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2 + (valeEhProvento ? vale : 0)) : sB + bV; 
-            const totD = meuPerfil.regime === 'CLT' ? (inss + irrf + inss13 + irrf13 + (valeEhProvento ? 0 : vale) + tempCm + tempCo + fret + descC) : descC; 
+            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2 + vF + vTF + valeRecebido) : sB + bV; 
+            const totD = meuPerfil.regime === 'CLT' ? (inss + irrf + inss13 + irrf13 + inssFerias + irrfFerias + vale + tempCm + tempCo + fret + descC) : descC; 
             const liq = totP - totD;
 
             const tbody = document.getElementById('corpoHoleritePremium'); tbody.innerHTML = '';
             const addRow = (desc, isProv, val) => { if(val <= 0 && !desc.startsWith('Salário') && desc !== 'Faturamento Bruto' && !desc.startsWith('Faturamento')) return; tbody.innerHTML += `<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-[#1e2a40] last:border-0 hover:bg-slate-50 dark:hover:bg-[#1a2639] transition-colors px-2 rounded"><span class="text-slate-600 dark:text-gray-300 font-medium">${desc}</span><span class="font-bold tracking-wide ${isProv ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-400'}">${isProv ? '+' : '-'} ${formatMoeda(val)}</span></div>`; };
 
-                if (meuPerfil.regime === 'CLT') {
-                    addRow(rotuloSalarioBase, true, sB); addRow('Horas Extras 50%', true, vH50); addRow('Horas Extras 100%', true, vH100); addRow('DSR s/ Extras', true, dsr); addRow(bN || 'Bônus/Premiação', true, bV); addRow('Férias', true, vF); addRow('1/3 Férias', true, vTF); addRow('13º Salário (1ª Parcela)', true, v13P1); addRow('13º Salário (2ª Parcela)', true, v13P2); if (isPosGozo) addRow('Vale (Adiantamento)', true, vale);
-                    addRow('INSS Previsto', false, inss); addRow('IRRF Previsto', false, irrf); if(isDez) addRow('INSS (Sobre 13º Salário)', false, inss13); if(isDez) addRow('IRRF (Sobre 13º Salário)', false, irrf13); if (!isPosGozo) addRow('Vale (Adiantamento)', false, vale); addRow('Fretado', false, fret); addRow('Convênio Médico', false, tempCm); addRow('Convênio Odontológico', false, tempCo); 
+            if (meuPerfil.regime === 'CLT') {
+                    addRow(labelSalarioBase, true, sB_mes); addRow('Horas Extras 50%', true, vH50); addRow('Horas Extras 100%', true, vH100); addRow('DSR s/ Extras', true, dsr); addRow(bN || 'Bônus/Premiação', true, bV);
+                    if (vF > 0) addRow(`Férias (${diasFeriasCalc} dias)`, true, vF);
+                    if (vTF > 0) addRow('1/3 Constitucional', true, vTF);
+                    addRow('13º Salário (1ª Parcela)', true, v13P1); addRow('13º Salário (2ª Parcela)', true, v13P2);
+                    addRow('INSS Previsto', false, inss); addRow('IRRF Previsto', false, irrf);
+                    if (inssFerias > 0) addRow('INSS (Férias)', false, inssFerias);
+                    if (irrfFerias > 0) addRow('IRRF (Férias)', false, irrfFerias);
+                    if(isDez) addRow('INSS (Sobre 13º Salário)', false, inss13); if(isDez) addRow('IRRF (Sobre 13º Salário)', false, irrf13); 
+                    // Vale tem dois papéis por mês:
+                    //   • Vale (Adiantamento) → PROVENTO, o que foi creditado
+                    //     no dia 20 deste mês (40% do salário do mês).
+                    //   • Vale (Desconto) → o que foi creditado no MÊS ANTERIOR
+                    //     e agora precisa ser descontado do salário.
+                    // Cada linha aparece apenas quando tem valor (> 0).
+                    if (valeRecebido > 0) addRow('Vale (Adiantamento)', true, valeRecebido);
+                    if (valeDescontado > 0) addRow('Vale (Desconto)', false, valeDescontado);
+                    addRow('Fretado', false, fret); addRow('Convênio Médico', false, tempCm); addRow('Convênio Odontológico', false, tempCo); 
                     addRow(dn1 || 'Desconto 1', false, dv1); addRow(dn2 || 'Desconto 2', false, dv2); addRow(dn3 || 'Desconto 3', false, dv3); addRow(dn4 || 'Desconto 4', false, dv4); addRow(dn5 || 'Desconto 5', false, dv5);
                 } else {
                     addRow('Faturamento Bruto', true, sB); 
@@ -7018,9 +7037,13 @@ window.checkRateio = function() {
             document.getElementById('lblDataVale').textContent = diaValeStr; document.getElementById('lblDataSalario').textContent = diaSalarioStr;
 
             simulacaoAtualGlobal = { 
-                ano: aF, mes: mF, valeAdiantamento: vale, diaValeStr, salarioLiquido: liq, diaSalarioStr, bruto: sB, horasMensais: hM, convMed: tempCm, convOdo: tempCo, fretadoPct: fP,
-                ext50: he50, ext100: he100, bonusNome: bN, bonusVal: bV, temFerias: chkFerias.checked, diasFerias: document.getElementById('holDiasFerias').value,
-                dataInicioFerias: document.getElementById('holDataInicioFerias')?.value || '',
+                ano: aF, mes: mF, 
+                valeAdiantamento: vale,          // compatibilidade (valor do desconto)
+                valeRecebido: valeRecebido,      // provento EXIBIDO (só no mês pós-férias)
+                valeDescontado: valeDescontado,  // desconto EXIBIDO (o do mês anterior)
+                valeCreditado: valeCreditado,    // interno: o que este mês credita no dia 20
+                diaValeStr, salarioLiquido: liq, diaSalarioStr, bruto: sB, horasMensais: hM, convMed: tempCm, convOdo: tempCo, fretadoPct: fP,
+                ext50: he50, ext100: he100, bonusNome: bN, bonusVal: bV,
                 descNome1: dn1, descVal1: dv1, descNome2: dn2, descVal2: dv2, descNome3: dn3, descVal3: dv3, descNome4: dn4, descVal4: dv4, descNome5: dn5, descVal5: dv5,
                 despesasPJ: dPJ
             };
@@ -7058,7 +7081,7 @@ window.checkRateio = function() {
             }
         }
 
-        const inputsFolha = ['holBruto', 'holHoras', 'holConvMed', 'holConvOdo', 'holFretadoPct', 'holExt50', 'holExt100', 'holDiasFerias', 'holBonusNome', 'holBonusVal', 'holDescNome1', 'holDescVal1', 'holDescNome2', 'holDescVal2', 'holDescNome3', 'holDescVal3', 'holDescNome4', 'holDescVal4', 'holDescNome5', 'holDescVal5', 'holDespesasPJ'];
+        const inputsFolha = ['holBruto', 'holHoras', 'holConvMed', 'holConvOdo', 'holFretadoPct', 'holExt50', 'holExt100', 'holDiasFerias', 'holDiaInicioFerias', 'holBonusNome', 'holBonusVal', 'holDescNome1', 'holDescVal1', 'holDescNome2', 'holDescVal2', 'holDescNome3', 'holDescVal3', 'holDescNome4', 'holDescVal4', 'holDescNome5', 'holDescVal5', 'holDespesasPJ'];
         inputsFolha.forEach(id => { 
             const el = document.getElementById(id);
             if(el) el.addEventListener('input', calcularMotorFolha) 
@@ -7133,6 +7156,49 @@ window.checkRateio = function() {
         }
 
         document.getElementById('btnAplicarFolha').addEventListener('click', function() {
+            // 🎯 Antes de salvar, grava os dados de férias (se o toggle estiver ativo)
+            // para que o PRÓXIMO mês saiba que deve mostrar salário proporcional.
+            const feriasAtivas = document.getElementById('checkFerias')?.checked;
+            if (feriasAtivas && meuPerfil.regime === 'CLT') {
+                const diasFerias = parseInt(document.getElementById('holDiasFerias')?.value) || 30;
+                const diaInicio = parseInt(document.getElementById('holDiaInicioFerias')?.value) || 1;
+                // 🎯 O spillover usa o CALENDÁRIO REAL do mês de partida (Dez=31, Fev=28)
+                // para saber quantos dias "transbordam" para o mês seguinte.
+                // Assim, férias de 30 dias começando em 07/dez terminam em 05/jan
+                // (não 06/jan), e o funcionário volta em 06/jan — que é o que o
+                // calendário real dita.
+                const diasNoMesReal = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() + 1, 0).getDate();
+                const fimVacCom = diaInicio + diasFerias - 1;
+                const spilloverDias = Math.max(0, fimVacCom - diasNoMesReal);
+                const diasFeriasNoMesComercial = Math.min(diasFerias, 30 - (diaInicio - 1));
+                const diasTrabalhadosMes = 30 - diasFeriasNoMesComercial;
+                simulacaoAtualGlobal.temFerias = true;
+                simulacaoAtualGlobal.diasFerias = diasFerias;
+                simulacaoAtualGlobal.diaInicioFerias = diaInicio;
+                simulacaoAtualGlobal.diasTrabalhadosNoMes = diasTrabalhadosMes;
+                simulacaoAtualGlobal.spilloverDias = spilloverDias;
+                simulacaoAtualGlobal.brutoFerias = simulacaoAtualGlobal.bruto;
+            } else {
+                // 🎯 Este mês não tem férias próprias. Deriva os dias trabalhados
+                // DIRETAMENTE do spillover do mês anterior — NÃO lê o config
+                // deste mês (que pode estar desatualizado com dados antigos de
+                // quando o toggle estava ligado). Ex: se o usuário acabou de
+                // DESLIGAR férias de Dezembro e salvar, Dezembro tem 30 dias
+                // trabalhados (mês normal) — não 6 (o valor antigo).
+                simulacaoAtualGlobal.temFerias = false;
+                const mesAntSalvar = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() - 1, 1);
+                const cfgAntSalvar = configHoleriteGlobal[window.chaveMes(mesAntSalvar)];
+                let spilloverAntSalvar = 0;
+                if (cfgAntSalvar && cfgAntSalvar.temFerias) {
+                    const df = parseInt(cfgAntSalvar.diasFerias) || 30;
+                    const di = parseInt(cfgAntSalvar.diaInicioFerias) || 1;
+                    const dn = new Date(mesAntSalvar.getFullYear(), mesAntSalvar.getMonth() + 1, 0).getDate();
+                    spilloverAntSalvar = Math.max(0, (di + df - 1) - dn);
+                }
+                simulacaoAtualGlobal.diasTrabalhadosNoMes = 30 - spilloverAntSalvar;
+                simulacaoAtualGlobal.spilloverDias = 0;
+            }
+
             // Salva a simulação diretamente, sem abrir o modal de conta
             configHoleriteGlobal[window.chaveMes(dataFiltro)] = simulacaoAtualGlobal;
             
@@ -8646,130 +8712,6 @@ const inputDesc = document.getElementById('descricao');
                 }
             }, 150);
         });
-
-        // ===================== MOTOR DE DESFAZER / REFAZER =====================
-        // Pilha em memória (session-scoped). Ao recarregar a página, o histórico é limpo.
-        const MAX_UNDO_STATES = 30;
-        let undoStack = [];
-        let redoStack = [];
-        let _aplicandoSnapshot = false; // Trava contra reentrância
-
-        function atualizarBotoesUndoRedo() {
-            // 🎯 Existem DOIS pares de botões: um no header (desktop) e um dentro
-            // do modal de perfil (mobile). Buscamos por classe para atualizar ambos.
-            const aplicar = (btns, stack, rotulo) => {
-                if (!btns || !btns.length) return;
-                btns.forEach(btn => {
-                    if (stack.length > 0) {
-                        btn.disabled = false;
-                        btn.classList.remove('opacity-40', 'cursor-not-allowed');
-                        btn.title = `${rotulo}: ${stack[stack.length - 1].nome}`;
-                    } else {
-                        btn.disabled = true;
-                        btn.classList.add('opacity-40', 'cursor-not-allowed');
-                        btn.title = `Nada para ${rotulo.toLowerCase()}`;
-                    }
-                });
-            };
-            aplicar(document.querySelectorAll('.js-undo-btn'), undoStack, 'Desfazer');
-            aplicar(document.querySelectorAll('.js-redo-btn'), redoStack, 'Refazer');
-        }
-
-        // Captura o estado atual e empilha para permitir desfazer.
-        // Sempre chamado ANTES da mutação.
-        window.pushUndoState = function(nomeAcao) {
-            if (_aplicandoSnapshot) return;
-            const atual = JSON.stringify(capturarSnapshot());
-            const ultimo = undoStack[undoStack.length - 1];
-            if (ultimo && ultimo.dados === atual) return; // evita duplicatas em sequência
-            undoStack.push({ nome: nomeAcao || 'Ação', dados: atual, timestamp: Date.now() });
-            if (undoStack.length > MAX_UNDO_STATES) undoStack.shift();
-            redoStack = []; // Qualquer ação nova invalida o refazer
-            atualizarBotoesUndoRedo();
-        };
-
-        // Aplica um snapshot do histórico — reescreve tudo do Firestore.
-        async function aplicarSnapshotUndo(snapshot) {
-            _aplicandoSnapshot = true;
-            try {
-                // 1. Limpa subcoleções atuais no Firestore
-                for (const d of bancoDeDados) await apagarDespesaFirestore(d.id);
-                for (const c of categoriasGlobais) await apagarCategoriaFirestore(c.id);
-                for (const c of contasGlobais) await apagarContaFirestore(c.id);
-
-                // 2. Restaura variáveis globais
-                bancoDeDados = snapshot.bancoDeDados || [];
-                categoriasGlobais = snapshot.categoriasGlobais || [];
-                contasGlobais = snapshot.contasGlobais || [];
-                meuPerfil = snapshot.meuPerfil || meuPerfil;
-                configHoleriteGlobal = snapshot.configHoleriteGlobal || {};
-                saldoBaseMensalGlobal = snapshot.saldoBaseMensalGlobal || {};
-                cacheSaldoAcumulado = {};
-
-                // 3. Repopula o Firestore
-                for (const d of bancoDeDados) await salvarDespesaFirestore(d);
-                for (const c of categoriasGlobais) await salvarCategoriaFirestore(c);
-                for (const c of contasGlobais) await salvarContaFirestore(c);
-                await syncToFirebase();
-
-                // 4. Redesenha a UI inteira
-                aplicarPerfilVisual();
-                setupDropdownCategorias();
-                renderizarCarrosselContas();
-                atualizarTabela();
-                if (typeof renderTabelaContasTela === 'function') renderTabelaContasTela();
-            } finally {
-                _aplicandoSnapshot = false;
-            }
-        }
-
-        window.desfazer = async function() {
-            if (_aplicandoSnapshot) return;
-            if (undoStack.length === 0) {
-                window.mostrarAviso("Nada para desfazer.", "info");
-                return;
-            }
-            const estadoAtual = JSON.stringify(capturarSnapshot());
-            const alvo = undoStack.pop();
-            redoStack.push({ nome: alvo.nome, dados: estadoAtual, timestamp: Date.now() });
-
-            window.mostrarAviso(`Desfazendo: ${alvo.nome}...`, "info");
-            await new Promise(r => setTimeout(r, 200)); // margem para writes pendentes
-            await aplicarSnapshotUndo(JSON.parse(alvo.dados));
-            atualizarBotoesUndoRedo();
-            window.mostrarAviso(`Desfeito: ${alvo.nome}`, "sucesso");
-        };
-
-        window.refazer = async function() {
-            if (_aplicandoSnapshot) return;
-            if (redoStack.length === 0) {
-                window.mostrarAviso("Nada para refazer.", "info");
-                return;
-            }
-            const estadoAtual = JSON.stringify(capturarSnapshot());
-            const alvo = redoStack.pop();
-            undoStack.push({ nome: alvo.nome, dados: estadoAtual, timestamp: Date.now() });
-
-            window.mostrarAviso(`Refazendo: ${alvo.nome}...`, "info");
-            await new Promise(r => setTimeout(r, 200));
-            await aplicarSnapshotUndo(JSON.parse(alvo.dados));
-            atualizarBotoesUndoRedo();
-            window.mostrarAviso(`Refeito: ${alvo.nome}`, "sucesso");
-        };
-
-        // Atalhos de teclado (Ctrl+Z / Ctrl+Shift+Z / Ctrl+Y)
-        document.addEventListener('keydown', (e) => {
-            const ativo = document.activeElement;
-            const editando = ativo && (ativo.tagName === 'INPUT' || ativo.tagName === 'TEXTAREA' || ativo.isContentEditable);
-            // Não interferir com undo nativo de campos de texto
-            if (editando) return;
-            const ctrl = e.ctrlKey || e.metaKey;
-            if (ctrl && !e.shiftKey && e.key.toLowerCase() === 'z') { e.preventDefault(); window.desfazer(); }
-            else if ((ctrl && e.shiftKey && e.key.toLowerCase() === 'z') || (ctrl && e.key.toLowerCase() === 'y')) { e.preventDefault(); window.refazar ? window.refazer() : window.refazer(); }
-        });
-
-        // Inicializa o estado visual dos botões
-        atualizarBotoesUndoRedo();
 
         setTimeout(() => { renderizarCarrosselContas(); }, 1500);        
     </script>

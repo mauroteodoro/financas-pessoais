@@ -506,7 +506,7 @@ select:focus, select:focus-visible {
         }
     </style>
 </head>
-<body class="bg-white dark:bg-[#0b1120] text-slate-900 dark:text-gray-100 transition-colors duration-300 relative overflow-y-scroll min-h-[100dvh]">
+<body class="bg-[#F1F2F6] dark:bg-[#0b1120] text-slate-900 dark:text-gray-100 transition-colors duration-300 relative overflow-y-scroll min-h-[100dvh]">
 
     <!-- Fundo Fixo Removido para o Light Mode -->
 
@@ -1125,7 +1125,7 @@ select:focus, select:focus-visible {
         </div>
         
         <!-- MODAL DE BUSCA GLOBAL -->
-        <div id="modalBuscaGlobal" class="fixed inset-0 bg-slate-900/60 hidden z-[4000] backdrop-blur-sm transition-opacity px-4 pt-[12vh] items-start justify-center">
+        <div id="modalBuscaGlobal" class="fixed inset-0 bg-slate-900/60 hidden z-[4000] backdrop-blur-sm transition-opacity px-4 pt-24 sm:pt-28 items-start justify-center">
             <div class="bg-white rounded-2xl w-full max-w-xl card-shadow border border-slate-200 transform scale-95 transition-transform flex flex-col max-h-[70vh] overflow-hidden">
                 <div class="p-4 border-b border-slate-100 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"></path></svg>
@@ -1267,7 +1267,7 @@ select:focus, select:focus-visible {
 
                 </div>
 
-                <div class="flex gap-3 pt-5 mt-2 border-t border-slate-100 dark:border-[#1e2a40] shrink-0">
+                <div class="flex gap-3 pt-5 mt-2 shrink-0">
                     <button type="button" onclick="fecharModalTransferencia()" class="flex-1 bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-600 dark:text-gray-300 font-semibold py-3 rounded-full transition-colors active:scale-95 h-[48px] border border-slate-200 dark:border-[#1e2a40]">Cancelar</button>
                     <button type="button" id="btnConfirmarTransferencia" onclick="salvarTransferencia()" class="flex-[1.4] bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-bold py-3 rounded-full transition-all duration-300 active:scale-95 shadow-lg shadow-[#4D6BFE]/20 h-[48px]">Transferir</button>
                 </div>
@@ -1573,7 +1573,7 @@ select:focus, select:focus-visible {
         </div> <!-- Fim modalNovoLancamento -->
         
                                                                 <!-- CABEÇALHO PRINCIPAL -->
-        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white dark:bg-[#121b2b] text-slate-900 dark:text-gray-100 flex flex-wrap sm:flex-nowrap items-center gap-x-1.5 sm:gap-x-2 gap-y-2 px-4 sm:px-8 lg:px-10 py-2 z-[300] shadow-sm border-b border-slate-200 dark:border-[#1e2a40] transition-colors duration-300">
+        <header id="mainHeader" class="fixed top-0 left-0 w-full bg-white dark:bg-[#121b2b] text-slate-900 dark:text-gray-100 flex flex-wrap sm:flex-nowrap items-center gap-x-1.5 sm:gap-x-2 gap-y-2 px-4 sm:px-8 lg:px-10 py-2 z-[300] shadow-[0_2px_8px_rgba(15,23,42,0.06)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.4)] transition-colors duration-300">
 
             <!-- IDENTIDADE — linha própria no mobile, inline no desktop -->
             <div class="w-full sm:w-auto flex items-center gap-2.5 min-w-0 shrink-0">
@@ -1661,7 +1661,7 @@ select:focus, select:focus-visible {
         <!-- ===================== BARRA INFERIOR MOBILE ===================== -->
         <!-- Só aparece no mobile (md:hidden). Fica fixa no rodapé como nos apps de banco. -->
         <nav id="mobileBottomNav"
-             class="md:hidden fixed bottom-0 left-0 right-0 z-[300] bg-white dark:bg-[#121b2b] border-t border-slate-200 dark:border-[#1e2a40] shadow-[0_-4px_12px_-4px_rgba(15,23,42,0.06)] dark:shadow-[0_-4px_12px_-4px_rgba(0,0,0,0.4)]"
+             class="md:hidden fixed bottom-0 left-3 right-3 z-[300] bg-white dark:bg-[#121b2b] rounded-t-2xl shadow-[0_-2px_12px_rgba(15,23,42,0.08)] dark:shadow-[0_-2px_12px_rgba(0,0,0,0.5)]"
              style="padding-bottom: var(--safe-bottom);">
             <div class="flex items-stretch justify-around">
                 <button type="button" onclick="abrirTela('resumo')" data-bottom-tela="resumo"
@@ -1698,16 +1698,31 @@ select:focus, select:focus-visible {
             <!-- MENU LATERAL (colado à esquerda, fixo no desktop) -->
             <aside class="hidden md:block md:w-60 lg:w-64 bg-white dark:bg-[#121b2b] md:border-b-0 border-slate-100 dark:border-[#1e2a40] flex-shrink-0 md:p-3 md:pt-6 md:fixed md:left-0 md:top-[calc(var(--header-h)+var(--safe-top))] md:bottom-0 md:overflow-y-auto z-40 transition-colors duration-300">
                 <nav class="flex flex-col gap-0.5">
-                    <button type="button" id="btnMenuResumo" onclick="abrirTela('resumo')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-[#4D6BFE] text-white shadow-md shadow-[#4D6BFE]/30">Resumo</button>
-                    <button type="button" id="btnMenuExtrato" onclick="abrirTela('extrato')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Extrato</button>
-                    <button type="button" id="btnMenuContas" onclick="abrirTela('contas')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Contas</button>
+                    <button type="button" id="btnMenuResumo" onclick="abrirTela('resumo')" class="w-full flex items-center gap-2.5 text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-[#4D6BFE] text-white shadow-md shadow-[#4D6BFE]/30">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        <span>Resumo</span>
+                    </button>
+                    <button type="button" id="btnMenuExtrato" onclick="abrirTela('extrato')" class="w-full flex items-center gap-2.5 text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                        <span>Extrato</span>
+                    </button>
+                    <button type="button" id="btnMenuContas" onclick="abrirTela('contas')" class="w-full flex items-center gap-2.5 text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                        <span>Contas</span>
+                    </button>
                     
                     <div class="pt-5 pb-1.5">
                         <p class="px-3.5 text-[8px] font-bold text-slate-300 dark:text-gray-600 uppercase tracking-[0.15em] select-none pointer-events-none">Planejar</p>
                     </div>
                     
-                    <button type="button" id="btnMenuRelatorios" onclick="abrirTela('relatorios')" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Relatórios</button>
-                    <button type="button" id="btnTabProjecao" onclick="mudarParaAbaProjecao()" class="w-full block text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">Simulador</button>
+                    <button type="button" id="btnMenuRelatorios" onclick="abrirTela('relatorios')" class="w-full flex items-center gap-2.5 text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <span>Relatórios</span>
+                    </button>
+                    <button type="button" id="btnTabProjecao" onclick="mudarParaAbaProjecao()" class="w-full flex items-center gap-2.5 text-left px-3.5 py-2.5 text-[13px] font-semibold rounded-lg transition-colors bg-transparent text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-[#1a2639]">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                        <span>Simulador</span>
+                    </button>
                 </nav>
             </aside>
 
@@ -1717,10 +1732,10 @@ select:focus, select:focus-visible {
                 <main id="abaCaixa" class="pb-24 relative block w-full">
                     
                     <!-- TELA: RESUMO -->
-                    <div id="viewResumo" class="block bg-white dark:bg-transparent space-y-6 md:space-y-8">
+                    <div id="viewResumo" class="block space-y-5 md:space-y-6">
 
                         <!-- PAINEL 1: Saldo Total + 3 indicadores (superfície única) -->
-                        <div class="anim-fade-up">
+                        <div class="anim-fade-up bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden">
 
                             <!-- Hero — Saldo Total (superfície limpa) -->
                             <div class="px-5 md:px-6 pt-6 pb-5 border-b border-slate-100 dark:border-[#1e2a40]">
@@ -1739,7 +1754,7 @@ select:focus, select:focus-visible {
                             </div>
 
                             <!-- 3 indicadores internos (sem divisórias verticais) -->
-                            <div class="grid grid-cols-1 sm:grid-cols-3 stagger-cards border-b border-slate-100 dark:border-[#1e2a40]">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 stagger-cards">
 
                                 <!-- Salário -->
                                 <div class="px-5 md:px-6 py-5 flex flex-col">
@@ -1804,8 +1819,8 @@ select:focus, select:focus-visible {
                         </div>
 
                         <!-- PAINEL 2: Saldos das Contas -->
-                        <div class="anim-fade-up">
-                            <div class="flex items-center justify-between mb-4 px-5 md:px-6">
+                        <div class="anim-fade-up bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden pt-5">
+                            <div class="flex items-center justify-between mb-2 px-5 md:px-6">
                                 <h2 class="text-[11px] font-bold text-slate-900 font-montserrat uppercase tracking-[0.15em]">Saldos das Contas</h2>
                                 <button type="button" onclick="abrirModalContas()" class="text-[11px] font-semibold text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1 active:scale-95">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
@@ -1821,9 +1836,12 @@ select:focus, select:focus-visible {
           <!-- TELA: EXTRATO -->
           <div id="viewExtrato" class="hidden">
             <!-- EXTRATO REFEITO: MOBILE FIRST (DIV GRID) -->
-            <div class="bg-transparent overflow-hidden relative z-0 w-full">
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden relative z-0 w-full">
                 <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-[#1e2a40] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400 shrink-0">Extrato Mensal</h2>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400 shrink-0 flex items-center gap-2">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                        Extrato Mensal
+                    </h2>
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto sm:flex-1 sm:justify-end">
                         <div class="relative w-full sm:w-64">
                             <input type="text" id="buscaExtrato" placeholder="Buscar lançamentos..." class="w-full border border-slate-200 dark:border-transparent rounded-full py-2 pl-9 pr-4 focus:bg-white focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 bg-white dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all text-sm h-[36px]">
@@ -1907,9 +1925,12 @@ select:focus, select:focus-visible {
 
           <!-- TELA: CONTAS -->
           <div id="viewContas" class="hidden">
-            <div class="bg-transparent overflow-hidden relative z-0 w-full flex flex-col">
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden relative z-0 w-full flex flex-col">
                 <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-[#1e2a40] flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400">Minhas Contas</h2>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400 flex items-center gap-2">
+                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                        Minhas Contas
+                    </h2>
                     <div class="relative z-[100]">
                         <button type="button" id="btnAcoesContas" class="bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-bold py-2 sm:py-2.5 px-4 sm:px-5 rounded-full transition-all duration-300 shadow-md shadow-[#4D6BFE]/20 active:scale-95 text-xs sm:text-sm flex items-center gap-1.5 font-montserrat uppercase tracking-wide">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
@@ -1966,19 +1987,17 @@ select:focus, select:focus-visible {
           </div> <!-- Fim viewContas -->
         </main>
         <!-- ==================== ABA 2: PROJEÇÕES ==================== -->
-        <main id="abaProjecao" class="space-y-6 pb-24 relative hidden w-full">
+        <main id="abaProjecao" class="space-y-5 pb-24 relative hidden w-full">
 
             <!-- CALCULADORA DE PROJEÇÃO -->
             <div id="viewProjecaoCalc" class="block">
-                <div class="bg-transparent overflow-hidden">
+                <div class="bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden">
                     <div class="px-5 sm:px-8 py-5 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-100 dark:border-[#1e2a40]">
-                        <div class="flex items-center gap-3 shrink-0">
-                            <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                            </div>
+                        <div class="flex items-center gap-2.5 shrink-0">
+                            <svg class="w-5 h-5 text-slate-700 dark:text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 leading-none mb-1">Simulação</p>
-                                <h2 class="text-lg font-bold font-montserrat tracking-tight text-slate-900 leading-none">Projeção Salarial</h2>
+                                <h2 class="text-lg font-bold font-montserrat tracking-tight text-slate-900 dark:text-cyan-400 leading-none">Projeção Salarial</h2>
                             </div>
                         </div>
                         
@@ -2007,7 +2026,7 @@ select:focus, select:focus-visible {
                             <h3 class="text-[11px] font-bold text-slate-900 dark:text-cyan-400 uppercase tracking-[0.15em] border-b border-slate-200 dark:border-[#1e2a40] pb-2 mb-4 dark:text-cyan-600">Parâmetros Base & Descontos</h3>
                             <div class="space-y-4">
                                 <div class="flex items-center gap-2">
-                                    <label class="flex-1 text-sm font-medium text-slate-500 dark:text-gray-300" id="lblSalarioBruto">Salário Bruto (R$)</label>
+                                    <label class="flex-1 text-sm font-medium text-slate-500 dark:text-gray-300" id="lblSalarioBruto">Salário Bruto do Mês Anterior (R$)</label>
                                     <div class="w-36 shrink-0">
                                         <div class="relative w-full has-calc-wrapper">
                                             <input type="text" id="holBruto" class="w-full border border-slate-300 dark:border-[#1e2a40] rounded-lg py-2.5 pl-2.5 pr-10 text-right font-semibold focus:bg-white focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:ring-cyan-500 transition-all bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white shadow-sm" placeholder="0,00">
@@ -2186,9 +2205,12 @@ select:focus, select:focus-visible {
         </main>
 
         <!-- ==================== ABA 3: RELATÓRIOS ==================== -->
-        <main id="abaRelatorios" class="space-y-6 pb-24 relative hidden w-full">
-            <div class="bg-transparent p-5 md:p-6">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat mb-6">Filtros de Relatório</h2>
+        <main id="abaRelatorios" class="space-y-5 pb-24 relative hidden w-full">
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] p-5 md:p-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    Filtros de Relatório
+                </h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-6">
                     <!-- Filtro: Período (Custom Calendar) -->
@@ -2280,23 +2302,23 @@ select:focus, select:focus-visible {
 
             <!-- Resumo Financeiro do Filtro -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
+                <div class="bg-white dark:bg-[#121b2b] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgba(15,23,42,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total Receitas</p>
                     <p id="relTotRec" class="text-2xl font-bold text-green-600 dark:text-green-500 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
-                 <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
+                 <div class="bg-white dark:bg-[#121b2b] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgba(15,23,42,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Total Despesas</p>
                     <p id="relTotDesp" class="text-2xl font-bold text-red-600 dark:text-red-400 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
-                 <div class="bg-white dark:bg-[#0b1120] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative flex flex-col justify-center min-h-[120px]">
+                 <div class="bg-white dark:bg-[#121b2b] p-5 md:p-6 rounded-2xl shadow-[0_1px_3px_rgba(15,23,42,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] relative flex flex-col justify-center min-h-[120px]">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Resultado Líquido</p>
                     <p id="relTotSaldo" class="text-2xl font-bold text-slate-900 dark:text-cyan-400 font-montserrat tracking-tight">R$ 0,00</p>
                  </div>
             </div>
 
             <!-- Lista de Resultados -->
-            <div class="bg-transparent overflow-hidden">
-                <div class="p-5 border-b border-slate-100 dark:border-[#1e2a40] bg-slate-50/50 dark:bg-[#121b2b]">
+            <div class="bg-white dark:bg-[#121b2b] rounded-2xl shadow-[0_2px_8px_rgba(15,23,42,0.06)] overflow-hidden">
+                <div class="p-5 border-b border-slate-100 dark:border-[#1e2a40]">
                     <h3 class="font-bold text-slate-800 dark:text-gray-200">Listagem de Movimentações</h3>
                 </div>
                 <div id="tabelaRelatorio" class="flex flex-col text-sm divide-y divide-slate-100 dark:divide-[#1e2a40]">
@@ -2507,25 +2529,26 @@ select:focus, select:focus-visible {
         };
 
         function renderBankLogo(b) {
-            // 🎯 Logos sem contorno — apenas a sombra suave separa do fundo.
-            // 1. Ícones genéricos (Carteira, Outros)
+            // 🎯 Logos "flutuantes" — sem círculo, sem fundo, sem sombra.
+            // O ícone/imagem é exibido em tamanho natural, apenas limitado
+            // ao tamanho do container onde foi inserido (`w-full h-full`).
+            // A separação do fundo é feita pelo próprio logo (cores, bordas
+            // naturais da marca) — não por uma "moldura" externa.
+
+            // 1. Ícones SVG genéricos (Carteira, Outros) — herdam a cor do próprio SVG
             if (b.isIcon) {
-                return `<div class="w-full h-full bg-slate-50 dark:bg-[#1a2639] rounded-full flex items-center justify-center p-[20%] shadow-sm text-slate-500">${b.svg}</div>`;
+                return `<div class="w-full h-full flex items-center justify-center">${b.svg}</div>`;
             }
-            
-            // 2. SVG Nativo injetado direto no código (Faz a Caixa ficar perfeita e sem fundo quadrado)
+
+            // 2. SVG Nativo injetado direto no código
             if (b.isRawSvg) {
-                return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[18%] shadow-sm">
-                            ${b.svg}
-                        </div>`;
+                return `<div class="w-full h-full flex items-center justify-center">${b.svg}</div>`;
             }
-            
-            // 3. Imagens externas (Clearbit ou link customizado) com fallback pro Google
+
+            // 3. Imagens externas (Clearbit, custom ou fallback Google)
             const imgSource = b.customImg ? b.customImg : `https://logo.clearbit.com/${b.domain}`;
-            
-            return `<div class="w-full h-full bg-white rounded-full flex items-center justify-center p-[15%] shadow-sm">
-                        <img src="${imgSource}" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?domain=${b.domain}&sz=128';" alt="${b.nome}" class="w-full h-full object-contain">
-                    </div>`;
+
+            return `<img src="${imgSource}" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?domain=${b.domain}&sz=128';" alt="${b.nome}" class="w-full h-full object-contain">`;
         }
 
         function getSVGIcon(name, classes = "w-5 h-5") {
@@ -6766,7 +6789,7 @@ window.checkRateio = function() {
                 elsCLT.forEach(el => el.classList.remove('hidden'));
                 elsPJ.forEach(el => el.classList.add('hidden'));
                 if(boxDatas) boxDatas.classList.remove('hidden');
-                document.getElementById('lblSalarioBruto').textContent = 'Salário Bruto (R$)';
+                document.getElementById('lblSalarioBruto').textContent = 'Salário Bruto do Mês Anterior (R$)';
                 document.getElementById('lblDescontosAvulsos').textContent = 'Descontos Avulsos (Faltas, etc):';
                 btnAplicar.classList.remove('hidden');
                 if (meuPerfil.temVale === 'Não' && cardVale) cardVale.classList.add('hidden');
@@ -6960,9 +6983,7 @@ window.checkRateio = function() {
             } else { badge13.classList.add('hidden'); }
 
             let vH = 0; let vH50 = 0; let vH100 = 0; let tE = 0; let dsr = 0; let vale = 0; let inss = 0; let irrf = 0; let fret = 0;
-            let valeRecebido = 0;    // provento EXIBIDO (só no mês pós-férias)
-            let valeDescontado = 0;  // desconto EXIBIDO (valor creditado no mês anterior)
-            let valeCreditado = 0;   // interno: o que ESTE mês credita no dia 20 (fica salvo p/ o próximo ler)
+            let valeDescontado = 0;  // desconto: o valor creditado no MÊS ANTERIOR
             let descC = 0;
             // 🎯 Base do INSS/IRRF do mês é o salário EFETIVO do mês (proporcional
             // quando o mês anterior teve férias). HE/Fretado/13º continuam sobre `sB`.
@@ -6987,41 +7008,16 @@ window.checkRateio = function() {
                 //   - Como entradas e saídas se anulam, o holerite só mostra
                 //     o DESCONTO (que é o que "pesa" no salário do mês).
                 if (meuPerfil.temVale === 'Sim') {
-                    // 1) Quanto ESTE mês credita no dia 20.
-                    //    0 se este mês é de férias (o funcionário está fora).
-                    //    Senão: 40% do salário real do mês (proporcional aos
-                    //    dias trabalhados, se houver spillover em curso).
-                    if (feriasAtivas) {
-                        valeCreditado = 0;
-                    } else {
-                        const diasTrabEsteMes = getDiasTrabalhadosDoMes(dataFiltro);
-                        valeCreditado = (sB / 30) * diasTrabEsteMes * 0.40;
-                    }
-
-                    // 2) Desconto = o que foi creditado no MÊS ANTERIOR.
-                    //    SEMPRE DERIVADO dos dados reais, sem ler `valeCreditado`
-                    //    salvo no config. Motivo: o config pode ter sido gravado
-                    //    por uma versão antiga do app (com valor errado) e
-                    //    ficaria corrompido para sempre. Derivando, o resultado
-                    //    é sempre coerente com a matemática atual:
-                    //      a) Mês anterior foi de FÉRIAS → ninguém creditou → 0.
-                    //      b) Senão → 40% do salário REAL do mês anterior,
-                    //         proporcional aos dias trabalhados (spillover).
-                    if (configAnt && configAnt.temFerias) {
-                        valeDescontado = 0;
-                    } else {
-                        const diasTrabAntCalc = getDiasTrabalhadosDoMes(mesAnt);
-                        const brutoAntCalc = parseFloat(configAnt?.bruto) || sB;
-                        valeDescontado = (brutoAntCalc / 30) * diasTrabAntCalc * 0.40;
-                    }
+                    // 🎯 VALE (adiantamento) — modelo simplificado:
+                    // O vale é creditado todo dia 20 (ou antes, se cair em
+                    // fim de semana/feriado) = 40% × (dias trabalhados no mês
+                    // anterior / 30 × bruto do mês anterior). NUNCA aparece como
+                    // provento na folha — apenas como DESCONTO no mês seguinte,
+                    // quando o salário é pago e o adiantamento é abatido.
+                    const diasTrabAntCalc = getDiasTrabalhadosDoMes(mesAnt);
+                    const brutoAntCalc = parseFloat(configAnt?.bruto) || sB;
+                    valeDescontado = (brutoAntCalc / 30) * diasTrabAntCalc * 0.40;
                     vale = valeDescontado;
-
-                    // 3) Provento EXIBIDO: só no mês SEGUINTE ao de férias.
-                    if (configAnt && configAnt.temFerias) {
-                        valeRecebido = valeCreditado;
-                    } else {
-                        valeRecebido = 0;
-                    }
                 }
                 inss = calcularINSS(tP_Trib); 
                 irrf = calcularIRRF(tP_Trib, meuPerfil.dependentes); 
@@ -7034,7 +7030,7 @@ window.checkRateio = function() {
                 tempCm = 0; tempCo = 0;
             }
 
-            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2 + vF + vTF + valeRecebido) : sB + bV; 
+            const totP = meuPerfil.regime === 'CLT' ? (tP_Trib + v13P1 + v13P2 + vF + vTF) : sB + bV; 
             const totD = meuPerfil.regime === 'CLT' ? (inss + irrf + inss13 + irrf13 + inssFerias + irrfFerias + vale + tempCm + tempCo + fret + descC) : descC; 
             const liq = totP - totD;
 
@@ -7056,8 +7052,7 @@ window.checkRateio = function() {
                     //   • Vale (Desconto) → o que foi creditado no MÊS ANTERIOR
                     //     e agora precisa ser descontado do salário.
                     // Cada linha aparece apenas quando tem valor (> 0).
-                    if (valeRecebido > 0) addRow('Vale (Adiantamento)', true, valeRecebido);
-                    if (valeDescontado > 0) addRow('Vale (Desconto)', false, valeDescontado);
+                    if (valeDescontado > 0) addRow('Vale (Adiantamento)', false, valeDescontado);
                     addRow('Fretado', false, fret); addRow('Convênio Médico', false, tempCm); addRow('Convênio Odontológico', false, tempCo); 
                     addRow(dn1 || 'Desconto 1', false, dv1); addRow(dn2 || 'Desconto 2', false, dv2); addRow(dn3 || 'Desconto 3', false, dv3); addRow(dn4 || 'Desconto 4', false, dv4); addRow(dn5 || 'Desconto 5', false, dv5);
                 } else {
@@ -7085,9 +7080,7 @@ window.checkRateio = function() {
             simulacaoAtualGlobal = { 
                 ano: aF, mes: mF, 
                 valeAdiantamento: vale,          // compatibilidade (valor do desconto)
-                valeRecebido: valeRecebido,      // provento EXIBIDO (só no mês pós-férias)
-                valeDescontado: valeDescontado,  // desconto EXIBIDO (o do mês anterior)
-                valeCreditado: valeCreditado,    // interno: o que este mês credita no dia 20
+                valeDescontado: valeDescontado,  // desconto aplicado neste mês
                 diaValeStr, salarioLiquido: liq, diaSalarioStr, bruto: sB, horasMensais: hM, convMed: tempCm, convOdo: tempCo, fretadoPct: fP,
                 ext50: he50, ext100: he100, bonusNome: bN, bonusVal: bV,
                 descNome1: dn1, descVal1: dv1, descNome2: dn2, descVal2: dv2, descNome3: dn3, descVal3: dv3, descNome4: dn4, descVal4: dv4, descNome5: dn5, descVal5: dv5,
@@ -8153,7 +8146,7 @@ window.checkRateio = function() {
                 let b = BANCOS[c.banco || 'carteira'] || BANCOS['outros'];
 
                 let div = document.createElement('div');
-                div.className = "min-w-[150px] sm:min-w-[170px] bg-white dark:bg-[#0b1120] p-5 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none shadow-[0_1px_3px_rgb(0,0,0,0.03),0_4px_14px_-6px_rgb(77,107,254,0.15)] dark:shadow-[0_1px_3px_rgb(0,0,0,0.3),0_4px_14px_-6px_rgb(77,107,254,0.35)] relative";
+                div.className = "min-w-[150px] sm:min-w-[170px] bg-white dark:bg-[#121b2b] p-5 rounded-2xl snap-start flex-shrink-0 flex flex-col justify-between cursor-grab active:cursor-grabbing select-none shadow-[0_2px_8px_rgba(15,23,42,0.06)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.4)] relative";
                 div.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease';
                 div.dataset.contaId = c.id;
 
@@ -8203,7 +8196,9 @@ window.checkRateio = function() {
                 // Fora dessas situações, o card repousa limpo (só sombra neutra).
                 // 🎯 Mesma "receita" do arrasto — o glow intenso e difuso que
                 // se dissolve naturalmente nas bordas, sem marcar "parede".
-                const glowAtivo   = '0 4px 12px rgba(0,0,0,0.06), 0 12px 24px -8px rgba(0,0,0,0.10)';
+                // 🎯 Glow neon roxo: só aparece em interação (hover em desktop ou
+                // tap em mobile). No repouso o card tem sombra neutra.
+                const glowAtivo   = '0 4px 14px -6px rgba(77, 107, 254, 0.35), 0 8px 24px -8px rgba(77, 107, 254, 0.25)';
                 const glowRepouso = '';
 
                 div.addEventListener('mouseenter', () => {
@@ -8217,6 +8212,18 @@ window.checkRateio = function() {
                     if (!dragState || dragState.card !== div) {
                         div.style.boxShadow = glowRepouso;
                     }
+                });
+
+                // 📱 Feedback visual no mobile: acende por 350ms ao tocar.
+                div.addEventListener('pointerdown', (e) => {
+                    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+                    if (e.target.closest('button')) return;
+                    div.style.boxShadow = glowAtivo;
+                    setTimeout(() => {
+                        if (!dragState || dragState.card !== div) {
+                            div.style.boxShadow = glowRepouso;
+                        }
+                    }, 350);
                 });
 
                 div.innerHTML = `

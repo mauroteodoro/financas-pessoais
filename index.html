@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Finanças Pessoais | Mauro</title>
     
+    <!-- 🎨 FAVICON — Monograma M$J -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%236B85FF'/%3E%3Cstop offset='55%25' stop-color='%234D6BFE'/%3E%3Cstop offset='100%25' stop-color='%233A56E0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Inter,sans-serif' font-size='28' font-weight='800' fill='white' text-anchor='middle' letter-spacing='-1.2'%3EM$J%3C/text%3E%3C/svg%3E">
+    
     <!-- 📱 PWA / iOS Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -483,6 +486,21 @@ select:focus, select:focus-visible {
                         color 0.35s ease,
                         box-shadow 0.35s ease !important;
         }
+        /* 🎯 Exceção: modais e a tela de login trocam de tema INSTANTANEAMENTE.
+           Sem isso, cada campo do modal interpola lentamente entre claro e
+           escuro — e com o `backdrop-blur-sm` por cima, o resultado é aquele
+           "flash lavado" momentâneo. Como o modal já está no topo do fade
+           global, o pulo de cor é imperceptível ao olho. */
+        html.theme-transitioning [id^="modal"],
+        html.theme-transitioning [id^="modal"] *,
+        html.theme-transitioning [id^="modal"] *::before,
+        html.theme-transitioning [id^="modal"] *::after,
+        html.theme-transitioning #telaLogin,
+        html.theme-transitioning #telaLogin *,
+        html.theme-transitioning #telaLogin *::before,
+        html.theme-transitioning #telaLogin *::after {
+            transition: none !important;
+        }
 
         /* ========================================================== */
         /* 🎯 Campos de Busca — linguagem oficial do site              */
@@ -492,16 +510,27 @@ select:focus, select:focus-visible {
         /* sem glow roxo, sem efeito neon. O foco é discreto — só o    */
         /* cursor denuncia o estado ativo. Aplicar a MESMA regra a     */
         /* qualquer novo campo de busca que venha a ser adicionado.    */
-        html.dark #buscaExtrato,
-        html.dark #inputBuscaGlobal {
+        html.dark #buscaExtrato {
             background-color: #0b1120 !important;
             border-color: #1e2a40 !important;
             box-shadow: none !important;
         }
-        html.dark #buscaExtrato:focus,
-        html.dark #inputBuscaGlobal:focus {
+        html.dark #buscaExtrato:focus {
             background-color: #0b1120 !important;
             border-color: #1e2a40 !important;
+            box-shadow: none !important;
+        }
+        /* 🎯 Campo de busca do modal — sem fundo próprio para se fundir
+           com o card do modal. Antes tinha uma "faixa" escura que destoava. */
+        html.dark #inputBuscaGlobal {
+            background-color: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            color: #f3f4f6 !important;
+        }
+        html.dark #inputBuscaGlobal:focus {
+            background-color: transparent !important;
+            border-color: transparent !important;
             box-shadow: none !important;
         }
     </style>
@@ -517,8 +546,20 @@ select:focus, select:focus-visible {
     <!-- TELA DE LOGIN -->
     <div id="telaLogin" class="fixed inset-0 bg-slate-100 dark:bg-[#0b1120] z-[9999] flex flex-col items-center justify-center px-4 transition-opacity duration-500">
         <div class="w-full max-w-sm bg-white dark:bg-[#121b2b] p-8 rounded-2xl border border-slate-200 dark:border-[#1e2a40] shadow-xl text-center relative overflow-hidden">
-            <div class="w-16 h-16 mx-auto bg-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-[#4D6BFE]/20 transform rotate-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white -rotate-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z" /></svg>
+            <!-- 🎨 LOGO M$J — Monograma da marca -->
+            <div class="w-20 h-20 mx-auto mb-6 rounded-3xl flex items-center justify-center shadow-lg shadow-[#4D6BFE]/30 relative overflow-hidden"
+                 style="background: linear-gradient(135deg, #6B85FF 0%, #4D6BFE 55%, #3A56E0 100%);">
+                <svg viewBox="0 0 80 80" class="w-full h-full relative z-10" aria-hidden="true">
+                    <text x="40" y="53"
+                          font-family="'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+                          font-size="34"
+                          font-weight="800"
+                          fill="#FFFFFF"
+                          text-anchor="middle"
+                          letter-spacing="-1.5">M$J</text>
+                </svg>
+                <!-- Brilho sutil no topo — dá a sensação de profundidade -->
+                <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none"></div>
             </div>
             <h1 class="text-2xl font-semibold text-slate-800 font-montserrat tracking-tight mb-1">Acesso Restrito</h1>
             <p class="text-sm text-slate-500 mb-8">Entre com sua conta para acessar o sistema.</p>
@@ -3503,13 +3544,22 @@ select:focus, select:focus-visible {
             if (!menu || menu.classList.contains('hidden')) return;
 
             if (window.innerWidth < 640) {
+                // 🎯 Centralização por pixels, NÃO por `translateX(-50%)`.
+                // Motivo: a animação `dropdown-anim` aplica `transform: translateY(...)`,
+                // que sobrescreve o `translateX(-50%)` e faz o popup ancorar no
+                // `left: 50%` — jogando metade dele para fora da tela.
                 menu.style.position = 'fixed';
-                menu.style.left = '50%';
-                menu.style.transform = 'translateX(-50%)';
-                menu.style.top = 'calc(var(--header-h) + var(--safe-top) + 1rem)';
-                menu.style.bottom = 'auto';
+                menu.style.transform = '';
                 menu.style.margin = '0';
+                menu.style.bottom = 'auto';
                 menu.style.maxWidth = 'calc(100vw - 2rem)';
+
+                // Mede a largura real do menu já renderizado e centraliza.
+                // Fallback de 280px cobre o caso de o offsetWidth vir 0.
+                const larguraMenu = menu.offsetWidth || 280;
+                const leftCalculado = Math.max(16, (window.innerWidth - larguraMenu) / 2);
+                menu.style.left = leftCalculado + 'px';
+                menu.style.top = 'calc(var(--header-h) + var(--safe-top) + 1rem)';
             } else {
                 // Restaura o comportamento original no desktop
                 menu.style.position = '';
@@ -3684,10 +3734,8 @@ select:focus, select:focus-visible {
             let filtrados = bancoDeDados.filter(d => {
                 if (d.ocultoExtrato || d.isTransferencia) return false;
                 
-                // Parcelado/Recorrente usa vencimento; à vista usa data de compra
-                let dataRef = (d.totalParcelas > 1 || d.isRecorrente)
-                    ? (d.vencimento || d.vencimentoOriginal)
-                    : (d.dataLancamento || d.vencimento);
+                // 🎯 Sempre pelo VENCIMENTO (parcelado, à vista e recorrente).
+                let dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
                 if (!dataRef || dataRef === '--/--/----') dataRef = d.dataLancamento;
                 
                 // Filtro Exato do Calendário
@@ -5041,11 +5089,12 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             };
 
             if (salarioMudou) {
-                // 🎯 Alvo: mês SEGUINTE ao mês REAL de hoje (não ao mês visualizado).
-                // Ex: se hoje é Set/2026, o alvo é Out/2026 — todos os meses a partir
-                // de Out/2026 recebem o novo bruto, não importa qual mês está na tela.
-                const hojeReal = new Date();
-                const mesAlvo = new Date(hojeReal.getFullYear(), hojeReal.getMonth() + 1, 1);
+                // 🎯 Alvo: mês SEGUINTE ao mês VISUALIZADO no header (dataFiltro).
+                // Ex: se estou vendo Set/2026 quando clico em Configurações, o
+                // alvo é Out/2026 — todos os meses a partir de Out/2026 recebem
+                // o novo bruto. O mês visualizado e todos os anteriores ficam
+                // intactos (histórico preservado).
+                const mesAlvo = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() + 1, 1);
                 const mesAlvoNum = mesAlvo.getFullYear() * 100 + (mesAlvo.getMonth() + 1);
 
                 let mesesAtualizados = 0;
@@ -5299,8 +5348,11 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     // Parcelado: cada parcela tem seu próprio vencimento
                     return formatarDataComparacao(despesa.vencimento).substring(3) === mesAnoFiltro;
                 } else {
-                    // À Vista: o mês é determinado pela DATA DA COMPRA (dataLancamento)
-                    const dataRef = despesa.dataLancamento || despesa.vencimento;
+                    // 🎯 À Vista: o mês é determinado pela DATA DE VENCIMENTO
+                    // (não pela data de lançamento). Assim, uma conta lançada em
+                    // janeiro mas com vencimento em outubro aparece no extrato
+                    // de OUTUBRO — junto com o resumo/projeção daquele mês.
+                    const dataRef = despesa.vencimento || despesa.vencimentoOriginal || despesa.dataLancamento;
                     return formatarDataComparacao(dataRef).substring(3) === mesAnoFiltro;
                 }
             });
@@ -5657,7 +5709,8 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 } else if (d.totalParcelas > 1) {
                     return formatarDataComparacao(d.vencimento).substring(3) === strMesAno;
                 } else {
-                    const dataRef = d.dataLancamento || d.vencimento;
+                    // 🎯 Mesma regra do extrato: filtra pelo VENCIMENTO.
+                    const dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
                     return formatarDataComparacao(dataRef).substring(3) === strMesAno;
                 }
             });
@@ -5746,8 +5799,12 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             // Injeta a simulação do mês diretamente nos cards de Resumo
             let chave = window.chaveMes(dataFiltro);
             if (configHoleriteGlobal[chave]) {
-                baseVale = parseFloat(configHoleriteGlobal[chave].valeAdiantamento || 0);
-                baseSalario = parseFloat(configHoleriteGlobal[chave].salarioLiquido || 0);
+                // 🎯 O 13º salário (nov e dez) é creditado após o dia 20,
+                // então pertence ao "Saldo do Vale" — não ao Salário.
+                // Move o valor LÍQUIDO do 13º de um bucket para o outro.
+                const valor13 = parseFloat(configHoleriteGlobal[chave].valor13 || 0);
+                baseVale = parseFloat(configHoleriteGlobal[chave].valeAdiantamento || 0) + valor13;
+                baseSalario = parseFloat(configHoleriteGlobal[chave].salarioLiquido || 0) - valor13;
             } else if (saldoBaseMensalGlobal[chave]) {
                 baseVale = parseFloat(saldoBaseMensalGlobal[chave].vale || 0);
                 baseSalario = parseFloat(saldoBaseMensalGlobal[chave].salario || 0);
@@ -7081,6 +7138,10 @@ window.checkRateio = function() {
                 ano: aF, mes: mF, 
                 valeAdiantamento: vale,          // compatibilidade (valor do desconto)
                 valeDescontado: valeDescontado,  // desconto aplicado neste mês
+                // 🎯 Valor LÍQUIDO do 13º (proventos − INSS − IRRF). Como o
+                // 13º cai depois do dia 20 (nov e dez), ele é direcionado ao
+                // bucket "Vale" nos cards do Resumo — junto com o adiantamento.
+                valor13: (v13P1 + v13P2) - (inss13 + irrf13),
                 diaValeStr, salarioLiquido: liq, diaSalarioStr, bruto: sB, horasMensais: hM, convMed: tempCm, convOdo: tempCo, fretadoPct: fP,
                 ext50: he50, ext100: he100, bonusNome: bN, bonusVal: bV,
                 descNome1: dn1, descVal1: dv1, descNome2: dn2, descVal2: dv2, descNome3: dn3, descVal3: dv3, descNome4: dn4, descVal4: dv4, descNome5: dn5, descVal5: dv5,
@@ -7781,8 +7842,10 @@ window.checkRateio = function() {
                     let isR = d.tipo === 'Receita' || d.natureza === 'Receita';
                     let noMes = false;
                     
-                    // Parcelado usa vencimento; à vista usa data de compra
-                    let dataRefConta = (d.totalParcelas > 1) ? d.vencimento : (d.dataLancamento || d.vencimento);
+                    // 🎯 Sempre pelo VENCIMENTO — parcelado, à vista ou recorrente.
+                    // Uma conta vence em outubro → entra nas receitas/despesas
+                    // de outubro, mesmo que tenha sido lançada em outro mês.
+                    let dataRefConta = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
                     if (dataRefConta) {
                         noMes = formatarDataComparacao(dataRefConta).substring(3) === mesAnoFiltro;
                     }
@@ -8691,7 +8754,8 @@ const inputDesc = document.getElementById('descricao');
 
             container.innerHTML = '';
             resultados.forEach(d => {
-                const dataRef = (d.totalParcelas > 1 || d.isRecorrente) ? (d.vencimento || d.vencimentoOriginal) : (d.dataLancamento || d.vencimento);
+                // 🎯 Sempre pelo VENCIMENTO — coerente com o filtro do Extrato.
+                const dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
                 const isR = (d.tipo === 'Receita' || d.natureza === 'Receita');
                 const catObj = categoriasGlobais.find(c => c.nome === d.categoria);
                 const iconeStr = catObj ? catObj.icon : 'tag';

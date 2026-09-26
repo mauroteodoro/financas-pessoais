@@ -87,6 +87,16 @@
         .anim-fade-up { animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
         .anim-fade-in { animation: fadeIn 0.25s ease-out both; }
 
+        /* ⚠️ Pulso do botão "Salvar Projeção" quando há alterações não salvas.
+           Um "respirar" suave de glow roxo — chama atenção sem ser agressivo. */
+        @keyframes pulseSave {
+            0%, 100% { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05), 0 4px 14px -6px rgba(77, 107, 254, 0.35); }
+            50%      { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05), 0 4px 20px -2px rgba(77, 107, 254, 0.75), 0 0 0 5px rgba(77, 107, 254, 0.10); }
+        }
+        .anim-pulse-save {
+            animation: pulseSave 2s ease-in-out infinite;
+        }
+
         /* Stagger — cada filho entra com delay progressivo */
         .stagger-cards > *:nth-child(1) { animation-delay: 0ms; }
         .stagger-cards > *:nth-child(2) { animation-delay: 60ms; }
@@ -939,7 +949,6 @@ select:focus, select:focus-visible {
                             <button type="button" data-origem-prefix="edit" data-origem-valor="Auto" onclick="selecionarOrigem('Auto', 'editOrigemManual', 'edit')" class="flex-1 text-xs font-bold rounded-lg transition-all bg-slate-900 text-white shadow-sm">Auto</button>
                             <button type="button" data-origem-prefix="edit" data-origem-valor="Vale" onclick="selecionarOrigem('Vale', 'editOrigemManual', 'edit')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Vale</button>
                             <button type="button" data-origem-prefix="edit" data-origem-valor="Salário" onclick="selecionarOrigem('Salário', 'editOrigemManual', 'edit')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Salário</button>
-                            <button type="button" data-origem-prefix="edit" data-origem-valor="Extra" onclick="selecionarOrigem('Extra', 'editOrigemManual', 'edit')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Extra</button>
                         </div>
                     </div>
 
@@ -1106,6 +1115,11 @@ select:focus, select:focus-visible {
                             </svg>
                         </button>
                     </div>
+
+                    <!-- 🎯 Dica específica do modo Salário: valor fixado é literal -->
+                    <p id="hintAjusteSalario" class="hidden text-[10px] text-slate-400 dark:text-gray-500 mt-3 text-center max-w-[260px] leading-snug">
+                        O valor digitado é <strong>exatamente</strong> o que aparece no card. Campo vazio vira <strong>R$ 0,00</strong>. Use <strong>Restaurar</strong> para voltar ao cálculo automático.
+                    </p>
                 </div>
 
                 <!-- Opção de ocultar do Extrato -->
@@ -1132,7 +1146,11 @@ select:focus, select:focus-visible {
                 </div>
 
                 <!-- Botão Salvar -->
-                <div class="mt-6">
+                <div class="mt-6 space-y-2">
+                    <!-- Botão exclusivo do modo Salário: desfaz o override e volta ao cálculo automático -->
+                    <button type="button" id="btnRestaurarAjusteSalario" onclick="restaurarAjusteSalario()" class="hidden w-full bg-transparent hover:bg-slate-100 dark:hover:bg-[#1a2639] text-slate-500 dark:text-gray-400 font-bold py-3 rounded-xl transition-colors active:scale-95 text-[11px] uppercase tracking-wider font-montserrat border border-slate-200 dark:border-[#1e2a40] h-[44px]">
+                        Restaurar cálculo automático
+                    </button>
                     <button type="button" id="btnSalvarAjuste" class="w-full bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-[#4D6BFE]/20 active:scale-95 text-sm uppercase tracking-wider font-montserrat">
                         Confirmar Ajuste
                     </button>
@@ -1540,7 +1558,6 @@ select:focus, select:focus-visible {
                                                         <button type="button" data-origem-prefix="new" data-origem-valor="Auto" onclick="selecionarOrigem('Auto', 'origemManual', 'new')" class="flex-1 text-xs font-bold rounded-lg transition-all bg-slate-900 text-white shadow-sm">Auto</button>
                                                         <button type="button" data-origem-prefix="new" data-origem-valor="Vale" onclick="selecionarOrigem('Vale', 'origemManual', 'new')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Vale</button>
                                                         <button type="button" data-origem-prefix="new" data-origem-valor="Salário" onclick="selecionarOrigem('Salário', 'origemManual', 'new')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Salário</button>
-                                                        <button type="button" data-origem-prefix="new" data-origem-valor="Extra" onclick="selecionarOrigem('Extra', 'origemManual', 'new')" class="flex-1 text-xs font-bold rounded-lg transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-200">Extra</button>
                                                     </div>
                                                 </div>
 
@@ -2231,6 +2248,19 @@ select:focus, select:focus-visible {
                         </div>
 
                         <div class="mt-auto pt-4">
+                            <!-- ⚠️ AVISO DE ALTERAÇÕES NÃO SALVAS -->
+                            <!-- Mostra-se apenas quando o líquido/vale calculado difere do que está salvo. -->
+                            <!-- Sem isso, o usuário só descobre a divergência ao abrir o modal de explicação do Resumo. -->
+                            <div id="avisoAlteracoesNaoSalvas" class="hidden mb-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/40 rounded-xl p-3 flex items-start gap-3 anim-fade-in">
+                                <div class="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold text-amber-800 dark:text-amber-200">Alterações não salvas</p>
+                                    <p class="text-[11px] text-amber-700/90 dark:text-amber-300/80 mt-0.5 leading-snug">O Resumo ainda mostra os valores anteriores. Clique em <strong>Salvar Projeção</strong> para atualizar.</p>
+                                </div>
+                            </div>
+
                             <button type="button" id="btnAplicarFolha" class="w-full bg-[#4D6BFE] hover:bg-[#4338CA] text-white font-bold py-3.5 px-4 rounded-xl transition-all active:scale-95 text-sm flex items-center justify-center gap-2 h-[48px] shadow-sm shadow-[#4D6BFE]/20">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
                                 <span id="txtBtnAplicarFolha">Salvar Projeção</span>
@@ -2255,14 +2285,14 @@ select:focus, select:focus-visible {
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-6">
                     <!-- Filtro: Período (Custom Calendar) -->
-                    <div class="relative lg:col-span-4 z-[140]">
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Período (Início e Fim)</label>
+                    <div class="relative sm:col-span-2 lg:col-span-4 z-[150]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Período (Início e Fim)</label>
                         <input type="hidden" id="filtroRelDataIni" value="">
                         <input type="hidden" id="filtroRelDataFim" value="">
-                        <button type="button" id="btnFiltroPeriodo" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
-                            <span id="lblFiltroPeriodo" class="truncate font-medium flex items-center gap-2">
+                        <button type="button" id="btnFiltroPeriodo" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl px-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
+                            <span id="lblFiltroPeriodo" class="truncate font-medium flex items-center gap-2 min-w-0">
                                 <svg class="h-4 w-4 text-slate-900 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                Carregando...
+                                <span class="truncate">Carregando...</span>
                             </span>
                             <svg class="h-4 w-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
@@ -2290,10 +2320,10 @@ select:focus, select:focus-visible {
                     </div>
 
                     <!-- Filtro: Natureza -->
-                    <div class="relative lg:col-span-2 z-[130]">
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Natureza</label>
+                    <div class="relative lg:col-span-2 z-[140]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Natureza</label>
                         <input type="hidden" id="filtroRelTipo" value="Todos">
-                        <button type="button" id="btnFiltroTipo" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
+                        <button type="button" id="btnFiltroTipo" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl px-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
                             <span id="lblFiltroTipo" class="truncate font-medium">Todas</span>
                             <svg class="h-4 w-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
@@ -2307,10 +2337,10 @@ select:focus, select:focus-visible {
                     </div>
 
                     <!-- Filtro: Conta -->
-                    <div class="relative lg:col-span-3 z-[120]">
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Conta</label>
+                    <div class="relative lg:col-span-2 z-[130]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Conta</label>
                         <input type="hidden" id="filtroRelConta" value="Todas">
-                        <button type="button" id="btnFiltroConta" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
+                        <button type="button" id="btnFiltroConta" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl px-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
                             <span id="lblFiltroConta" class="truncate font-medium">Todas as Contas</span>
                             <svg class="h-4 w-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
@@ -2320,15 +2350,28 @@ select:focus, select:focus-visible {
                     </div>
 
                     <!-- Filtro: Categoria -->
-                    <div class="relative lg:col-span-3 z-[110]">
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Categoria</label>
+                    <div class="relative lg:col-span-2 z-[120]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Categoria</label>
                         <input type="hidden" id="filtroRelCategoria" value="Todas">
-                        <button type="button" id="btnFiltroCategoria" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl p-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
+                        <button type="button" id="btnFiltroCategoria" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl px-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
                             <span id="lblFiltroCategoria" class="truncate font-medium">Todas as Categorias</span>
                             <svg class="h-4 w-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
                         <div id="menuFiltroCategoria" class="hidden absolute w-full mt-1 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-2xl dropdown-anim overflow-hidden z-[9999]">
                             <ul class="hover-scrollbar max-h-[350px] overflow-y-auto text-sm" id="listaFiltroCategoria"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Filtro: Origem -->
+                    <div class="relative lg:col-span-2 z-[110]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Origem</label>
+                        <input type="hidden" id="filtroRelOrigem" value="Todas">
+                        <button type="button" id="btnFiltroOrigem" class="w-full flex justify-between items-center border border-slate-300 dark:border-[#1e2a40] rounded-xl px-3 focus:bg-white bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white transition-all shadow-sm text-left text-sm h-[48px]">
+                            <span id="lblFiltroOrigem" class="truncate font-medium">Todas as Origens</span>
+                            <svg class="h-4 w-4 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="menuFiltroOrigem" class="hidden absolute w-full mt-1 bg-white dark:bg-[#121b2b] border border-slate-200 dark:border-[#1e2a40] rounded-xl shadow-2xl dropdown-anim overflow-hidden z-[9999]">
+                            <ul class="hover-scrollbar max-h-[350px] overflow-y-auto text-sm" id="listaFiltroOrigem"></ul>
                         </div>
                     </div>
                 </div>
@@ -2413,6 +2456,7 @@ select:focus, select:focus-visible {
             { m: 'menuFiltroTipo', b: 'btnFiltroTipo' },
             { m: 'menuFiltroConta', b: 'btnFiltroConta' },
             { m: 'menuFiltroCategoria', b: 'btnFiltroCategoria' },
+            { m: 'menuFiltroOrigem', b: 'btnFiltroOrigem' },
             { m: 'menuCalDataCompra', b: 'btnCalDataCompra' },
             { m: 'menuCalVencimento', b: 'btnCalVencimento' },
             { m: 'menuCalEditCompra', b: 'btnCalEditCompra' },
@@ -3655,7 +3699,7 @@ select:focus, select:focus-visible {
             document.getElementById('filtroRelDataIni').value = `${window.selDataIni.getFullYear()}${String(window.selDataIni.getMonth()+1).padStart(2,'0')}${String(window.selDataIni.getDate()).padStart(2,'0')}`;
             document.getElementById('filtroRelDataFim').value = `${window.selDataFim.getFullYear()}${String(window.selDataFim.getMonth()+1).padStart(2,'0')}${String(window.selDataFim.getDate()).padStart(2,'0')}`;
             
-            document.getElementById('lblFiltroPeriodo').innerHTML = `<svg class="h-4 w-4 text-slate-900 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="truncate mt-0.5">${strIni} até ${strFim}</span>`;
+            document.getElementById('lblFiltroPeriodo').innerHTML = `<svg class="h-4 w-4 text-slate-900 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="truncate">${strIni} até ${strFim}</span>`;
             document.getElementById('menuFiltroPeriodo').classList.add('hidden');
         }
 
@@ -3710,6 +3754,9 @@ select:focus, select:focus-visible {
                 li.onclick = () => { selCat.value = c.nome; lblCat.innerHTML = `<div class="flex items-center gap-2 truncate"><span class="text-slate-900 dark:text-cyan-400 shrink-0">${getSVGIcon(c.icon, 'w-4 h-4')}</span><span class="truncate font-medium pt-[1px]">${c.nome}</span></div>`; document.getElementById('menuFiltroCategoria').classList.add('hidden'); };
                 listaCat.appendChild(li);
             });
+
+            // Popula o filtro de Origem (reage ao regime CLT/PJ do perfil)
+            window.popularFiltroOrigem();
         }
 
         window.selecionarFiltroTipo = function(val, text) {
@@ -3718,12 +3765,69 @@ select:focus, select:focus-visible {
             document.getElementById('menuFiltroTipo').classList.add('hidden');
         }
 
+        // ===== FILTRO DE ORIGEM (Relatórios) =====
+        // Replica EXATAMENTE a normalização de origem que o Extrato já exibe.
+        // Assim, filtrar por "Salário" mostra as mesmas linhas que o Extrato
+        // rotula como "Salário" — sem surpresas para o usuário.
+        window.obterOrigemItem = function(d) {
+            if (d.isTransferencia) return 'Transferência';
+            if (d.isAjuste) return 'Ajuste';
+            const ehReceita = d.tipo === 'Receita' || d.natureza === 'Receita';
+
+            // PJ: Recebimento (entradas) / Caixa (saídas). Sem ambiguidade.
+            if (meuPerfil.regime === 'PJ') {
+                return ehReceita ? 'Recebimento' : 'Caixa';
+            }
+
+            // CLT: se o usuário fixou origem manualmente, respeita.
+            if (d.origem === 'Vale' || d.origem === 'Salário') return d.origem;
+
+            // Senão, deriva da DATA de vencimento (fallback: lançamento).
+            const dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
+            return determinarOrigem(dataRef, d.natureza || d.tipo || 'Despesa', null);
+        };
+
+        window.selecionarFiltroOrigem = function(val, text) {
+            document.getElementById('filtroRelOrigem').value = val;
+            document.getElementById('lblFiltroOrigem').textContent = text;
+            document.getElementById('menuFiltroOrigem').classList.add('hidden');
+        };
+
+        // Popula a lista de origens conforme o regime do perfil (CLT x PJ).
+        // CLT vê: Salário, Vale, Extra. PJ vê: Recebimento, Caixa.
+        // "Ajuste" aparece para todos (é universal).
+        window.popularFiltroOrigem = function() {
+            const lista = document.getElementById('listaFiltroOrigem');
+            if (!lista) return;
+            lista.innerHTML = '';
+
+            const opcoes = [{ val: 'Todas', txt: 'Todas as Origens' }];
+            if (meuPerfil.regime === 'PJ') {
+                opcoes.push({ val: 'Recebimento', txt: 'Recebimento' });
+                opcoes.push({ val: 'Caixa', txt: 'Caixa' });
+            } else {
+                opcoes.push({ val: 'Salário', txt: 'Salário' });
+                opcoes.push({ val: 'Vale', txt: 'Vale' });
+            }
+            opcoes.push({ val: 'Ajuste', txt: 'Ajuste' });
+
+            opcoes.forEach((op, i) => {
+                const li = document.createElement('li');
+                li.className = "cursor-pointer px-4 py-3 hover:bg-slate-100 dark:hover:bg-[#1a2639] transition-colors border-b border-slate-100 dark:border-[#1e2a40] last:border-0";
+                if (i === 0) li.classList.add('font-bold', 'text-center');
+                li.textContent = op.txt;
+                li.onclick = () => window.selecionarFiltroOrigem(op.val, op.txt);
+                lista.appendChild(li);
+            });
+        };
+
         window.gerarRelatorio = function() {
             const dataIniVal = document.getElementById('filtroRelDataIni').value; 
             const dataFimVal = document.getElementById('filtroRelDataFim').value; 
             const tipoVal = document.getElementById('filtroRelTipo').value;
             const contaVal = document.getElementById('filtroRelConta').value;
             const catVal = document.getElementById('filtroRelCategoria').value;
+            const origemVal = document.getElementById('filtroRelOrigem')?.value || 'Todas';
 
             let dtIniNum = 0; let dtFimNum = 99999999;
             if (dataIniVal) dtIniNum = parseInt(dataIniVal);
@@ -3753,6 +3857,7 @@ select:focus, select:focus-visible {
                 if (tipoVal === 'Despesa' && isR) return false;
                 if (contaVal !== 'Todas' && (d.contaId || 'c_padrao') !== contaVal) return false;
                 if (catVal !== 'Todas' && d.categoria !== catVal) return false;
+                if (origemVal !== 'Todas' && window.obterOrigemItem(d) !== origemVal) return false;
 
                 return true;
             });
@@ -4761,6 +4866,12 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             }
             if (ehOverrideSalario && boxMotivo) boxMotivo.classList.add('hidden');
 
+            // 🎯 Mostra dica + botão de restaurar apenas no modo Salário
+            const hintSal = document.getElementById('hintAjusteSalario');
+            const btnRest = document.getElementById('btnRestaurarAjusteSalario');
+            if (hintSal) hintSal.classList.toggle('hidden', !ehOverrideSalario);
+            if (btnRest) btnRest.classList.toggle('hidden', !ehOverrideSalario);
+
             window.abrirModalGenerico('modalAjuste');
         }
 
@@ -4780,6 +4891,20 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
         
         window.fecharModalAjuste = function() {
             window.fecharModalGenerico('modalAjuste');
+        }
+
+        // 🎯 Remove o override do Salário e devolve o card ao cálculo automático.
+        // Chamado pelo botão "Restaurar cálculo automático" (só visível no modo Salário).
+        window.restaurarAjusteSalario = function() {
+            let chave = window.chaveMes(dataFiltro);
+            if (saldoBaseMensalGlobal[chave] && saldoBaseMensalGlobal[chave].overrideSalario !== undefined) {
+                delete saldoBaseMensalGlobal[chave].overrideSalario;
+                cacheSaldoAcumulado = {};
+                syncToFirebase();
+                atualizarTabela();
+                window.mostrarAviso("Saldo do Salário restaurado ao cálculo automático.", "info");
+            }
+            fecharModalAjuste();
         }
 
         function atualizarSinalAjuste() {
@@ -4810,16 +4935,14 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 let chave = window.chaveMes(dataFiltro);
                 if (!saldoBaseMensalGlobal[chave]) saldoBaseMensalGlobal[chave] = {};
 
-                // Campo vazio → remove o override e volta ao cálculo automático
+                // 🎯 UX: campo vazio agora vale ZERO (fixa em R$ 0,00) em vez de
+                // remover o override silenciosamente. Quem quiser voltar ao
+                // cálculo automático usa o botão dedicado "Restaurar".
+                // Antes, o usuário apagava o campo pensando em zerar, e o
+                // override era removido — deixando o card preso no valor antigo.
                 const inputEl = document.getElementById('inputAjusteBase');
                 if (!inputEl.value || inputEl.value.trim() === '') {
-                    delete saldoBaseMensalGlobal[chave].overrideSalario;
-                    cacheSaldoAcumulado = {};
-                    syncToFirebase();
-                    atualizarTabela();
-                    fecharModalAjuste();
-                    window.mostrarAviso("Override removido. O card voltou ao cálculo automático.", "info");
-                    return;
+                    val = 0;
                 }
 
                 // Se o valor não mudou em relação ao override existente, não faz nada.
@@ -4832,10 +4955,6 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 // Registra o ajuste com data e valor anterior. A partir desta data,
                 // novas movimentações voltam a compor o saldo automaticamente.
                 const valorAnterior = window.saldoSalarioAtualCalculado;
-                // 🎯 Mesmo racional da Substituição 1: a data do override tem que
-                // pertencer ao mês visualizado. `dataParaNum` usa essa data para
-                // decidir quais movimentações vieram "depois" do ajuste — se ela
-                // aponta para outro mês, o cálculo acumula tudo errado.
                 const diaHojeOv = new Date().getDate();
                 const ultimoDiaOv = new Date(dataFiltro.getFullYear(), dataFiltro.getMonth() + 1, 0).getDate();
                 const diaOv = Math.min(diaHojeOv, ultimoDiaOv);
@@ -5482,19 +5601,21 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                     // Tags agora são texto discreto — cor fica reservada para semântica de valor
                     let textoTag = isTransf ? 'Transferência' : (transacao.isAjuste ? 'Ajuste' : transacao.tipo);
                     
-                    // NOVA LÓGICA DE CORES DA ORIGEM (RECEBIMENTO E CAIXA)
-                    let txtOrigem = isTransf ? 'Transferência' : (transacao.origem || 'Salário');
+                    // ORIGEM — derivada da DATA (Salário ou Vale). Sem "Extra".
+                    let txtOrigem = isTransf ? 'Transferência' : (transacao.origem || '');
                     
-                    // Correção visual retroativa para dados antigos
                     if (isTransf) {
                         // Transferência mantém o rótulo — não passa pelas regras abaixo.
                     } else if (meuPerfil.regime === 'PJ') {
-                        if (ehReceita && txtOrigem !== 'Vale' && txtOrigem !== 'Salário') txtOrigem = 'Recebimento';
-                        else if (txtOrigem === 'Extra' || txtOrigem === 'Recebimento') txtOrigem = 'Caixa';
-                    } else if (ehReceita && txtOrigem !== 'Ajuste' && txtOrigem !== 'Vale' && txtOrigem !== 'Salário') {
-                        // Só receitas com origem legada/vazia/ambígua viram Extra.
-                        // Se o usuário escolheu Vale/Salário explicitamente, respeitamos.
-                        txtOrigem = 'Extra';
+                        txtOrigem = ehReceita ? 'Recebimento' : 'Caixa';
+                    } else {
+                        // CLT: Vale/Salário/Ajuste explícitos são respeitados.
+                        // Qualquer outra origem (vazia, legada "Extra"/"Caixa"/"Recebimento")
+                        // é recalculada pela data de vencimento.
+                        if (txtOrigem !== 'Vale' && txtOrigem !== 'Salário' && txtOrigem !== 'Ajuste') {
+                            const dataRefOrig = transacao.vencimento || transacao.dataLancamento;
+                            txtOrigem = determinarOrigem(dataRefOrig, transacao.natureza || 'Despesa', null);
+                        }
                     }
 
                     // Origem exibida como texto discreto — sem cor de fundo.
@@ -5722,21 +5843,20 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 if (d.isAjuste) {
                     if (d.alvoAjuste === 'Vale') return 'Vale';
                     if (d.alvoAjuste === 'Salário') return 'Salário';
-                    return 'Extra';
+                    // Ajuste "Geral" ou de conta específica: compõe o Salário.
+                    return 'Salário';
                 }
-                if (isRec(d)) {
-                    // 🎯 Mesma regra do `atualizarCardsSaldo`: o toggle manda em
-                    // TODA receita, inclusive as com origem explícita. Assim,
-                    // o histórico entre meses nunca diverge dos cards da tela.
-                    if (!d.compoeResumo) return 'Nenhum';
-                    if (d.origem === 'Vale') return 'Vale';
-                    if (d.origem === 'Salário') return 'Salário';
-                    return 'Extra';
-                } else {
-                    if (d.origem === 'Vale') return 'Vale';
-                    if (d.origem === 'Salário' || (!d.origem && !d.isAjuste)) return 'Salário';
-                    return 'Extra';
-                }
+                // Toggle "Compor Resumo do Mês" manda em TODA receita.
+                // Sem ele, a receita NÃO entra nos cards.
+                if (isRec(d) && !d.compoeResumo) return 'Nenhum';
+
+                // Chip manual do usuário é respeitado.
+                if (d.origem === 'Vale') return 'Vale';
+                if (d.origem === 'Salário') return 'Salário';
+
+                // 🎯 Origem SEMPRE pela data (Salário ou Vale). Sem "Extra".
+                const dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
+                return determinarOrigem(dataRef, d.natureza || d.tipo || 'Despesa', null);
             };
 
             // 2. Pega o Valor Base (Salário Líquido + Vale) do mês
@@ -5796,15 +5916,27 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             let baseVale = 0; 
             let baseSalario = 0; 
             
-            // Injeta a simulação do mês diretamente nos cards de Resumo
+            // 🎯 REGRA: o Valor Base dos cards é EXATAMENTE o do holerite:
+            //   • Salário → Líquido a Receber (Total Proventos − Total Descontos)
+            //   • Vale    → Vale (Adiantamento) — a linha de desconto do holerite
+            // O 13º já compõe o Líquido a Receber (é provento), então NÃO é movido
+            // para o bucket do Vale. Cada card bate com sua linha no holerite.
+            //
+            // 🎯 PRIORIDADE: se a simulação VIVA (`simulacaoAtualGlobal`) for do
+            // MESMO mês visualizado, usamos ela — assim os cards refletem edições
+            // feitas no holerite que AINDA NÃO foram salvas. Elimina a divergência
+            // entre o "Líquido a Receber" do simulador e o "Valor Base" do Resumo.
             let chave = window.chaveMes(dataFiltro);
-            if (configHoleriteGlobal[chave]) {
-                // 🎯 O 13º salário (nov e dez) é creditado após o dia 20,
-                // então pertence ao "Saldo do Vale" — não ao Salário.
-                // Move o valor LÍQUIDO do 13º de um bucket para o outro.
-                const valor13 = parseFloat(configHoleriteGlobal[chave].valor13 || 0);
-                baseVale = parseFloat(configHoleriteGlobal[chave].valeAdiantamento || 0) + valor13;
-                baseSalario = parseFloat(configHoleriteGlobal[chave].salarioLiquido || 0) - valor13;
+            const mesSimulacaoBate = simulacaoAtualGlobal &&
+                simulacaoAtualGlobal.ano === dataFiltro.getFullYear() &&
+                simulacaoAtualGlobal.mes === dataFiltro.getMonth();
+
+            if (mesSimulacaoBate && simulacaoAtualGlobal.salarioLiquido !== undefined) {
+                baseSalario = parseFloat(simulacaoAtualGlobal.salarioLiquido || 0);
+                baseVale = parseFloat(simulacaoAtualGlobal.valeAdiantamento ?? simulacaoAtualGlobal.valeDescontado ?? 0);
+            } else if (configHoleriteGlobal[chave]) {
+                baseSalario = parseFloat(configHoleriteGlobal[chave].salarioLiquido || 0);
+                baseVale = parseFloat(configHoleriteGlobal[chave].valeAdiantamento || 0);
             } else if (saldoBaseMensalGlobal[chave]) {
                 baseVale = parseFloat(saldoBaseMensalGlobal[chave].vale || 0);
                 baseSalario = parseFloat(saldoBaseMensalGlobal[chave].salario || 0);
@@ -5828,22 +5960,20 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
                 if (d.isAjuste) {
                     if (d.alvoAjuste === 'Vale') return 'Vale';
                     if (d.alvoAjuste === 'Salário') return 'Salário';
-                    return 'Extra'; // Ajuste 'Geral' ou de conta específica
+                    // Ajuste "Geral" ou de conta específica: compõe o Salário.
+                    return 'Salário';
                 }
-                if (isRec(d)) {
-                    // 🎯 O toggle "Compor Resumo do Mês" manda em TODA receita —
-                    // inclusive as com origem explícita (Vale/Salário/Extra).
-                    // Sem ele, a receita NÃO entra nos cards (ex: Adiantamento
-                    // Salarial já coberto pela simulação do holerite).
-                    if (!d.compoeResumo) return 'Nenhum';
-                    if (d.origem === 'Vale') return 'Vale';
-                    if (d.origem === 'Salário') return 'Salário';
-                    return 'Extra';
-                } else {
-                    if (d.origem === 'Vale') return 'Vale';
-                    if (d.origem === 'Salário' || (!d.origem && !d.isAjuste)) return 'Salário';
-                    return 'Extra';
-                }
+                // Toggle "Compor Resumo do Mês" manda em TODA receita.
+                // Sem ele, a receita NÃO entra nos cards.
+                if (isRec(d) && !d.compoeResumo) return 'Nenhum';
+
+                // Chip manual do usuário é respeitado.
+                if (d.origem === 'Vale') return 'Vale';
+                if (d.origem === 'Salário') return 'Salário';
+
+                // 🎯 Origem SEMPRE pela data (Salário ou Vale). Sem "Extra".
+                const dataRef = d.vencimento || d.vencimentoOriginal || d.dataLancamento;
+                return determinarOrigem(dataRef, d.natureza || d.tipo || 'Despesa', null);
             };
 
             // === SALÁRIO ===
@@ -5881,30 +6011,18 @@ const chkCompoe = document.getElementById('chkCompoeSaldo');
             let saldoSalario;
             let overrideDetalhes = null;
             if (temOverrideSal && typeof overrideSal === 'object' && overrideSal.valor !== undefined) {
-                const numOverride = dataParaNum(overrideSal.data);
-                const recApos = receitaSalarioItens
-                    .filter(d => dataParaNum(d.dataLancamento || d.vencimento) > numOverride)
-                    .reduce((s, d) => s + valorFloat(d.valor), 0);
-                const despApos = visiveis
-                    .filter(d => !isRec(d) && !d.isAjuste && alvoComposicao(d) === 'Salário')
-                    .filter(d => dataParaNum(d.dataLancamento || d.vencimento) > numOverride)
-                    .reduce((s, d) => s + valorFloat(d.valor), 0);
-                const ajusteApos = visiveis
-                    .filter(d => d.isAjuste && alvoComposicao(d) === 'Salário')
-                    .filter(d => dataParaNum(d.dataLancamento || d.vencimento) > numOverride)
-                    .reduce((s, d) => s + (isRec(d) ? valorFloat(d.valor) : -valorFloat(d.valor)), 0);
-                // 🎯 O override do Salário congela APENAS o bucket Salário.
-                // O bucket Extra (renda/gasto/ajustes com `alvoAjuste: 'Geral'`) sempre
-                // passa por cima — não faz parte do "snapshot" que o override capturou.
-                // Sem isso, um ajuste manual no "Saldo Total" some quando há override ativo.
-                saldoSalario = parseFloat(overrideSal.valor) + recApos - despApos + ajusteApos;
+                // 🎯 OVERRIDE ABSOLUTO: o valor fixado é EXATAMENTE o que aparece no card.
+                // Não somamos movimentações posteriores — o usuário pediu para fixar.
+                // O botão "Restaurar" remove o override e devolve ao cálculo automático.
+                const valorOverride = parseFloat(overrideSal.valor);
+                saldoSalario = valorOverride;
                 overrideDetalhes = {
-                    valor: parseFloat(overrideSal.valor),
+                    valor: valorOverride,
                     data: overrideSal.data || '',
                     valorAnterior: (overrideSal.valorAnterior !== undefined && overrideSal.valorAnterior !== null) ? parseFloat(overrideSal.valorAnterior) : null,
-                    recApos: recApos,
-                    despApos: despApos,
-                    ajusteApos: ajusteApos
+                    recApos: 0,
+                    despApos: 0,
+                    ajusteApos: 0
                 };
             } else if (temOverrideSal) {
                 // Compatibilidade com overrides antigos (número puro): congela o valor.
@@ -6695,13 +6813,20 @@ window.checkRateio = function() {
         }
 
         function determinarOrigem(dataStr, natureza = 'Despesa', override = null) {
-            // 🎯 Override manual: se o usuário escolheu explicitamente a origem no modal,
-            // respeitamos a escolha dele — mesmo que a auto-classificação sugerisse outra.
-            // Casos típicos: vale caiu antes do dia 20, adiantamento fora do padrão, etc.
+            // 🎯 Override manual: se o usuário escolheu explicitamente a origem no
+            // modal, respeitamos a escolha dele — mesmo que a auto-classificação
+            // sugerisse outra (ex: vale caiu antes do dia 20).
             if (override && override !== 'Auto') return override;
             if (meuPerfil.regime === 'PJ') return natureza === 'Receita' ? 'Recebimento' : 'Caixa';
-            if (meuPerfil.temVale === 'Não') return 'Salário'; 
-            const p = dataStr.split('/'); const dV = new Date(p[2], p[1] - 1, p[0]); const qDU = getQuintoDiaUtil(p[2], p[1] - 1);
+            if (meuPerfil.temVale === 'Não') return 'Salário';
+            // 🎯 Origem SEMPRE pela data (Salário ou Vale). Sem "Extra".
+            // Guardas contra datas vazias ou malformadas: caem em Salário (fallback seguro).
+            if (!dataStr || typeof dataStr !== 'string') return 'Salário';
+            const p = dataStr.split('/');
+            if (p.length !== 3) return 'Salário';
+            const dV = new Date(p[2], p[1] - 1, p[0]);
+            if (isNaN(dV.getTime())) return 'Salário';
+            const qDU = getQuintoDiaUtil(p[2], p[1] - 1);
             return (parseInt(p[0]) >= 20 || dV < qDU) ? 'Vale' : 'Salário';
         }
 
@@ -6721,6 +6846,25 @@ window.checkRateio = function() {
         };
 
         let simulacaoAtualGlobal = {};
+        // ⚠️ Flag: usuário mexeu em algum campo do simulador sem salvar?
+        // Controla a exibição do banner âmbar + o pulso no botão "Salvar Projeção".
+        let simulacaoTemAlteracoesNaoSalvas = false;
+
+        // Aplica o estado do aviso à UI. Chamada por calcularMotorFolha (após
+        // recalcular), pelo botão de salvar (para esconder) e ao recarregar o mês.
+        function atualizarAvisoNaoSalvo() {
+            const avisoEl = document.getElementById('avisoAlteracoesNaoSalvas');
+            const btnSalvar = document.getElementById('btnAplicarFolha');
+            if (!avisoEl || !btnSalvar) return;
+            if (simulacaoTemAlteracoesNaoSalvas) {
+                avisoEl.classList.remove('hidden');
+                btnSalvar.classList.add('anim-pulse-save');
+            } else {
+                avisoEl.classList.add('hidden');
+                btnSalvar.classList.remove('anim-pulse-save');
+            }
+        }
+
         function calcularINSS(base) {
             // 🎯 INSS progressivo por faixas — cada alíquota incide SÓ sobre a
             // parcela da base que cai dentro da faixa. Correto em qualquer valor,
@@ -6814,6 +6958,7 @@ window.checkRateio = function() {
                 setTimeout(() => { boxFerias.classList.add('invisible'); }, 300); 
                 boxDiaInicioFerias.classList.add('hidden');
             }
+            simulacaoTemAlteracoesNaoSalvas = true;
             calcularMotorFolha();
         });
         document.getElementById('holDiasFerias')?.addEventListener('input', calcularMotorFolha);
@@ -6919,6 +7064,11 @@ window.checkRateio = function() {
                 document.getElementById('holDiasFerias').value = 30;
                 document.getElementById('holDiaInicioFerias').value = 1;
             }
+
+            // 🎯 Ao recarregar (troca de mês ou volta à aba), o formulário é
+            // repopulado com o que está SALVO. Qualquer edição pendente foi
+            // descartada — então o aviso de "não salvo" deve sumir.
+            simulacaoTemAlteracoesNaoSalvas = false;
 
             calcularMotorFolha();
         }
@@ -7179,12 +7329,19 @@ window.checkRateio = function() {
                     boxCmp.classList.add('hidden');
                 }
             }
+
+            // ⚠️ Atualiza o aviso de "não salvo" sempre que o motor recalcula.
+            // É aqui que o banner âmbar e o pulso do botão reagem ao estado atual.
+            atualizarAvisoNaoSalvo();
         }
 
         const inputsFolha = ['holBruto', 'holHoras', 'holConvMed', 'holConvOdo', 'holFretadoPct', 'holExt50', 'holExt100', 'holDiasFerias', 'holDiaInicioFerias', 'holBonusNome', 'holBonusVal', 'holDescNome1', 'holDescVal1', 'holDescNome2', 'holDescVal2', 'holDescNome3', 'holDescVal3', 'holDescNome4', 'holDescVal4', 'holDescNome5', 'holDescVal5', 'holDespesasPJ'];
         inputsFolha.forEach(id => { 
             const el = document.getElementById(id);
-            if(el) el.addEventListener('input', calcularMotorFolha) 
+            if(el) el.addEventListener('input', () => {
+                simulacaoTemAlteracoesNaoSalvas = true;
+                calcularMotorFolha();
+            });
         });
 
         window.zerarProjecaoMes = function() {
@@ -7316,6 +7473,10 @@ window.checkRateio = function() {
             if(typeof renderTabelaContasTela === 'function') renderTabelaContasTela();
             atualizarTabela();
             
+            // ✅ Salvo! O aviso de "não salvo" some imediatamente.
+            simulacaoTemAlteracoesNaoSalvas = false;
+            atualizarAvisoNaoSalvo();
+
             window.mostrarAviso("Simulação salva com sucesso!", "sucesso");
             window.mudarParaAbaCaixa();
         });
@@ -8633,6 +8794,7 @@ const inputDesc = document.getElementById('descricao');
         document.getElementById('btnFiltroTipo')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroTipo', e));
         document.getElementById('btnFiltroConta')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroConta', e));
         document.getElementById('btnFiltroCategoria')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroCategoria', e));
+        document.getElementById('btnFiltroOrigem')?.addEventListener('click', (e) => window.abrirMenuExclusivo('menuFiltroOrigem', e));
         
         // Atualiza o preview do parcelamento em tempo real
         ['valor', 'qtdParcelas', 'parcAtual'].forEach(id => {
